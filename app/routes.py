@@ -13,3 +13,7 @@ def servicios():
     """Ruta de servicios"""
     return render_template('Servicios.html', title='Servicios')
 
+@bp.route('/conductores')
+def conductores():
+    """Ruta de conductores"""
+    return render_template("Modules/Gestion_Conductores/chepe.html", title='Conductores')
