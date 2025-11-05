@@ -315,9 +315,7 @@ main {
 .nav-item:nth-child(5) { animation-delay: 0.3s; }
 .nav-item:nth-child(6) { animation-delay: 0.35s; }
 .nav-item:nth-child(7) { animation-delay: 0.4s; }
-<<<<<<< HEAD
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
-<<<<<<< HEAD
 
 /* ===== Ajustes para Main Content ===== */
 main {
@@ -334,8 +332,7 @@ main {
         padding: 20px;
     }
 }
-=======
-=======
+
+
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
->>>>>>> Gestion_Conductores
->>>>>>> Gestion_Evidencia_Documentacion
+d
