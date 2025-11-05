@@ -1,0 +1,25 @@
+ <!--plantilla del archivo base.html-->
+{% extends "layouts/base.html" %}
+
+
+{% block title %}Agroservicio Ruta Verde - Inicio{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Bienvenido a Agroservicio Ruta Verde</h1>
+    <p>Su socio confiable en logistica agrícola.</p>
+</div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="/static/images/servicios.jpg" class="card-img-top" alt="Servicios">
+                <div class="card-body">
+                    <h5 class="card-title">Nuestros Servicios</h5>
+                    <p class="card-text">Ofrecemos una amplia gama de servicios para satisfacer sus necesidades agrícolas.</p>
+                    <a href="/servicios" class="btn btn-primary">Ver Servicios</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
