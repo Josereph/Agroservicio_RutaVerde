@@ -8,6 +8,7 @@ def index():
     """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
 
+<<<<<<< HEAD
 # Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 @bp.route('/Servicios')
@@ -26,4 +27,13 @@ def conductores():
 def recursos():
     """Mini menú de recursos operativos"""
     return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
+=======
+@bp.route('/gestion_evidencia')
+def servicios():
+    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia')
+
+
+
+
+>>>>>>> 8e34deb (Rutas agregadas)
 
