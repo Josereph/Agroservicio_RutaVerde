@@ -6,7 +6,7 @@ bp = Blueprint('main', __name__)
 @bp.route('/index')
 def index():
     """Ruta principal de la aplicacion"""
-    return render_template('index.html', title='Inicio')
+    return render_template('layouts/index.html', title='Inicio')
 
 @bp.route('/Servicios')
 def servicios():

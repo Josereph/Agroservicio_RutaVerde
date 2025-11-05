@@ -6,4 +6,8 @@ def create_app(config_class=Config):
 
     app.config.from_object(config_class)
     
+
+
+    from app import routes
+    app.register_blueprint(routes.bp)
     return app
