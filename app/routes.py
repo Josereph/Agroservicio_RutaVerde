@@ -8,8 +8,11 @@ def index():
     """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
 
-@bp.route('/Servicios')
+@bp.route('/gestion_evidencia')
 def servicios():
-    """Ruta de servicios"""
-    return render_template('Servicios.html', title='Servicios')
+    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia')
+
+
+
+
 
