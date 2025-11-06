@@ -42,7 +42,11 @@ body {
 /* ===== Sidebar Header / Brand ===== */
 .sidebar-header {
     padding: 25px 20px;
+<<<<<<< HEAD
     background: #ffffff;
+=======
+    background: rgba(0, 0, 0, 0.25);
+>>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     border-bottom: 2px solid rgba(139, 195, 74, 0.3);
     position: sticky;
     top: 0;
@@ -62,6 +66,7 @@ body {
     animation: pulse 2s ease-in-out infinite;
 }
 
+<<<<<<< HEAD
 .brand-logo {
     width: 42px;                
     height: 42px;
@@ -71,6 +76,8 @@ body {
 }
 
 
+=======
+>>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -87,8 +94,13 @@ body {
 }
 
 .brand-title {
+<<<<<<< HEAD
     color: var(--color-primary-dark);
     font-size: 14px;
+=======
+    color: var(--color-white);
+    font-size: 16px;
+>>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     font-weight: 700;
     margin: 0;
     line-height: 1.2;
@@ -315,6 +327,7 @@ main {
 .nav-item:nth-child(5) { animation-delay: 0.3s; }
 .nav-item:nth-child(6) { animation-delay: 0.35s; }
 .nav-item:nth-child(7) { animation-delay: 0.4s; }
+<<<<<<< HEAD
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
 
 /* ===== Ajustes para Main Content ===== */
@@ -332,3 +345,6 @@ main {
         padding: 20px;
     }
 }
+=======
+.nav-item:nth-child(8) { animation-delay: 0.45s; }
+>>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
