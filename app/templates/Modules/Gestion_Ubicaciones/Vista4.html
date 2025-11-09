@@ -1,13 +1,13 @@
 {% extends "layouts/base.html" %}
-{% block title %}Agroservicio Ruta Verde - Algún Título{% endblock %}
+{% block title %}Agroservicio Ruta Verde - Gestión de Ubicaciones{% endblock %}
 {% block content %}
 
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-lg-4">
             <div class="card shadow mb-4">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">Registrar Ubicación Logística 🚜</h5>
+                <div class="card-header text-white">
+                    <h5 class="mb-0">Registrar Ubicación o Ruta 🚜</h5>
                 </div>
                 <div class="card-body">
                     <form id="form-ubicacion">
@@ -37,24 +37,20 @@
                             <label for="ubicacion-municipio" class="form-label">Municipio</label>
                             <select class="form-select" id="ubicacion-municipio" required>
                                 <option value="">Seleccione primero un Departamento</option>
-
                                 <optgroup label="Ahuachapán" data-parent="Ahuachapán">
                                     <option value="Ahuachapán">Ahuachapán</option>
                                     <option value="Jujutla">Jujutla</option>
-                                    </optgroup>
-
+                                </optgroup>
                                 <optgroup label="San Salvador" data-parent="San Salvador">
                                     <option value="San Salvador Centro">San Salvador Centro</option>
                                     <option value="Soyapango">Soyapango</option>
                                     <option value="Apopa">Apopa</option>
-                                    </optgroup>
-
+                                </optgroup>
                                 <optgroup label="Usulután" data-parent="Usulután">
-                                    <option value="Usulután">Usulután</option>
+                                    <option value="Usulután">Usulután</p>
                                     <option value="Jiquilisco">Jiquilisco</option>
-                                    </optgroup>
-
-                                </select>
+                                </optgroup>
+                            </select>
                         </div>
 
                         <div class="mb-3">
@@ -78,7 +74,7 @@
 
         <div class="col-lg-8">
             <div class="card shadow mb-4">
-                <div class="card-header bg-info text-white">
+                <div class="card-header text-white header-tierra">
                     <h5 class="mb-0">Inventario de Zonas de Trabajo y Distribución</h5>
                 </div>
                 <div class="card-body p-0">
@@ -136,5 +132,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-</html>
+{% endblock %}A
