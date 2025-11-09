@@ -9,7 +9,7 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 @bp.route('/ubicaciones')
-def ubicacion():
+def ubicaciones():
     """Ruta de servicios de ubicaciones"""
-    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Servicios')
+    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
 
