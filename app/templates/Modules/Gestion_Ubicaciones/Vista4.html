@@ -1,7 +1,14 @@
 {% extends "layouts/base.html" %}
-{% block title %}Agroservicio Ruta Verde - Gestión de Ubicaciones{% endblock %}
-{% block content %}
 
+{% block title %}Agroservicio Ruta Verde - Gestión de Ubicaciones{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="c../modules/Gestion_Ubicaciones/css/cards.css">
+    <link rel="stylesheet" href="c../modules/Gestion_Ubicaciones/css/ubicaciones.css">
+{% endblock %}
+
+{% block content %}
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-lg-4">
@@ -47,7 +54,7 @@
                                     <option value="Apopa">Apopa</option>
                                 </optgroup>
                                 <optgroup label="Usulután" data-parent="Usulután">
-                                    <option value="Usulután">Usulután</p>
+                                    <option value="Usulután">Usulután</option>
                                     <option value="Jiquilisco">Jiquilisco</option>
                                 </optgroup>
                             </select>
@@ -92,7 +99,7 @@
                             </thead>
                             <tbody>
                                 <tr class="ubicacion-nivel-1">
-                                    <td><span class="hierarchy-level nivel-1"></span>**San Salvador**</td>
+                                    <td><span class="hierarchy-level nivel-1"></span>San Salvador</td>
                                     <td>SS</td>
                                     <td>San Salvador</td>
                                     <td>-</td>
@@ -132,4 +139,4 @@
         </div>
     </div>
 </div>
-{% endblock %}A
+{% endblock %}
