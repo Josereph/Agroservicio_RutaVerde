@@ -8,7 +8,13 @@ def index():
     """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
 
+<<<<<<< HEAD
 @bp.route('/gestion_evidencia')
+=======
+# Alias en minúsculas para evitar confusiones con /Servicios
+@bp.route('/servicios')
+@bp.route('/Servicios')
+>>>>>>> base
 def servicios():
     return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia')
 
@@ -16,3 +22,8 @@ def servicios():
 
 
 
+# 🔹 NUEVA RUTA → Mini menú de Recursos Operativos
+@bp.route('/recursos')
+def recursos():
+    """Mini menú de recursos operativos"""
+    return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
