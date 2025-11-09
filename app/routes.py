@@ -15,10 +15,14 @@ def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 =======
 @bp.route('/ubicaciones')
-def ubicacion():
+def ubicaciones():
     """Ruta de servicios de ubicaciones"""
+<<<<<<< HEAD
     return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Servicios')
 >>>>>>> f6c97e6 (cambios en routes y base.html)
+=======
+    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
+>>>>>>> 021f33f (descargar camcios de vase y colocar ruta)
 
 
 <<<<<<< HEAD
