@@ -42,7 +42,7 @@ body {
 /* ===== Sidebar Header / Brand ===== */
 .sidebar-header {
     padding: 25px 20px;
-    background: rgba(0, 0, 0, 0.25);
+    background: #ffffff;
     border-bottom: 2px solid rgba(139, 195, 74, 0.3);
     position: sticky;
     top: 0;
@@ -62,6 +62,15 @@ body {
     animation: pulse 2s ease-in-out infinite;
 }
 
+.brand-logo {
+    width: 42px;                
+    height: 42px;
+    border-radius: 8px;         
+    object-fit: cover;          
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -78,8 +87,8 @@ body {
 }
 
 .brand-title {
-    color: var(--color-white);
-    font-size: 16px;
+    color: var(--color-primary-dark);
+    font-size: 14px;
     font-weight: 700;
     margin: 0;
     line-height: 1.2;
