@@ -10,6 +10,7 @@
     --glass: rgba(255,255,255,0.6);
     --radius: 12px;
 }
+
 .agro-cards-grid{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
