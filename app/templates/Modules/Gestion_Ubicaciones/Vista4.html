@@ -4,17 +4,20 @@
 
 {% block styles %}
     {{ super() }}
-    <!-- Estos son los estilos solo para ESTA página -->
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/ubicaciones.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
+    <link rel="stylesheet" href="c../../../../static/css/ubicaciones.css">">
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4">
+
+</div>
     <div class="row">
         <div class="col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header text-white">
+                    <link rel="stylesheet" href="cards.css">
+                    <link rel="stylesheet" href="ubicaciones.css">
                     <h5 class="mb-0">Registrar Ubicación o Ruta 🚜</h5>
                 </div>
                 <div class="card-body">
@@ -100,7 +103,7 @@
                             </thead>
                             <tbody>
                                 <tr class="ubicacion-nivel-1">
-                                    <td><span class="hierarchy-level nivel-1"></span>San Salvador</td>
+                                    <td><span class="hierarchy-level nivel-1"></span>**San Salvador**</td>
                                     <td>SS</td>
                                     <td>San Salvador</td>
                                     <td>-</td>
