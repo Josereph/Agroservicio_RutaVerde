@@ -1,0 +1,39 @@
+/* =============================
+   Mini Menú — Agroservicio Ruta Verde
+   ============================= */
+
+body {
+    background-color: #f5f5f5;
+}
+
+/* ===== Cards ===== */
+.menu-card .card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.menu-card .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: #8bc34a;
+}
+
+/* ===== Iconos ===== */
+.menu-card i {
+    color: #2d5f4f; /* verde corporativo */
+    transition: all 0.3s ease;
+}
+
+.menu-card:hover i {
+    color: #8bc34a; /* verde claro */
+    transform: scale(1.2);
+}
+
+/* ===== Texto ===== */
+.menu-card h5 {
+    color: #1a3d32;
+    font-weight: 700;
+}

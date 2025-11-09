@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Mini Menú de Gestión{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/MiniMenu.css">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Panel de Gestión</h2>
+    <div class="row justify-content-center g-4">
+        <div class="col-md-4">
+            <a href="/vehiculos" class="menu-card text-decoration-none">
+                <div class="card text-center p-4">
+                    <i class="bi bi-truck fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Gestión de Vehículos</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/conductores" class="menu-card text-decoration-none">
+                <div class="card text-center p-4">
+                    <i class="bi bi-person-badge fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Gestión de Conductores</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/ubicaciones" class="menu-card text-decoration-none">
+                <div class="card text-center p-4">
+                    <i class="bi bi-geo-alt fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Gestión de Ubicaciones</h5>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -42,7 +42,11 @@ body {
 /* ===== Sidebar Header / Brand ===== */
 .sidebar-header {
     padding: 25px 20px;
+<<<<<<< .merge_file_RpqR6e
     background: rgba(0, 0, 0, 0.25);
+=======
+    background: #ffffff;
+>>>>>>> .merge_file_54y7mS
     border-bottom: 2px solid rgba(139, 195, 74, 0.3);
     position: sticky;
     top: 0;
@@ -62,6 +66,18 @@ body {
     animation: pulse 2s ease-in-out infinite;
 }
 
+<<<<<<< .merge_file_RpqR6e
+=======
+.brand-logo {
+    width: 42px;                
+    height: 42px;
+    border-radius: 8px;         
+    object-fit: cover;          
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+
+>>>>>>> .merge_file_54y7mS
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -78,8 +94,13 @@ body {
 }
 
 .brand-title {
+<<<<<<< .merge_file_RpqR6e
     color: var(--color-white);
     font-size: 16px;
+=======
+    color: var(--color-primary-dark);
+    font-size: 14px;
+>>>>>>> .merge_file_54y7mS
     font-weight: 700;
     margin: 0;
     line-height: 1.2;

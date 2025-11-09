@@ -6,35 +6,60 @@
     <meta name="description" content="Sistema de gestión logística para agroservicio">
     <meta name="author" content="Agroservicio Ruta Verde">
     <title>{% block title %}Agroservicio Ruta Verde{% endblock %}</title>
+<<<<<<< .merge_file_AcnQOd
     
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
+=======
+
+    
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+>>>>>>> .merge_file_hPQoMD
     <link rel="stylesheet" href="/static/css/sidebar.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+<<<<<<< .merge_file_AcnQOd
     <!-- Sidebar Navigation -->
+=======
+
+    <!-- ================================================ Sidebar Navigation ================================================ -->
+>>>>>>> .merge_file_hPQoMD
     <header>
         <nav id="sidebarMenu" class="d-flex flex-column">
             <!-- Brand Header -->
             <div class="sidebar-header">
                 <div class="brand-container">
+<<<<<<< .merge_file_AcnQOd
                     <i class="bi bi-tree-fill brand-icon"></i>
                     <div class="brand-text">
                         <h3 class="brand-title">Agroservicio Ruta Verde</h3>
+=======
+                     <img src="/static/image/IconAgro.jpeg" alt="Logo Agroservicio" class="brand-logo">
+                    <div class="brand-text">
+                        <h3 class="brand-title">Agroservicio "Ruta Verde"</h3>
+>>>>>>> .merge_file_hPQoMD
                         <span class="brand-subtitle">Sistema Logístico</span>
                     </div>
                 </div>
             </div>
 
+<<<<<<< .merge_file_AcnQOd
             <!-- Navigation Menu -->
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="/inicio" id="nav-inicio">
+=======
+            <!-- Menu -->
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.index') }}" id="nav-inicio">
+>>>>>>> .merge_file_hPQoMD
                         <i class="bi bi-house-door-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -46,9 +71,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+<<<<<<< .merge_file_AcnQOd
                     <a class="nav-link" href="/recursos" id="nav-recursos">
                         <i class="bi bi-box-seam"></i>
                         <span>Recursos Agrícolas</span>
+=======
+                    <a class="nav-link" href="{{ url_for('main.recursos') }}" id="nav-recursos">
+                             <i class="bi bi-box-seam"></i>
+                              <span>Recursos Operativos</span>  <!--Joseph estuvo aqui xdxd--> 
+>>>>>>> .merge_file_hPQoMD
                     </a>
                 </li>
                 <li class="nav-item">
@@ -85,7 +116,11 @@
         </nav>
     </header>
 
+<<<<<<< .merge_file_AcnQOd
     <!-- Main Content Area -->
+=======
+    <!-- ================================================ Main Content Area ================================================ -->
+>>>>>>> .merge_file_hPQoMD
     <main>
         {% block content %}
         {% endblock %}
