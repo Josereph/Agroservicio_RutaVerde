@@ -1,0 +1,15 @@
+.card {
+  border-radius: 1rem;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+.badge {
+  font-size: 0.9rem;
+}
+
+.btn i {
+  vertical-align: middle;
+}
