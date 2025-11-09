@@ -9,9 +9,18 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 @bp.route('/Servicios')
+=======
+@bp.route('/gestion_evidencia')
+
+# Alias en minúsculas para evitar confusiones con /Servicios
+@bp.route('/servicios')
+@bp.route('/Servicios')
+
+>>>>>>> 405b73d (resolviendo conflictos)
 def servicios():
     """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
