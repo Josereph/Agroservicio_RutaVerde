@@ -1,11 +1,140 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+{% extends "layouts/base.html" %}
+{% block title %}Agroservicio Ruta Verde - Algún Título{% endblock %}
+{% block content %}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Registrar Ubicación Logística 🚜</h5>
+                </div>
+                <div class="card-body">
+                    <form id="form-ubicacion">
+
+                        <div class="mb-3">
+                            <label for="ubicacion-departamento" class="form-label">Departamento</label>
+                            <select class="form-select" id="ubicacion-departamento" required>
+                                <option value="">Seleccione un Departamento</option>
+                                <option value="Ahuachapán">Ahuachapán</option>
+                                <option value="Santa Ana">Santa Ana</option>
+                                <option value="Sonsonate">Sonsonate</option>
+                                <option value="La Libertad">La Libertad</option>
+                                <option value="Chalatenango">Chalatenango</option>
+                                <option value="San Salvador">San Salvador</option>
+                                <option value="Cuscatlán">Cuscatlán</option>
+                                <option value="La Paz">La Paz</option>
+                                <option value="Cabañas">Cabañas</option>
+                                <option value="San Vicente">San Vicente</option>
+                                <option value="Usulután">Usulután</option>
+                                <option value="San Miguel">San Miguel</option>
+                                <option value="Morazán">Morazán</option>
+                                <option value="La Unión">La Unión</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ubicacion-municipio" class="form-label">Municipio</label>
+                            <select class="form-select" id="ubicacion-municipio" required>
+                                <option value="">Seleccione primero un Departamento</option>
+
+                                <optgroup label="Ahuachapán" data-parent="Ahuachapán">
+                                    <option value="Ahuachapán">Ahuachapán</option>
+                                    <option value="Jujutla">Jujutla</option>
+                                    </optgroup>
+
+                                <optgroup label="San Salvador" data-parent="San Salvador">
+                                    <option value="San Salvador Centro">San Salvador Centro</option>
+                                    <option value="Soyapango">Soyapango</option>
+                                    <option value="Apopa">Apopa</option>
+                                    </optgroup>
+
+                                <optgroup label="Usulután" data-parent="Usulután">
+                                    <option value="Usulután">Usulután</option>
+                                    <option value="Jiquilisco">Jiquilisco</option>
+                                    </optgroup>
+
+                                </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ubicacion-direccion" class="form-label">Dirección Exacta (Punto Logístico/Cultivo)</label>
+                            <textarea class="form-control" id="ubicacion-direccion" rows="2" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ubicacion-estado" class="form-label">Estado</label>
+                            <select class="form-select" id="ubicacion-estado" required>
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Guardar Punto Logístico</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Inventario de Zonas de Trabajo y Distribución</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Jerarquía</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Municipio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="ubicacion-nivel-1">
+                                    <td><span class="hierarchy-level nivel-1"></span>**San Salvador**</td>
+                                    <td>SS</td>
+                                    <td>San Salvador</td>
+                                    <td>-</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success">Ver Detalles</button>
+                                    </td>
+                                </tr>
+                                <tr class="ubicacion-nivel-2">
+                                    <td><span class="hierarchy-level nivel-2"></span>Soyapango</td>
+                                    <td>SYP</td>
+                                    <td>San Salvador</td>
+                                    <td>Soyapango</td>
+                                    <td><span class="badge bg-success">Activo</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success">Ver Detalles</button>
+                                    </td>
+                                </tr>
+                                <tr class="ubicacion-nivel-3">
+                                    <td><span class="hierarchy-level nivel-3"></span>Bodega Finca #3</td>
+                                    <td>BF-003</td>
+                                    <td>San Salvador</td>
+                                    <td>Soyapango</td>
+                                    <td><span class="badge bg-warning">Inactivo</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success">Ver Detalles</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        Mostrando puntos logísticos activos e inactivos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 </html>
