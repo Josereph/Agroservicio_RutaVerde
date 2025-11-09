@@ -1,3 +1,9 @@
+/*
+ * Archivo: vista2.css
+ * Ubicación: app/static/css/vista2.css
+ */
+
+/* Variables de Color */
 :root {
     --primary-green: #38761d; 
     --base-white: #ffffff; 
@@ -6,6 +12,7 @@
     --text-color: #333; 
 }
 
+/* Tipografía */
 body {
     font-family: 'Inter', sans-serif; 
     color: var(--text-color);
@@ -22,11 +29,13 @@ body {
     font-weight: 600; 
 }
 
+/* Encabezado Principal (Debe cambiar a verde) */
 .text-primary-green {
-    color: var(--primary-green) !important;
+    color: var(--primary-green) !important; /* Añadido !important para asegurar que sobreescriba Bootstrap si es necesario */
     font-weight: 700; 
 }
 
+/* Componentes de Tarjeta y Pestañas */
 .tab-content-card {
     background-color: var(--base-white);
     border: 1px solid var(--border-gray);
@@ -59,6 +68,7 @@ body {
     padding-bottom: 5px;
 }
 
+/* Estilo de Formulario (Input) */
 .custom-input {
     border-radius: 4px;
     border: 1px solid var(--border-gray);
@@ -71,6 +81,7 @@ body {
     box-shadow: 0 0 0 0.25rem rgba(56, 118, 29, 0.25);
 }
 
+/* Botón Principal (Debe cambiar a verde) */
 .primary-submit-btn {
     background-color: var(--primary-green) !important;
     color: var(--base-white) !important;
@@ -84,18 +95,7 @@ body {
     background-color: var(--hover-green) !important;
 }
 
+/* Estilos de Tabla */
 .thead-custom th {
     border-bottom: 2px solid var(--primary-green);
-}
-
-.btn-secondary-action {
-    color: var(--primary-green);
-    border-color: var(--primary-green);
-    border-radius: 6px;
-    transition: all 0.2s;
-}
-
-.btn-secondary-action:hover {
-    background-color: var(--primary-green);
-    color: var(--base-white);
 }
