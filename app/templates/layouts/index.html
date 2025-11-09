@@ -1,22 +1,204 @@
- <!--plantilla del archivo base.html-->
+<!--plantilla del archivo inicio.html-->
 {% extends "layouts/base.html" %}
-
 
 {% block title %}Agroservicio Ruta Verde - Inicio{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Bienvenido a Agroservicio Ruta Verde</h1>
-    <p>Su socio confiable en logistica agrícola.</p>
-</div class="container mt-4">
+<div class="page-header">
+    <div class="container-fluid">
+        <div class="header-content">
+            <h1 class="page-title">Bienvenido a Agroservicio Ruta Verde</h1>
+            <p class="page-subtitle">Su socio confiable en logística agrícola</p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-4">
+    <!-- Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">1,248</h3>
+                    <p class="stat-label">Entregas Totales</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">456</h3>
+                    <p class="stat-label">Recursos Activos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="bi bi-bell"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">12</h3>
+                    <p class="stat-label">Alertas Pendientes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-icon info">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">89</h3>
+                    <p class="stat-label">Documentos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- contenedor de las cards -->
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="/static/images/servicios.jpg" class="card-img-top" alt="Servicios">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card service-card">
+                <div class="card-image">
+                    <img src="/static/images/servicios.jpg" class="card-img-top" alt="Servicios">
+                    <div class="card-overlay">
+                        <i class="bi bi-briefcase"></i>
+                    </div>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">Nuestros Servicios</h5>
-                    <p class="card-text">Ofrecemos una amplia gama de servicios para satisfacer sus necesidades agrícolas.</p>
-                    <a href="/servicios" class="btn btn-primary">Ver Servicios</a>
+                    <p class="card-text">Ofrecemos una amplia gama de servicios logísticos para satisfacer todas sus necesidades agrícolas.</p>
+                    <a href="/servicios" class="btn btn-custom">
+                        Ver Servicios
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card service-card">
+                <div class="card-image">
+                    <img src="/static/images/recursos.jpg" class="card-img-top" alt="Recursos">
+                    <div class="card-overlay">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Recursos Agrícolas</h5>
+                    <p class="card-text">Acceda a un catálogo completo de recursos y herramientas para optimizar su producción.</p>
+                    <a href="/recursos" class="btn btn-custom">
+                        Ver Recursos
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card service-card">
+                <div class="card-image">
+                    <img src="/static/images/reportes.jpg" class="card-img-top" alt="Reportes">
+                    <div class="card-overlay">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Reportes & Análisis</h5>
+                    <p class="card-text">Visualice estadísticas detalladas y genere reportes personalizados de sus operaciones.</p>
+                    <a href="/reportes" class="btn btn-custom">
+                        Ver Reportes
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-lg-8 mb-4">
+            <div class="card activity-card">
+                <div class="card-header">
+                    <h5 class="card-header-title">
+                        <i class="bi bi-clock-history"></i>
+                        Actividad Reciente
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-title">Entrega completada</h6>
+                                <p class="activity-description">Pedido #12458 entregado exitosamente</p>
+                                <span class="activity-time">Hace 2 horas</span>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon warning">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-title">Alerta de inventario</h6>
+                                <p class="activity-description">Nivel bajo en fertilizante orgánico</p>
+                                <span class="activity-time">Hace 4 horas</span>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon info">
+                                <i class="bi bi-file-earmark-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-title">Nuevo documento</h6>
+                                <p class="activity-description">Certificado fitosanitario agregado</p>
+                                <span class="activity-time">Hace 6 horas</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card quick-actions-card">
+                <div class="card-header">
+                    <h5 class="card-header-title">
+                        <i class="bi bi-lightning"></i>
+                        Acciones Rápidas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="quick-action-list">
+                        <a href="/servicios" class="quick-action-item">
+                            <i class="bi bi-plus-circle"></i>
+                            <span>Nuevo Servicio</span>
+                        </a>
+                        <a href="/recursos" class="quick-action-item">
+                            <i class="bi bi-box"></i>
+                            <span>Agregar Recurso</span>
+                        </a>
+                        <a href="/reportes" class="quick-action-item">
+                            <i class="bi bi-file-text"></i>
+                            <span>Generar Reporte</span>
+                        </a>
+                        <a href="/busqueda" class="quick-action-item">
+                            <i class="bi bi-search"></i>
+                            <span>Búsqueda Avanzada</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
