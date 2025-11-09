@@ -1,0 +1,101 @@
+/*
+ * Archivo: vista2.css
+ * Ubicación: app/static/css/vista2.css
+ */
+
+/* Variables de Color */
+:root {
+    --primary-green: #38761d; 
+    --base-white: #ffffff; 
+    --border-gray: #ced4da; 
+    --hover-green: #6aa84f; 
+    --text-color: #333; 
+}
+
+/* Tipografía */
+body {
+    font-family: 'Inter', sans-serif; 
+    color: var(--text-color);
+}
+
+.text-inter-regular {
+    font-weight: 400; 
+}
+
+.text-secondary-title,
+.tab-link,
+.primary-submit-btn,
+.thead-custom th {
+    font-weight: 600; 
+}
+
+/* Encabezado Principal (Debe cambiar a verde) */
+.text-primary-green {
+    color: var(--primary-green) !important; /* Añadido !important para asegurar que sobreescriba Bootstrap si es necesario */
+    font-weight: 700; 
+}
+
+/* Componentes de Tarjeta y Pestañas */
+.tab-content-card {
+    background-color: var(--base-white);
+    border: 1px solid var(--border-gray);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 2rem !important;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-color);
+}
+
+.nav-tabs .tab-link {
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    font-weight: 600;
+}
+
+.nav-tabs .tab-link.active {
+    background-color: var(--base-white);
+    border-color: var(--border-gray);
+    border-bottom-color: var(--base-white); 
+    color: var(--primary-green) !important;
+}
+
+.text-section-header {
+    color: var(--primary-green);
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Estilo de Formulario (Input) */
+.custom-input {
+    border-radius: 4px;
+    border: 1px solid var(--border-gray);
+    transition: all 0.2s ease-in-out;
+    font-weight: 400;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.25rem rgba(56, 118, 29, 0.25);
+}
+
+/* Botón Principal (Debe cambiar a verde) */
+.primary-submit-btn {
+    background-color: var(--primary-green) !important;
+    color: var(--base-white) !important;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s;
+    font-weight: 600; 
+}
+
+.primary-submit-btn:hover {
+    background-color: var(--hover-green) !important;
+}
+
+/* Estilos de Tabla */
+.thead-custom th {
+    border-bottom: 2px solid var(--primary-green);
+}
