@@ -4,8 +4,9 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" href="c../modules/Gestion_Ubicaciones/css/cards.css">
-    <link rel="stylesheet" href="c../modules/Gestion_Ubicaciones/css/ubicaciones.css">
+    <!-- Estos son los estilos solo para ESTA página -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/ubicaciones.css') }}">
 {% endblock %}
 
 {% block content %}
