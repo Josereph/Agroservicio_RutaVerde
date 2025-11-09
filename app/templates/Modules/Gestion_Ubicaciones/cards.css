@@ -1,0 +1,168 @@
+:root{
+    --verde-oscuro: #1f8a3e;
+    --verde-claro: #7cc06b;
+    --tierra: #7a5a38;
+    --accent: #f6a623;
+    --fondo: #f7fbf6;
+    --text: #22322b;
+    --muted: #6b7a73;
+    --card-shadow: 0 6px 18px rgba(34,51,43,0.08);
+    --glass: rgba(255,255,255,0.6);
+    --radius: 12px;
+}
+.agro-cards-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    padding: 1rem;
+    background: linear-gradient(180deg, var(--fondo), #eef7ee);
+}
+.agro-card{
+    background: linear-gradient(180deg, #ffffff, #fbfff9);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .22s ease, box-shadow .22s ease;
+    border: 1px solid rgba(31,138,62,0.06);
+}
+.agro-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px rgba(31,138,62,0.12);
+}
+.agro-card .card-media{
+    position: relative;
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+.agro-card .badge{
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: linear-gradient(90deg,var(--verde-oscuro),var(--verde-claro));
+    color: #fff;
+    padding: 6px 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(31,138,62,0.14);
+}
+.agro-card .fav{
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    display: grid;
+    place-items: center;
+    color: var(--verde-oscuro);
+    font-size: 1.05rem;
+    box-shadow: 0 6px 12px rgba(34,51,43,0.06);
+}
+.agro-card .card-body{
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.agro-card .title{
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+.agro-card .subtitle{
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0;
+}
+.agro-card .meta{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--muted);
+    align-items: center;
+}
+.meta .meta-item{
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    background: rgba(122,90,56,0.06);
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+.agro-card .tags{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.tag{
+    background: rgba(124,192,107,0.12);
+    color: var(--verde-oscuro);
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(124,192,107,0.12);
+}
+.agro-card .card-footer{
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 16px;
+    gap: 10px;
+}
+.price{
+    font-weight: 800;
+    color: var(--tierra);
+    font-size: 1.05rem;
+}
+.btn-cta{
+    background: linear-gradient(90deg, var(--verde-oscuro), var(--verde-claro));
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(124,192,107,0.18);
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+.btn-cta:active{ transform: translateY(1px); }
+.btn-cta.secondary{
+    background: transparent;
+    color: var(--verde-oscuro);
+    border: 1px solid rgba(31,138,62,0.12);
+    box-shadow: none;
+}
+.status{
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+.status.available{ background: rgba(31,138,62,0.12); color: var(--verde-oscuro); }
+.status.soldout{ background: rgba(200,40,40,0.08); color: #c82828; }
+
+@media (max-width: 420px){
+    .agro-card .card-media{ height: 140px; }
+    .agro-card .card-body{ padding: 12px; }
+    .btn-cta{ padding: 7px 10px; }
+}
+.u-muted{ color: var(--muted); font-size: .9rem; }
+.img-bg-seed {
+    background-image: url('/static/img/seed.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.img-bg-tractor {
+    background-image: url('/static/img/tractor.jpg');
+    background-size: cover;
+    background-position: center;
+}
