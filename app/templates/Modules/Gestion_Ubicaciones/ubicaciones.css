@@ -1,0 +1,104 @@
+body {
+    background-color: var(--fondo);
+    color: var(--text);
+}
+
+.card {
+    background: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(31,138,62,0.06);
+}
+
+.card-header {
+    background-color: var(--verde-oscuro);
+    color: white;
+    font-weight: 600;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    border-bottom: none;
+}
+
+.card-header.header-tierra {
+    background-color: var(--tierra);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--verde-oscuro), var(--verde-claro));
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(124,192,107,0.18);
+    transition: transform .16s ease, box-shadow .16s ease;
+}
+.btn-primary:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(124,192,107,0.25);
+}
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--verde-oscuro);
+    box-shadow: 0 0 0 0.25rem rgba(31, 138, 62, 0.25);
+}
+
+.table thead th {
+    color: var(--tierra);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-bottom: 2px solid var(--tierra);
+    background: var(--fondo);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(124, 192, 107, 0.05);
+}
+
+.badge.bg-success {
+    background: rgba(31,138,62,0.12); 
+    color: var(--verde-oscuro);
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+.badge.bg-warning {
+    background: rgba(246,166,35,0.12); 
+    color: #b97d00;
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.ubicacion-nivel-1 td:first-child {
+    font-weight: 700;
+    color: var(--text);
+}
+.ubicacion-nivel-2 td:first-child {
+    padding-left: 2.5rem;
+}
+.ubicacion-nivel-3 td:first-child {
+    padding-left: 4.5rem;
+}
+.hierarchy-level {
+    margin-right: 5px;
+    color: var(--muted);
+}
+.ubicacion-nivel-2 .hierarchy-level::before,
+.ubicacion-nivel-3 .hierarchy-level::before {
+    content: "└─";
+}
