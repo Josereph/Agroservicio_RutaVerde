@@ -9,6 +9,11 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 @bp.route('/gestion_evidencia')
+
+# Alias en minúsculas para evitar confusiones con /Servicios
+@bp.route('/servicios')
+@bp.route('/Servicios')
+
 def servicios():
     return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia')
 
