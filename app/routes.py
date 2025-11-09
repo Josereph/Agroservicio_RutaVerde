@@ -22,3 +22,14 @@ def gestion_evidencia():
 
 
 
+@bp.route('/recursos')
+def recursos():
+    """Mini menú de recursos operativos"""
+    return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
+
+
+@bp.route('/vehiculos')
+def vehiculos():
+    """Vista del módulo de gestión de vehículos"""
+    return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+
