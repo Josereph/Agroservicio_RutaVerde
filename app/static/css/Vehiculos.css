@@ -1,15 +1,8 @@
-.card {
-  border-radius: 1rem;
-}
-
-h2 {
-  font-weight: 700;
-}
-
-.badge {
-  font-size: 0.9rem;
-}
-
-.btn i {
-  vertical-align: middle;
-}
+.card { border-radius: 1rem; }
+h2 { font-weight: 700; }
+.badge { font-size: .9rem; }
+.btn i { vertical-align: middle; }
+/*Esto son cosas a parte, OJO con eso*/
+.table { margin-bottom: 0; }
+.table-responsive { border-radius: .75rem; overflow: hidden; }
+form .form-label { font-weight: 600; }
