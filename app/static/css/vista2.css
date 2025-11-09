@@ -1,0 +1,101 @@
+:root {
+    --primary-green: #38761d; 
+    --base-white: #ffffff; 
+    --border-gray: #ced4da; 
+    --hover-green: #6aa84f; 
+    --text-color: #333; 
+}
+
+body {
+    font-family: 'Inter', sans-serif; 
+    color: var(--text-color);
+}
+
+.text-inter-regular {
+    font-weight: 400; 
+}
+
+.text-secondary-title,
+.tab-link,
+.primary-submit-btn,
+.thead-custom th {
+    font-weight: 600; 
+}
+
+.text-primary-green {
+    color: var(--primary-green) !important;
+    font-weight: 700; 
+}
+
+.tab-content-card {
+    background-color: var(--base-white);
+    border: 1px solid var(--border-gray);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 2rem !important;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-color);
+}
+
+.nav-tabs .tab-link {
+    border-radius: 8px 8px 0 0;
+    margin-right: 5px;
+    font-weight: 600;
+}
+
+.nav-tabs .tab-link.active {
+    background-color: var(--base-white);
+    border-color: var(--border-gray);
+    border-bottom-color: var(--base-white); 
+    color: var(--primary-green) !important;
+}
+
+.text-section-header {
+    color: var(--primary-green);
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.custom-input {
+    border-radius: 4px;
+    border: 1px solid var(--border-gray);
+    transition: all 0.2s ease-in-out;
+    font-weight: 400;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.25rem rgba(56, 118, 29, 0.25);
+}
+
+.primary-submit-btn {
+    background-color: var(--primary-green) !important;
+    color: var(--base-white) !important;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s;
+    font-weight: 600; 
+}
+
+.primary-submit-btn:hover {
+    background-color: var(--hover-green) !important;
+}
+
+.thead-custom th {
+    border-bottom: 2px solid var(--primary-green);
+}
+
+.btn-secondary-action {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-secondary-action:hover {
+    background-color: var(--primary-green);
+    color: var(--base-white);
+}
