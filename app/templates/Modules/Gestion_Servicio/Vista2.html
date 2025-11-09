@@ -22,11 +22,13 @@
         </ul>
 
         <div class="tab-content tab-content-card" id="serviciosTabContent">
-            <div class="tab-pane fade show active" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+            <!-- primera pestaña: registro de servicio -->
+            <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
                 
                 <form action="#" method="POST">
                     <div class="row g-4">
+                        <!-- seccion de informacion del cliente -->
                         <div class="col-12"><h3 class="h6 text-section-header">Información del Cliente</h3></div>
                         
                         <div class="col-md-4">
@@ -44,6 +46,7 @@
                             <input type="text" class="form-control custom-input" id="cliente_id" name="cliente_id" placeholder="ID o Razón Social">
                         </div>
 
+                        <!-- Seccion de detalle del servicio -->
                         <div class="col-12"><h3 class="h6 text-section-header mt-3">Detalles del Envío</h3></div>
                         
                         <div class="col-md-4">
@@ -68,22 +71,26 @@
                         <div class="col-12">
                             <div class="row justify-content-center">
                                 
-                                <div class="col-md-3 col-sm-6"> 
+                                <div class="col-md-4 col-sm-6"> 
                                     <label for="cantidad" class="form-label text-inter-regular">Cantidad</label>
                                     <input type="number" class="form-control custom-input" id="cantidad" name="cantidad" required>
                                 </div>
                                 
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="peso_carga" class="form-label text-inter-regular">Peso de la Carga</label>
+                                <div class="col-md-4 col-sm-6">
+                                    <label for="peso_carga" class="form-label text-inter-regular">Peso de la Carga (kg/toneladas)</label>
                                     <input type="number" step="0.01" class="form-control custom-input" id="peso_carga" name="peso_carga" required>
                                 </div>
 
-                            </div> </div> <div class="col-12">
+                            </div> 
+                        </div>
+
+                        <div class="col-12">
                             <label for="descripcion_carga" class="form-label text-inter-regular">Descripción de la Carga</label>
                             <textarea class="form-control custom-input" id="descripcion_carga" name="descripcion_carga" rows="2" placeholder="Detalles o especificaciones"></textarea>
                         </div>
 
 
+                        <!-- seccion de logistica y tiempo de registro y entrega -->
                         <div class="col-12"><h3 class="h6 text-section-header mt-3">Logística y Tiempos</h3></div>
                         
                         <div class="col-md-6">
@@ -107,7 +114,8 @@
                             <small class="text-muted small-text">*La fecha de entrega no puede ser durante la misma semana que se encargó el envío.</small>
                         </div>
 
-                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Información Financiera</h3></div>
+                        <!-- seccion de paga -->
+                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Pago</h3></div>
 
                         <div class="col-md-6">
                             <label for="precio_total" class="form-label text-inter-regular">Precio Total ($)</label>
@@ -123,6 +131,7 @@
                             </select>
                         </div>
 
+                        <!-- boton de registro-->
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-lg w-100 primary-submit-btn">
                                 <i class="fas fa-truck me-2"></i> Registrar Servicio
@@ -132,6 +141,7 @@
                 </form>
             </div>
 
+            <!-- segunda pestaña: consultar como van los servicios -->
             <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Listado de Envíos y su Estado:</h2>
                 
