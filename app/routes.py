@@ -46,6 +46,8 @@ def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
 
+
+
 @bp.route('/conductores')
 def conductores():
     """Ruta de conductores"""
@@ -65,7 +67,3 @@ def vehiculos():
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
 
-@bp.route('/busqueda')
-def busqueda():
-    """Vista busqueda"""
-    return render_template('layouts/busqueda.html', title='Busqueda')
