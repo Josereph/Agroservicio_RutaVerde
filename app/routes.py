@@ -35,16 +35,9 @@ def gestion_evidencia():
         {'Id_Servicio': 2, 'cliente_nombre': 'Distribuidora San José'},
         {'Id_Servicio': 3, 'cliente_nombre': 'Cooperativa El Progreso'}
     ]
-    return render_template(
-        'modules/Gestion_Evidencia/Vista.html',
-        title='Gestión de Evidencia',
-        servicios=servicios
-    )
+    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
 
 
-# ============================================================
-# UBICACIONES
-# ============================================================
 @bp.route('/ubicaciones')
 def ubicaciones():
     return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
@@ -64,12 +57,7 @@ def detalles():
 def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
-
-
-# ============================================================
-# CONDUCTORES
-# ============================================================
-@bp.route('/conductores', methods=['GET', 'POST'])
+@bp.route('/conductores')
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
     if request.method == 'POST':
