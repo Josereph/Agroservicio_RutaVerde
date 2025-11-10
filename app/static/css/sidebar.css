@@ -317,19 +317,4 @@ main {
 .nav-item:nth-child(6) { animation-delay: 0.35s; }
 .nav-item:nth-child(7) { animation-delay: 0.4s; }
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
-
-/* ===== Ajustes para Main Content ===== */
-main {
-    margin-left: 280px;
-    padding: 30px;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-    transition: margin-left 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    main {
-        margin-left: 0;
-        padding: 20px;
-    }
-}
+.nav-item:nth-child(8) { animation-delay: 0.45s; }
