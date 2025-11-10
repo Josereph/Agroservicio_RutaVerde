@@ -1,0 +1,348 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Gestión de Conductores{% endblock %}
+
+{% block content %}
+
+<!-- 
+  CONTENIDO PRINCIPAL: Gestión de Conductores 
+  Envuelto en un ID para aislar los estilos CSS.
+-->
+<div id="modulo-conductores">
+
+    <!-- 
+      NOTA: Asumo que tu 'base.html' ya carga Bootstrap 5 CSS y JS.
+      Si no, deberás agregarlos a tu 'base.html'.
+    -->
+
+    <div class="container-xl mt-4 p-4">
+        
+        <!-- Cabecera y Botón de Acción -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h1 class="h2 mb-0">Gestión de Conductores</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistroConductor">
+                <i class="bi bi-person-plus-fill me-2"></i>
+                Registrar Nuevo Conductor
+            </button>
+        </div>
+
+        <!-- 
+          TABLA DE CONDUCTORES: 
+          Envuelto en 'card-table-wrapper' para estilo coherente 
+          y 'table-responsive' para móviles.
+        -->
+        <div class="card-table-wrapper">
+            <h5 class="mb-3">Conductores Registrados</h5>
+            
+            <!-- Filtros y búsqueda (opcional, como placeholder) -->
+            <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Buscar por nombre o DUI...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">Filtrar por estado...</option>
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Nombre Completo</th>
+                            <th scope="col">DUI</th>
+                            <th scope="col">Licencia</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col" class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaConductoresBody">
+                        <!-- Fila de ejemplo 1 -->
+                        <tr>
+                            <td>Juan Antonio Pérez López</td>
+                            <td>01234567-8</td>
+                            <td>0123-456789-012-3</td>
+                            <td>7890-1234</td>
+                            <td><span class="badge bg-success-subtle text-success-emphasis rounded-pill">Activo</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Desactivar">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Fila de ejemplo 2 -->
+                        <tr>
+                            <td>María Isabel Galdámez</td>
+                            <td>09876543-2</td>
+                            <td>0987-654321-098-7</td>
+                            <td>7123-4567</td>
+                            <td><span class="badge bg-danger-subtle text-danger-emphasis rounded-pill">Inactivo</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-success" title="Activar">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                         <!-- Fila de ejemplo 3 -->
+                        <tr>
+                            <td>Carlos Alberto Henríquez</td>
+                            <td>04567890-1</td>
+                            <td>0456-789012-045-6</td>
+                            <td>7555-6677</td>
+                            <td><span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Suspendido</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Desactivar">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Nuevos conductores se agregarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginación (opcional, como placeholder) -->
+            <nav aria-label="Page navigation" class="mt-3">
+                <ul class="pagination justify-content-end mb-0">
+                    <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 
+      MODAL: Formulario de Registro de Conductor 
+    -->
+    <div class="modal fade" id="modalRegistroConductor" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Registrar Nuevo Conductor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 
+                      Formulario dinámico con validación de Bootstrap.
+                      'needs-validation' y 'novalidate' activan la validación JS.
+                    -->
+                    <form id="formConductor" class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <!-- Nombre Completo -->
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el nombre completo.
+                                </div>
+                            </div>
+                            
+                            <!-- DUI -->
+                            <div class="col-md-6">
+                                <label for="dui" class="form-label">DUI</label>
+                                <input type="text" class="form-control" id="dui" placeholder="00000000-0" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese un DUI válido.
+                                </div>
+                            </div>
+
+                            <!-- N° de Licencia -->
+                            <div class="col-md-6">
+                                <label for="licencia" class="form-label">N° de Licencia</label>
+                                <input type="text" class="form-control" id="licencia" placeholder="0000-000000-000-0" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el número de licencia.
+                                </div>
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono" placeholder="0000-0000" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese un número de teléfono.
+                                </div>
+                            </div>
+
+                            <!-- Dirección -->
+                            <div class="col-12">
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <textarea class="form-control" id="direccion" rows="3" required></textarea>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese la dirección.
+                                </div>
+                            </div>
+
+                            <!-- Tipo de Licencia -->
+                            <div class="col-md-4">
+                                <label for="tipoLicencia" class="form-label">Tipo de Licencia</label>
+                                <select class="form-select" id="tipoLicencia" required>
+                                    <option value="" disabled selected>Seleccionar...</option>
+                                    <option value="Particular">Particular</option>
+                                    <option value="Liviana">Liviana</option>
+                                    <option value="Pesada">Pesada</option>
+                                    <option value="Motociclista">Motociclista</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Seleccione un tipo de licencia.
+                                </div>
+                            </div>
+
+                            <!-- Fecha de Vencimiento -->
+                            <div class="col-md-4">
+                                <label for="fechaVencimiento" class="form-label">Vencimiento Licencia</label>
+                                <input type="date" class="form-control" id="fechaVencimiento" required>
+                                <div class="invalid-feedback">
+                                    Ingrese la fecha de vencimiento.
+                                </div>
+                            </div>
+                            
+                            <!-- Estado -->
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" required>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Suspendido">Suspendido</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" form="formConductor">
+                        <i class="bi bi-save-fill me-2"></i>
+                        Guardar Conductor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- Fin de #modulo-conductores -->
+
+{% endblock %}
+
+
+{% block scripts %}
+<!-- 
+  Scripts específicos para esta página.
+  Estos se agregarán al final de tu 'base.html' si tienes un 'block scripts'.
+  Si no, puedes poner la etiqueta <script> directamente al final del 'block content'.
+-->
+<script>
+    // Espera a que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const form = document.getElementById('formConductor');
+        const modalElement = document.getElementById('modalRegistroConductor');
+        // Obtener la instancia del modal de Bootstrap
+        // Asegúrate de que el JS de Bootstrap esté cargado en tu base.html
+        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+
+        // --- MANEJO DEL FORMULARIO ---
+        form.addEventListener('submit', (event) => {
+            // Prevenir el envío tradicional
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Aplicar estilos de validación de Bootstrap
+            form.classList.add('was-validated');
+
+            // Comprobar si el formulario es válido
+            if (form.checkValidity()) {
+                // 1. Obtener los datos del formulario
+                const datosConductor = {
+                    nombre: document.getElementById('nombre').value,
+                    dui: document.getElementById('dui').value,
+                    licencia: document.getElementById('licencia').value,
+                    telefono: document.getElementById('telefono').value,
+                    estado: document.getElementById('estado').value,
+                };
+
+                // 2. Llamar a la función para agregar los datos a la tabla
+                agregarConductorATabla(datosConductor);
+
+                // 3. Ocultar el modal
+                modal.hide();
+
+                // 4. Limpiar el formulario y resetear la validación
+                form.reset();
+                form.classList.remove('was-validated');
+            }
+        });
+
+        // Limpiar el formulario cuando el modal se cierra
+        modalElement.addEventListener('hidden.bs.modal', () => {
+            form.reset();
+            form.classList.remove('was-validated');
+        });
+    });
+
+    /**
+     * Función para agregar dinámicamente un nuevo conductor a la tabla.
+     * @param {object} conductor - Objeto con los datos del conductor.
+     */
+    function agregarConductorATabla(conductor) {
+        const tablaBody = document.getElementById('tablaConductoresBody');
+        const nuevaFila = tablaBody.insertRow(0); // Inserta al inicio
+
+        // Clases de badge según el estado
+        let badgeClass = '';
+        let textClass = '';
+        switch (conductor.estado) {
+            case 'Activo':
+                badgeClass = 'bg-success-subtle';
+                textClass = 'text-success-emphasis';
+                break;
+            case 'Inactivo':
+                badgeClass = 'bg-danger-subtle';
+                textClass = 'text-danger-emphasis';
+                break;
+            case 'Suspendido':
+                badgeClass = 'bg-warning-subtle';
+                textClass = 'text-warning-emphasis';
+                break;
+            default:
+                badgeClass = 'bg-secondary-subtle';
+                textClass = 'text-secondary-emphasis';
+        }
+
+        // Insertar celdas (HTML)
+        nuevaFila.innerHTML = `
+            <td>${conductor.nombre}</td>
+            <td>${conductor.dui}</td>
+            <td>${conductor.licencia}</td>
+            <td>${conductor.telefono}</td>
+            <td>
+                <span class="badge ${badgeClass} ${textClass} rounded-pill">${conductor.estado}</span>
+            </td>
+            <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                    <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" title="Desactivar">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </td>
+        `;
+    }
+</script>
+{% endblock %}

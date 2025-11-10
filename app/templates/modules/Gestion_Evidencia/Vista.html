@@ -1,0 +1,326 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Gestión de Evidencias{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Gestion_Evidencia.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4 evidencia-container">
+    
+    <!-- Mensaje de confirmación (opcional) -->
+    {% if mensaje %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ mensaje }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <!-- Encabezado -->
+    <div class="mb-4">
+        <h1 class="evidencia-titulo">Gestión de Evidencias y Documentación</h1>
+    </div>
+
+    <!-- Pestañas -->
+    <ul class="nav nav-tabs evidencia-tabs mb-4" id="evidenciaTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-bold evidencia-tab-btn" id="registrar-tab" 
+                    data-bs-toggle="tab" data-bs-target="#registrar" type="button" role="tab">
+                Registrar Evidencia
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold evidencia-tab-btn" id="seguimiento-tab" 
+                    data-bs-toggle="tab" data-bs-target="#seguimiento" type="button" role="tab">
+                Control de Seguimiento
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold evidencia-tab-btn" id="historial-tab" 
+                    data-bs-toggle="tab" data-bs-target="#historial" type="button" role="tab">
+                Historial de Evidencias
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="evidenciaTabContent">
+        
+        <!-- ========================================== -->
+        <!-- TAB 1: REGISTRAR EVIDENCIA -->
+        <!-- ========================================== -->
+        <div class="tab-pane fade show active" id="registrar" role="tabpanel">
+            <div class="card shadow-sm border-0 evidencia-card">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 evidencia-subtitulo">Registrar Nueva Evidencia</h4>
+                    
+                    <form method="POST" enctype="multipart/form-data" action="/evidencia/registrar">
+                        
+                        <!-- Información del Servicio -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3 evidencia-seccion-titulo">Información del Servicio</h5>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">ID de Servicio</label>
+                                    <select class="form-select" name="id_servicio" required>
+                                        <option value="">Seleccione un servicio...</option>
+                                        {% for servicio in servicios %}
+                                        <option value="{{ servicio.Id_Servicio }}">
+                                            Servicio #{{ servicio.Id_Servicio }} - {{ servicio.cliente_nombre }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                    <small class="text-muted">Seleccione el servicio al que pertenece esta evidencia</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">Tipo de Evidencia</label>
+                                    <select class="form-select" name="tipo_evidencia" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="foto_salida">📸 Fotografía de Salida</option>
+                                        <option value="foto_entrega">📸 Fotografía de Entrega</option>
+                                        <option value="documento_firmado">📄 Documento Firmado</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Detalles de la Evidencia -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3 evidencia-seccion-titulo">Detalles de la Evidencia</h5>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold evidencia-label">Archivo (Imagen o PDF)</label>
+                                    <input type="file" class="form-control" name="archivo" 
+                                           accept="image/*,.pdf" required>
+                                    <small class="text-muted">Formatos permitidos: JPG, PNG, PDF (máx. 5MB)</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">¿El documento es legible?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="es_legible" 
+                                               value="1" id="legibleSi" checked>
+                                        <label class="form-check-label" for="legibleSi">
+                                            ✅ Sí, es legible
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="es_legible" 
+                                               value="0" id="legibleNo">
+                                        <label class="form-check-label" for="legibleNo">
+                                            ❌ No, está borroso o ilegible
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">Fecha y Hora de Captura</label>
+                                    <input type="datetime-local" class="form-control" name="fecha_captura" required>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-lg fw-bold evidencia-btn-primary">
+                                💾 Registrar Evidencia
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: CONTROL DE SEGUIMIENTO -->
+        <!-- ========================================== -->
+        <div class="tab-pane fade" id="seguimiento" role="tabpanel">
+            <div class="card shadow-sm border-0 evidencia-card">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 evidencia-subtitulo">Registrar Seguimiento de Servicio</h4>
+                    
+                    <form method="POST" action="/seguimiento/registrar">
+                        
+                        <!-- Información del Servicio -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3 evidencia-seccion-titulo">Información del Servicio</h5>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold evidencia-label">ID de Servicio</label>
+                                    <select class="form-select" name="id_servicio" required>
+                                        <option value="">Seleccione un servicio...</option>
+                                        {% for servicio in servicios %}
+                                        <option value="{{ servicio.Id_Servicio }}">
+                                            Servicio #{{ servicio.Id_Servicio }} - {{ servicio.cliente_nombre }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Estado del Envío -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3 evidencia-seccion-titulo">Estado del Envío</h5>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">Estado Actual</label>
+                                    <select class="form-select" name="estado_actual" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="cargando">📦 Siendo Cargado</option>
+                                        <option value="en_ruta">🚚 En Ruta</option>
+                                        <option value="en_espera">⏳ En Espera de Entrega</option>
+                                        <option value="entregado">✅ Entregado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">Control de Calidad</label>
+                                    <select class="form-select" name="control_calidad">
+                                        <option value="pendiente">⏸️ Pendiente</option>
+                                        <option value="aprobado">✅ Aprobado</option>
+                                        <option value="rechazado">❌ Rechazado</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Incidentes y Notificaciones -->
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3 evidencia-seccion-titulo">Incidentes y Notificaciones</h5>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold evidencia-label">Incidente (si ocurrió alguno)</label>
+                                    <textarea class="form-control" name="incidente" rows="3" 
+                                              placeholder="Ej: Cambio de ruta por tráfico en carretera, Lluvia intensa, etc."></textarea>
+                                    <small class="text-muted">Descripción de problemas: clima, mecánico, cambio de ruta, etc.</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">¿Se notificó al cliente?</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="notificacion_enviada" 
+                                               value="1" id="notifCheck">
+                                        <label class="form-check-label" for="notifCheck">
+                                            📧 Sí, se envió notificación (correo o SMS)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold evidencia-label">Nombre del Receptor (si entregado)</label>
+                                    <input type="text" class="form-control" name="nombre_receptor" 
+                                           placeholder="Nombre de quien recibió">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-lg fw-bold evidencia-btn-primary">
+                                📊 Registrar Seguimiento
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: HISTORIAL DE EVIDENCIAS -->
+        <!-- ========================================== -->
+        <div class="tab-pane fade" id="historial" role="tabpanel">
+            <div class="card shadow-sm border-0 evidencia-card">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 evidencia-subtitulo">Historial de Evidencias Registradas</h4>
+                    
+                    <!-- Filtros -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="buscarServicio" 
+                                   placeholder="🔍 Buscar por ID de Servicio...">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="filtroTipo">
+                                <option value="">Todos los tipos</option>
+                                <option value="foto_salida">Fotografía de Salida</option>
+                                <option value="foto_entrega">Fotografía de Entrega</option>
+                                <option value="documento_firmado">Documento Firmado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn w-100 evidencia-btn-secondary">
+                                🔍 Buscar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Evidencias -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle evidencia-table">
+                            <thead class="evidencia-table-header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Servicio</th>
+                                    <th>Tipo</th>
+                                    <th>Archivo</th>
+                                    <th>Legible</th>
+                                    <th>Fecha Captura</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        No hay evidencias registradas
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de Seguimientos -->
+                    <h4 class="fw-bold mt-5 mb-4 evidencia-subtitulo">Historial de Seguimientos</h4>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle evidencia-table">
+                            <thead class="evidencia-table-header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Servicio</th>
+                                    <th>Estado</th>
+                                    <th>Calidad</th>
+                                    <th>Incidente</th>
+                                    <th>Notificado</th>
+                                    <th>Receptor</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        No hay seguimientos registrados
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

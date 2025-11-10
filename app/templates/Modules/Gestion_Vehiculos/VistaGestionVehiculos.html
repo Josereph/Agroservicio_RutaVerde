@@ -1,0 +1,153 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Gestión de Vehículos{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Vehiculos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Gestión de Vehículos</h2>
+  <p class="text-center text-muted">Administra los vehículos de carga del Agroservicio “Ruta Verde”.</p>
+
+  <!-- Filtros -->
+  <form class="row g-2 mb-4" role="search" aria-label="Filtros de vehículos" method="get">
+    <div class="col-md-4">
+      <label for="q" class="form-label">Buscar</label>
+      <input id="q" name="q" class="form-control" placeholder="Placa, marca o modelo" inputmode="search" />
+    </div>
+    <div class="col-md-3">
+      <label for="f-tipo" class="form-label">Tipo</label>
+      <select id="f-tipo" name="tipo" class="form-select">
+        <option value="">Todos</option>
+        <option value="pickup">Pick-up</option>
+        <option value="camion">Camión</option>
+        <option value="tractor">Tractor</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="f-estado" class="form-label">Estado</label>
+      <select id="f-estado" name="estado" class="form-select">
+        <option value="">Todos</option>
+        <option value="activo">Activo</option>
+        <option value="mantenimiento">En mantenimiento</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-outline-success w-100" type="submit">
+        <i class="bi bi-funnel"></i> Filtrar
+      </button>
+    </div>
+  </form>
+
+  <!-- Formulario de registro -->
+  <div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
+    <h5 id="titulo-form" class="mb-3">Registrar nuevo vehículo</h5>
+    <form novalidate>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="placa" class="form-label">Placa</label>
+          <input id="placa" name="placa" type="text" class="form-control"
+                 placeholder="Ej: P-123456"
+                 pattern="^[A-Z]{1,2}-?\d{3,6}$"
+                 title="Ej: P-123456 o AB123456"
+                 required>
+          <div class="form-text">Use letras mayúsculas y números.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="marca" class="form-label">Marca</label>
+          <input id="marca" name="marca" type="text" class="form-control" placeholder="Ej: Toyota" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="modelo" class="form-label">Modelo</label>
+          <input id="modelo" name="modelo" type="text" class="form-control" placeholder="Ej: Hilux" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="anio" class="form-label">Año</label>
+          <input id="anio" name="anio" type="number" class="form-control" placeholder="Ej: 2010"
+                 min="1980" max="2099" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="tipo" class="form-label">Tipo</label>
+          <select id="tipo" name="tipo" class="form-select" required>
+            <option value="">Seleccione...</option>
+            <option value="pickup">Pick-up</option>
+            <option value="camion">Camión</option>
+            <option value="tractor">Tractor</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="capacidad" class="form-label">Capacidad de carga (kg)</label>
+          <input id="capacidad" name="capacidad" type="number" class="form-control"
+                 placeholder="Ej: 1000" min="0" step="10" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" name="estado" class="form-select" required>
+            <option value="activo">Activo</option>
+            <option value="mantenimiento">En mantenimiento</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-end gap-2">
+        <button type="reset" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-counterclockwise"></i> Limpiar
+        </button>
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-save"></i> Guardar vehículo
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card p-4 shadow-sm">
+    <h5 class="mb-3">Listado de vehículos</h5>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-success">
+          <tr>
+            <th scope="col">Placa</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Año</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Capacidad (kg)</th>
+            <th scope="col">Estado</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ejemplo de fila -->
+          <tr>
+            <td>P-123456</td>
+            <td>Toyota</td>
+            <td>Hilux</td>
+            <td>2010</td>
+            <td>Pick-up</td>
+            <td>1000</td>
+            <td><span class="badge bg-success">Activo</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-1" aria-label="Editar Toyota Hilux P-123456">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" aria-label="Eliminar Toyota Hilux P-123456">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
