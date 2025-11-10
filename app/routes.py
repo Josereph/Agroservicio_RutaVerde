@@ -13,6 +13,11 @@ def ubicaciones():
     """Ruta de servicios de ubicaciones"""
     return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
 
+@bp.route('/detalles')
+def detalles():
+    """Ruta de servicios de detalles"""
+    return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='detalles')
+
 # Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 def servicios():
