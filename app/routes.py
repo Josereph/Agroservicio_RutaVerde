@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template # type: ignore
 
 bp = Blueprint('main', __name__)
 
@@ -7,6 +7,7 @@ bp = Blueprint('main', __name__)
 def index():
     """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
+
 
 
 @bp.route('/gestion_evidencia') 
@@ -21,10 +22,18 @@ def gestion_evidencia():
 
 
 
+
+@bp.route('/ubicaciones')
+def ubicaciones():
+    """Ruta de servicios de ubicaciones"""
+    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
+
+# Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 def servicios():
     """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
+
 
 
 
