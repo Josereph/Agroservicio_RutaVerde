@@ -141,6 +141,7 @@
     background: transparent;
     color: var(--verde-oscuro);
     border: 1px solid #38761d;
+    border: 1px solid rgba(31,138,62,0.12);
     box-shadow: none;
 }
 .status{
@@ -158,3 +159,16 @@
     .btn-cta{ padding: 7px 10px; }
 }
 .u-muted{ color: var(--muted); font-size: .9rem; }
+
+
+.img-bg-seed {
+    background-image: url('/static/img/seed.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.img-bg-tractor {
+    background-image: url('/static/img/tractor.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
