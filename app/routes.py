@@ -10,6 +10,7 @@ def index():
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 @bp.route('/Servicios')
@@ -24,6 +25,19 @@ def index():
 def servicios():
     """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
+=======
+@bp.route('/gestion_evidencia') 
+def gestion_evidencia():
+    """Módulo de Gestión de Evidencias y Documentación"""
+    servicios = [
+        {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
+        {'Id_Servicio': 2, 'cliente_nombre': 'Distribuidora San José'},
+        {'Id_Servicio': 3, 'cliente_nombre': 'Cooperativa El Progreso'}
+    ]
+    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
+
+
+>>>>>>> 5dfc803 (Agregar diseño en el modulo Gestion_Evidencia)
 
 
 @bp.route('/conductores')
