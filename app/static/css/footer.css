@@ -1,10 +1,7 @@
 /* ===== Variables del Footer ===== */
 :root {
     --footer-bg: #1a3d32;
-<<<<<<< HEAD
-=======
     --footer-bg-dark: #0f2620;
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     --footer-text: #e0e0e0;
     --footer-accent: #8bc34a;
     --footer-hover: #cddc39;
@@ -13,19 +10,12 @@
 
 /* ===== Footer Principal ===== */
 .main-footer {
-<<<<<<< HEAD
-    background: linear-gradient(180deg, #1a3d32 0%, #0f2620 100%);
-=======
     background: linear-gradient(180deg, var(--footer-bg) 0%, var(--footer-bg-dark) 100%);
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     color: var(--footer-text);
     margin-left: 280px;
     transition: margin-left 0.3s ease;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
-<<<<<<< HEAD
-=======
     margin-top: 50px;
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
 }
 
 .footer-container {
@@ -97,11 +87,7 @@
 
 .social-link:hover {
     background: var(--footer-accent);
-<<<<<<< HEAD
-    color: #1a3d32;
-=======
     color: var(--footer-bg);
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     transform: translateY(-3px);
     border-color: var(--footer-hover);
     box-shadow: 0 4px 12px rgba(139, 195, 74, 0.3);
@@ -168,11 +154,7 @@
 /* ===== Contact List ===== */
 .contact-list li {
     display: flex;
-<<<<<<< HEAD
-    align-items: center;
-=======
     align-items: flex-start;
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
     gap: 12px;
     color: var(--footer-text);
     font-size: 14px;
@@ -182,10 +164,7 @@
     font-size: 16px;
     color: var(--footer-accent);
     min-width: 20px;
-<<<<<<< HEAD
-=======
     margin-top: 2px;
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
 }
 
 .contact-list span {
@@ -302,20 +281,4 @@
 .footer-section:nth-child(1) { animation-delay: 0.1s; }
 .footer-section:nth-child(2) { animation-delay: 0.2s; }
 .footer-section:nth-child(3) { animation-delay: 0.3s; }
-<<<<<<< HEAD
 .footer-section:nth-child(4) { animation-delay: 0.4s; }
-
-/* Ajuste del footer con el sidebar */
-.main-footer {
-    margin-left: 280px;
-    transition: margin-left 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    .main-footer {
-        margin-left: 0;
-    }
-}
-=======
-.footer-section:nth-child(4) { animation-delay: 0.4s; }
->>>>>>> 25dd124 (Merge: integración de el nuevo menu, footer y base)
