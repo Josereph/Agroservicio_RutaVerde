@@ -9,7 +9,10 @@
     --card-shadow: 0 6px 18px rgba(34,51,43,0.08);
     --glass: rgba(255,255,255,0.6);
     --radius: 12px;
+<<<<<<< HEAD
     --primary-green: #38761d;
+=======
+>>>>>>> Gestion_Conductores
 }
 
 .agro-cards-grid{
@@ -140,7 +143,11 @@
 .btn-cta.secondary{
     background: transparent;
     color: var(--verde-oscuro);
+<<<<<<< HEAD
     border: 1px solid #38761d;
+=======
+    border: 1px solid rgba(31,138,62,0.12);
+>>>>>>> Gestion_Conductores
     box-shadow: none;
 }
 .status{
@@ -158,3 +165,16 @@
     .btn-cta{ padding: 7px 10px; }
 }
 .u-muted{ color: var(--muted); font-size: .9rem; }
+<<<<<<< HEAD
+=======
+.img-bg-seed {
+    background-image: url('/static/img/seed.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.img-bg-tractor {
+    background-image: url('/static/img/tractor.jpg');
+    background-size: cover;
+    background-position: center;
+}
+>>>>>>> Gestion_Conductores

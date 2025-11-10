@@ -12,7 +12,6 @@
 
     <!-- 
       NOTA: Asumo que tu 'base.html' ya carga Bootstrap 5 CSS y JS.
-      Si no, deberás agregarlos a tu 'base.html'.
     -->
 
     <div class="container-xl mt-4 p-4">
@@ -37,13 +36,14 @@
             <!-- Filtros y búsqueda (opcional, como placeholder) -->
             <div class="row g-2 mb-3">
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Buscar por nombre o DUI...">
+                    <input type="text" class="form-control" placeholder="Buscar por nombre o documento...">
                 </div>
                 <div class="col-md-3">
                     <select class="form-select">
                         <option value="">Filtrar por estado...</option>
-                        <option value="activo">Activo</option>
-                        <option value="inactivo">Inactivo</option>
+                        <option value="Activo">Activo</option>
+                        <option value="De Vacaciones">De Vacaciones</option>
+                        <option value="Suspendido">Suspendido</option>
                     </select>
                 </div>
             </div>
@@ -53,9 +53,10 @@
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Nombre Completo</th>
-                            <th scope="col">DUI</th>
-                            <th scope="col">Licencia</th>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Tipo Licencia</th>
                             <th scope="col">Teléfono</th>
+                            <th scope="col">Correo</th>
                             <th scope="col">Estado</th>
                             <th scope="col" class="text-end">Acciones</th>
                         </tr>
@@ -65,15 +66,16 @@
                         <tr>
                             <td>Juan Antonio Pérez López</td>
                             <td>01234567-8</td>
-                            <td>0123-456789-012-3</td>
+                            <td>Pesada</td>
                             <td>7890-1234</td>
+                            <td>juan.perez@email.com</td>
                             <td><span class="badge bg-success-subtle text-success-emphasis rounded-pill">Activo</span></td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                                    <i class="bi bi-pencil-fill"></i>
+                                    <i>Editar</i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger" title="Desactivar">
-                                    <i class="bi bi-trash-fill"></i>
+                                    <i>Eliminar</i>
                                 </button>
                             </td>
                         </tr>
@@ -81,31 +83,33 @@
                         <tr>
                             <td>María Isabel Galdámez</td>
                             <td>09876543-2</td>
-                            <td>0987-654321-098-7</td>
+                            <td>Liviana</td>
                             <td>7123-4567</td>
-                            <td><span class="badge bg-danger-subtle text-danger-emphasis rounded-pill">Inactivo</span></td>
+                            <td>maria.galdamez@email.com</td>
+                            <td><span class="badge bg-info-subtle text-info-emphasis rounded-pill">De Vacaciones</span></td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                                    <i class="bi bi-pencil-fill"></i>
+                                    <i>Editar</i>
                                 </button>
-                                <button class="btn btn-sm btn-outline-success" title="Activar">
-                                    <i class="bi bi-check-circle-fill"></i>
+                                <button class="btn btn-sm btn-outline-danger" title="Activar">
+                                    <i>Eliminar</i>
                                 </button>
                             </td>
                         </tr>
                          <!-- Fila de ejemplo 3 -->
                         <tr>
                             <td>Carlos Alberto Henríquez</td>
-                            <td>04567890-1</td>
-                            <td>0456-789012-045-6</td>
+                            <td>12345678-9</td>
+                            <td>Pesada T</td>
                             <td>7555-6677</td>
+                            <td>carlos.henriquez@email.com</td>
                             <td><span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Suspendido</span></td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                                    <i class="bi bi-pencil-fill"></i>
+                                    <i>Editar</i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger" title="Desactivar">
-                                    <i class="bi bi-trash-fill"></i>
+                                    <i>Eliminar</i>
                                 </button>
                             </td>
                         </tr>
@@ -153,40 +157,27 @@
                                 </div>
                             </div>
                             
-                            <!-- DUI -->
+                            <!-- Documento de Identificación -->
                             <div class="col-md-6">
-                                <label for="dui" class="form-label">DUI</label>
+                                <label for="dui" class="form-label">Documento (DUI o NIT)</label>
                                 <input type="text" class="form-control" id="dui" placeholder="00000000-0" required>
                                 <div class="invalid-feedback">
-                                    Por favor ingrese un DUI válido.
-                                </div>
-                            </div>
-
-                            <!-- N° de Licencia -->
-                            <div class="col-md-6">
-                                <label for="licencia" class="form-label">N° de Licencia</label>
-                                <input type="text" class="form-control" id="licencia" placeholder="0000-000000-000-0" required>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese el número de licencia.
+                                    Por favor ingrese un documento de identificación.
                                 </div>
                             </div>
 
                             <!-- Teléfono -->
                             <div class="col-md-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" placeholder="0000-0000" required>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese un número de teléfono.
-                                </div>
+                                <input type="text" class="form-control" id="telefono" placeholder="0000-0000">
+                                <!-- No es NOT NULL, así que 'required' se omite -->
                             </div>
 
-                            <!-- Dirección -->
-                            <div class="col-12">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <textarea class="form-control" id="direccion" rows="3" required></textarea>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese la dirección.
-                                </div>
+                            <!-- Correo Electrónico -->
+                            <div class="col-md-6">
+                                <label for="correo" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correo" placeholder="ejemplo@email.com">
+                                <!-- No es NOT NULL, así que 'required' se omite -->
                             </div>
 
                             <!-- Tipo de Licencia -->
@@ -194,10 +185,9 @@
                                 <label for="tipoLicencia" class="form-label">Tipo de Licencia</label>
                                 <select class="form-select" id="tipoLicencia" required>
                                     <option value="" disabled selected>Seleccionar...</option>
-                                    <option value="Particular">Particular</option>
                                     <option value="Liviana">Liviana</option>
                                     <option value="Pesada">Pesada</option>
-                                    <option value="Motociclista">Motociclista</option>
+                                    <option value="Pesada T">Pesada T</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Seleccione un tipo de licencia.
@@ -217,10 +207,17 @@
                             <div class="col-md-4">
                                 <label for="estado" class="form-label">Estado</label>
                                 <select class="form-select" id="estado" required>
-                                    <option value="Activo">Activo</option>
-                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Activo" selected>Activo</option>
+                                    <option value="De Vacaciones">De Vacaciones</option>
                                     <option value="Suspendido">Suspendido</option>
                                 </select>
+                            </div>
+
+                             <!-- Experiencia y Notas -->
+                            <div class="col-12">
+                                <label for="experiencia_notas" class="form-label">Experiencia y Notas</label>
+                                <textarea class="form-control" id="experiencia_notas" rows="3" placeholder="Años de experiencia, rutas conocidas..."></textarea>
+                                <!-- No es NOT NULL, así que 'required' se omite -->
                             </div>
                         </div>
                     </form>
@@ -244,8 +241,6 @@
 {% block scripts %}
 <!-- 
   Scripts específicos para esta página.
-  Estos se agregarán al final de tu 'base.html' si tienes un 'block scripts'.
-  Si no, puedes poner la etiqueta <script> directamente al final del 'block content'.
 -->
 <script>
     // Espera a que el DOM esté completamente cargado
@@ -253,7 +248,6 @@
 
         const form = document.getElementById('formConductor');
         const modalElement = document.getElementById('modalRegistroConductor');
-        // Obtener la instancia del modal de Bootstrap
         // Asegúrate de que el JS de Bootstrap esté cargado en tu base.html
         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
 
@@ -272,8 +266,9 @@
                 const datosConductor = {
                     nombre: document.getElementById('nombre').value,
                     dui: document.getElementById('dui').value,
-                    licencia: document.getElementById('licencia').value,
+                    tipoLicencia: document.getElementById('tipoLicencia').value,
                     telefono: document.getElementById('telefono').value,
+                    correo: document.getElementById('correo').value,
                     estado: document.getElementById('estado').value,
                 };
 
@@ -312,9 +307,9 @@
                 badgeClass = 'bg-success-subtle';
                 textClass = 'text-success-emphasis';
                 break;
-            case 'Inactivo':
-                badgeClass = 'bg-danger-subtle';
-                textClass = 'text-danger-emphasis';
+            case 'De Vacaciones':
+                badgeClass = 'bg-info-subtle';
+                textClass = 'text-info-emphasis';
                 break;
             case 'Suspendido':
                 badgeClass = 'bg-warning-subtle';
@@ -329,8 +324,9 @@
         nuevaFila.innerHTML = `
             <td>${conductor.nombre}</td>
             <td>${conductor.dui}</td>
-            <td>${conductor.licencia}</td>
+            <td>${conductor.tipoLicencia}</td>
             <td>${conductor.telefono}</td>
+            <td>${conductor.correo}</td>
             <td>
                 <span class="badge ${badgeClass} ${textClass} rounded-pill">${conductor.estado}</span>
             </td>
