@@ -9,6 +9,7 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 
+<<<<<<< HEAD
 
 @bp.route('/gestion_evidencia') 
 def gestion_evidencia():
@@ -34,11 +35,19 @@ def detalles():
     return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='detalles')
 
 # Alias en minúsculas para evitar confusiones con /Servicios
+=======
+>>>>>>> Gestion_Conductores
 @bp.route('/servicios')
 def servicios():
     """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
+@bp.route('/ubicaciones')
+def ubicaciones():
+    """Ruta de servicios de ubicaciones"""
+
+    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Servicios')
+    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
 
 
 @bp.route('/conductores')
@@ -59,3 +68,7 @@ def recursos():
 def vehiculos():
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+<<<<<<< HEAD
+=======
+
+>>>>>>> Gestion_Conductores
