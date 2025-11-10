@@ -104,129 +104,10 @@ def ubicaciones():
     departamentos = Departamento.query.all()
     municipios = Municipio.query.all()
 
-    inventario = (
-        db.session.query(Ubicaciones, Departamento, Municipio, Direccion)
-        .join(Departamento, Ubicaciones.Id_Departamento == Departamento.Id_Departamento)
-        .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio)
-        .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion)
-        .all()
-    )
-
-    return render_template(
-        "Modules/Gestion_Ubicaciones/Vista4.html",
-        departamentos=departamentos,
-        municipios=municipios,
-        inventario=inventario
-    )
-
-
-
-@bp.route("/registrar_ubicacion", methods=["POST"])
-def registrar_ubicacion():
-    dep = request.form["Id_Departamento"]
-    muni = request.form["Id_Municipio"]
-    direccion_texto = request.form.get("Direccion") or ""
-
-    # 1) Crear dirección
-    nueva_dir = Direccion(
-        Id_Municipio=muni,
-        Detalle_Direccion=direccion_texto
-    )
-    db.session.add(nueva_dir)
-    db.session.commit()
-
-    # 2) Crear ubicación
-    nueva = Ubicaciones(
-        Id_Departamento=dep,
-        Id_Municipio=muni,
-        Id_Direccion=nueva_dir.Id_Direccion
-    )
-    db.session.add(nueva)
-    db.session.commit()
-
-    flash("Ubicación registrada correctamente", "success")
-    return redirect(url_for("main.ubicaciones"))
-
-
-@bp.route("/ubicaciones/<int:id_ubicacion>")
-def detalles_ubicacion(id_ubicacion):
-
-    u = Ubicaciones.query.get_or_404(id_ubicacion)
-
-    d = Departamento.query.get(u.Id_Departamento)
-    m = Municipio.query.get(u.Id_Municipio)
-    dir = Direccion.query.get(u.Id_Direccion)
-
-    # Sububicaciones del MISMO departamento
-    sub_ubicaciones = (
-        db.session.query(Ubicaciones, Municipio, Direccion)
-        .join(Municipio)
-        .join(Direccion)
-        .filter(Ubicaciones.Id_Departamento == u.Id_Departamento)
-        .filter(Ubicaciones.Id_Ubicacion != id_ubicacion)
-        .all()
-    )
-
-    departamentos = Departamento.query.all()
-    municipios = Municipio.query.all()
-    
-    return render_template(
-    "Modules/Gestion_Ubicaciones/detalles.html",
-    u=u,
-    d=d,
-    m=m,
-    dir=dir,
-    sub_ubicaciones=sub_ubicaciones,
-    departamentos=departamentos,
-    municipios=municipios
-    )
-
-
-
-
-# ============================================================
-# SERVICIOS
-# ============================================================
-
-@bp.route('/servicios', methods=['GET', 'POST'])
+# Alias en minúsculas para evitar confusiones con /Servicios
+@bp.route('/servicios')
 def servicios():
 
-    # 🔹 Cargar catálogos para los selects
-    clientes = Clientes.query.all()
-    vehiculos = Vehiculos.query.all()
-    conductores = Conductor.query.all()
-    tipos_servicio = TipoServicio.query.all()
-    fragilidades = NivelFragilidad.query.all()
-    ubicaciones = Ubicaciones.query.all()
-
-    if request.method == 'POST':
-        nuevo = Servicios(
-            Id_Cliente=request.form['Id_Cliente'],
-            Id_Vehiculo=request.form['Id_Vehiculo'],
-            id_conductor=request.form['id_conductor'],
-            Id_Tipo_Servicio=request.form['Id_Tipo_Servicio'],
-            Id_Fragilidad=request.form['Id_Fragilidad'],
-            Id_Ubicacion=request.form['Id_Ubicacion'],
-
-            Peso_Carga=request.form['Peso_Carga'],
-            Fecha_Pedido=request.form['Fecha_Pedido'],
-            Fecha_Entrega=request.form['Fecha_Entrega'],
-            Precio_Total=request.form['Precio_Total']
-        )
-        db.session.add(nuevo)
-        db.session.commit()
-        flash("Servicio registrado correctamente", "success")
-        return redirect(url_for('main.servicios'))
-
-    return render_template(
-        'Modules/Gestion_Servicio/Vista2.html',
-        clientes=clientes,
-        vehiculos=vehiculos,
-        conductores=conductores,
-        tipos_servicio=tipos_servicio,
-        fragilidades=fragilidades,
-        ubicaciones=ubicaciones
-    )
 
 
 # ============================================================
@@ -511,12 +392,3 @@ def eliminar_vehiculo(id_vehiculo):
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
 
-@bp.route('/busqueda')
-def busqueda():
-    """Vista busqueda"""
-    return render_template('layouts/busqueda.html', title='Busqueda')
-
-@bp.route('/Reportes')
-def reportes():
-    """Vista del módulo de reportes"""
-    return render_template('layouts/Reportes.html', title='Reportes')
