@@ -4,13 +4,21 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/vista2.css') }}">
+<<<<<<< HEAD
         
+=======
+    
+>>>>>>> Gestion_Conductores
     <div class="container mt-5">
         <h1 class="mb-4 display-4 text-primary-green">Gestión de Servicios</h1>
 
         <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
             <li class="nav-item" role="presentation">
+<<<<<<< HEAD
                 <button class="nav-link **active** tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="true">
+=======
+                <button class="nav-link active tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="true">
+>>>>>>> Gestion_Conductores
                     Registrar Nuevo Servicio
                 </button>
             </li>
@@ -22,12 +30,22 @@
         </ul>
 
         <div class="tab-content tab-content-card" id="serviciosTabContent">
+<<<<<<< HEAD
             <div class="tab-pane fade **show active**" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+=======
+            <!-- primera pestaña: registro de servicio -->
+            <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+>>>>>>> Gestion_Conductores
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
                 
                 <form action="#" method="POST">
                     <div class="row g-4">
+<<<<<<< HEAD
                         <div class="col-12"><h3 class="h6 text-section-header">Información del Cliente y Contacto</h3></div>
+=======
+                        <!-- seccion de informacion del cliente -->
+                        <div class="col-12"><h3 class="h6 text-section-header">Información del Cliente</h3></div>
+>>>>>>> Gestion_Conductores
                         
                         <div class="col-md-4">
                             <label for="cliente_nombre" class="form-label text-inter-regular">Nombre del Cliente</label>
@@ -35,21 +53,35 @@
                         </div>
                         
                         <div class="col-md-4">
+<<<<<<< HEAD
                             <label for="cliente_email" class="form-label text-inter-regular">Correo Electrónico (Para Cliente)</label>
+=======
+                            <label for="cliente_email" class="form-label text-inter-regular">Correo Electrónico</label>
+>>>>>>> Gestion_Conductores
                             <input type="email" class="form-control custom-input" id="cliente_email" name="cliente_email" placeholder="Para factura y notificaciones" required>
                         </div>
 
                         <div class="col-md-4">
+<<<<<<< HEAD
                             <label for="cliente_dui" class="form-label text-inter-regular">DUI de Cliente/Empresa</label>
                             <input type="text" class="form-control custom-input" id="cliente_dui" name="cliente_dui" placeholder="Documento Único de Identidad" required>
                         </div>
 
                         <div class="col-12"><h3 class="h6 text-section-header mt-3">Detalles de la Carga</h3></div>
+=======
+                            <label for="cliente_id" class="form-label text-inter-regular">ID de Cliente o Empresa</label>
+                            <input type="text" class="form-control custom-input" id="cliente_id" name="cliente_id" placeholder="ID o Razón Social">
+                        </div>
+
+                        <!-- Seccion de detalle del servicio -->
+                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Detalles del Envío</h3></div>
+>>>>>>> Gestion_Conductores
                         
                         <div class="col-md-4">
                             <label for="tipo_servicio" class="form-label text-inter-regular">Tipo de Servicio</label>
                             <select class="form-select custom-input" id="tipo_servicio" name="tipo_servicio" required>
                                 <option value="">Seleccione...</option>
+<<<<<<< HEAD
                                 <option value="1">Entrega de producto</option>
                                 <option value="2">Retiro de producto</option>
                             </select>
@@ -117,6 +149,75 @@
                         <div class="col-md-6">
                             <label for="precio_total" class="form-label text-inter-regular">Precio Total ($)</label>
                             <input type="number" step="0.01" class="form-control custom-input" id="precio_total" name="precio_total" min="0.00" placeholder="0.00" required>
+=======
+                                <option value="entrega">Entrega de producto</option>
+                                <option value="retiro">Retiro de producto</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="nombre_producto" class="form-label text-inter-regular">Nombre del Producto</label>
+                            <input type="text" class="form-control custom-input" id="nombre_producto" name="nombre_producto" placeholder="Ej: Abono, Semilla, Agroquímico" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="tipo_producto" class="form-label text-inter-regular">Tipo de Producto (Categoría)</label>
+                            <input type="text" class="form-control custom-input" id="tipo_producto" name="tipo_producto" placeholder="Fertilizantes, Concentrados, etc." required>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="row justify-content-center">
+                                
+                                <div class="col-md-4 col-sm-6"> 
+                                    <label for="cantidad" class="form-label text-inter-regular">Cantidad</label>
+                                    <input type="number" class="form-control custom-input" id="cantidad" name="cantidad" required>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6">
+                                    <label for="peso_carga" class="form-label text-inter-regular">Peso de la Carga (kg/toneladas)</label>
+                                    <input type="number" step="0.01" class="form-control custom-input" id="peso_carga" name="peso_carga" required>
+                                </div>
+
+                            </div> 
+                        </div>
+
+                        <div class="col-12">
+                            <label for="descripcion_carga" class="form-label text-inter-regular">Descripción de la Carga</label>
+                            <textarea class="form-control custom-input" id="descripcion_carga" name="descripcion_carga" rows="2" placeholder="Detalles o especificaciones"></textarea>
+                        </div>
+
+
+                        <!-- seccion de logistica y tiempo de registro y entrega -->
+                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Logística y Tiempos</h3></div>
+                        
+                        <div class="col-md-6">
+                            <label for="ubicacion_origen" class="form-label text-inter-regular">Ubicación de Origen</label>
+                            <input type="text" class="form-control custom-input" id="ubicacion_origen" name="ubicacion_origen" placeholder="Punto de recolección" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="destino" class="form-label text-inter-regular">Ubicación de Destino</label>
+                            <input type="text" class="form-control custom-input" id="destino" name="destino" placeholder="Lugar de entrega final" required>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="fecha_inicio" class="form-label text-inter-regular">Fecha de Inicio de Servicio</label>
+                            <input type="date" class="form-control custom-input" id="fecha_inicio" name="fecha_inicio" required>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="fecha_entrega" class="form-label text-inter-regular">Fecha y Hora de Entrega Planeada</label>
+                            <input type="datetime-local" class="form-control custom-input" id="fecha_entrega" name="fecha_entrega" required>
+                            <small class="text-muted small-text">*La fecha de entrega no puede ser durante la misma semana que se encargó el envío.</small>
+                        </div>
+
+                        <!-- seccion de paga -->
+                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Pago</h3></div>
+
+                        <div class="col-md-6">
+                            <label for="precio_total" class="form-label text-inter-regular">Precio Total ($)</label>
+                            <input type="number" step="0.01" class="form-control custom-input" id="precio_total" name="precio_total" placeholder="0.00" required>
+>>>>>>> Gestion_Conductores
                         </div>
 
                         <div class="col-md-6">
@@ -125,6 +226,7 @@
                                 <option value="">Seleccione...</option>
                                 <option value="efectivo">Efectivo</option>
                                 <option value="tarjeta">Tarjeta</option>
+<<<<<<< HEAD
                                 <option value="transferencia">Transferencia Bancaria</option>
                             </select>
                         </div>
@@ -132,12 +234,25 @@
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-lg w-100 primary-submit-btn">
                                 <i></i> Registrar Servicio
+=======
+                            </select>
+                        </div>
+
+                        <!-- boton de registro-->
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-lg w-100 primary-submit-btn">
+                                <i class="fas fa-truck me-2"></i> Registrar Servicio
+>>>>>>> Gestion_Conductores
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
 
+<<<<<<< HEAD
+=======
+            <!-- segunda pestaña: consultar como van los servicios -->
+>>>>>>> Gestion_Conductores
             <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Listado de Envíos y su Estado:</h2>
                 
@@ -168,33 +283,60 @@
                                 <td>SRV-001</td>
                                 <td>José Diego C.</td>
                                 <td>Semilla Maíz</td>
+<<<<<<< HEAD
                                 <td>2025-11-28</td>
                                 <td><span class="badge bg-warning text-dark">En Camión</span></td>
                                 <td>
                                     <button class="btn btn-sm btn-success me-1" title="Editar Servicio"><i>Editar</i></button>
                                     <button class="btn btn-sm btn-danger" title="Eliminar Servicio"><i>Eliminar</i></button>
+=======
+                                <td>2025-11-28 10:00</td>
+                                <td><span class="badge bg-warning text-dark">En Camión</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info text-white me-1" title="Ver Detalle"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-success me-1" title="Editar Servicio"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger" title="Eliminar Servicio"><i class="fas fa-trash-alt"></i></button>
+>>>>>>> Gestion_Conductores
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-002</td>
                                 <td>René A. Hernández</td>
                                 <td>Abono Orgánico</td>
+<<<<<<< HEAD
                                 <td>2025-11-20</td>
                                 <td><span class="badge bg-primary">En Ruta</span></td>
                                 <td>
                                     <button class="btn btn-sm btn-success me-1"><i>Editar</i></button>
                                     <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
+=======
+                                <td>2025-11-20 14:30</td>
+                                <td><span class="badge bg-primary">En Ruta</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info text-white me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-success me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+>>>>>>> Gestion_Conductores
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-003</td>
                                 <td>Joseph Orellana</td>
                                 <td>Fertilizante Líquido</td>
+<<<<<<< HEAD
                                 <td>2025-11-15</td>
                                 <td><span class="badge bg-success">Entregado</span></td>
                                 <td>
                                     <button class="btn btn-sm btn-success me-1" disabled><i>Editar</i></button>
                                     <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
+=======
+                                <td>2025-11-15 08:00</td>
+                                <td><span class="badge bg-success">Entregado</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info text-white me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-success me-1" disabled><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-danger" disabled><i class="fas fa-trash-alt"></i></button>
+>>>>>>> Gestion_Conductores
                                 </td>
                             </tr>
                         </tbody>
