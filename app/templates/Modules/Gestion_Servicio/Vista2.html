@@ -10,7 +10,7 @@
 
         <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="false">
+                <button class="nav-link active tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="true">
                     Registrar Nuevo Servicio
                 </button>
             </li>
@@ -22,44 +22,38 @@
         </ul>
 
         <div class="tab-content tab-content-card" id="serviciosTabContent">
-            <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+            <div class="tab-pane fade show active" id="registro" role="tabpanel" aria-labelledby="registro-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
                 
-                <form action="{{ url_for('main.servicios') }}" method="POST">
-    <div class="row g-4">
+                <form action="#" method="POST">
+                    <div class="row g-4">
+                        <div class="col-12"><h3 class="h6 text-section-header">Información del Cliente y Contacto</h3></div>
+                        
+                        <div class="col-md-4">
+                            <label for="cliente_nombre" class="form-label text-inter-regular">Nombre del Cliente</label>
+                            <input type="text" class="form-control custom-input" id="cliente_nombre" name="cliente_nombre" placeholder="Nombre completo" required>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="cliente_email" class="form-label text-inter-regular">Correo Electrónico (Para Cliente)</label>
+                            <input type="email" class="form-control custom-input" id="cliente_email" name="cliente_email" placeholder="Para factura y notificaciones" required>
+                        </div>
 
-        <!-- CLIENTE -->
-        <div class="col-md-6">
-            <label class="form-label">Cliente</label>
-            <select class="form-select" name="Id_Cliente" required>
-                <option value="">Seleccione...</option>
-                {% for c in clientes %}
-                    <option value="{{ c.Id_Cliente }}">{{ c.Nombre_Cliente }} ({{ c.Dui }})</option>
-                {% endfor %}
-            </select>
-        </div>
+                        <div class="col-md-4">
+                            <label for="cliente_dui" class="form-label text-inter-regular">DUI de Cliente/Empresa</label>
+                            <input type="text" class="form-control custom-input" id="cliente_dui" name="cliente_dui" placeholder="Documento Único de Identidad" required>
+                        </div>
 
-        <!-- VEHÍCULO -->
-        <div class="col-md-6">
-            <label class="form-label">Vehículo Asignado</label>
-            <select class="form-select" name="Id_Vehiculo" required>
-                <option value="">Seleccione...</option>
-                {% for v in vehiculos %}
-                    <option value="{{ v.id_vehiculo }}">{{ v.unidad_numero }} - {{ v.placa }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- CONDUCTOR -->
-        <div class="col-md-6">
-            <label class="form-label">Conductor</label>
-            <select class="form-select" name="id_conductor" required>
-                <option value="">Seleccione...</option>
-                {% for con in conductores %}
-                    <option value="{{ con.id_conductor }}">{{ con.nombre_completo }}</option>
-                {% endfor %}
-            </select>
-        </div>
+                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Detalles de la Carga</h3></div>
+                        
+                        <div class="col-md-4">
+                            <label for="tipo_servicio" class="form-label text-inter-regular">Tipo de Servicio</label>
+                            <select class="form-select custom-input" id="tipo_servicio" name="tipo_servicio" required>
+                                <option value="">Seleccione...</option>
+                                <option value="1">Entrega de producto</option>
+                                <option value="2">Retiro de producto</option>
+                            </select>
+                        </div>
 
         <!-- TIPO SERVICIO -->
         <div class="col-md-6">
@@ -129,6 +123,28 @@
     </div>
 </form>
 
+                        <div class="col-md-6">
+                            <label for="precio_total" class="form-label text-inter-regular">Precio Total ($)</label>
+                            <input type="number" step="0.01" class="form-control custom-input" id="precio_total" name="precio_total" min="0.00" placeholder="0.00" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="metodo_pago" class="form-label text-inter-regular">Método de Pago</label>
+                            <select class="form-select custom-input" id="metodo_pago" name="metodo_pago" required>
+                                <option value="">Seleccione...</option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="tarjeta">Tarjeta</option>
+                                <option value="transferencia">Transferencia Bancaria</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-lg w-100 primary-submit-btn">
+                                <i></i> Registrar Servicio
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
@@ -160,47 +176,38 @@
                         <tbody>
                             <tr>
                                 <td>SRV-001</td>
-                                <td>José Diego C. (0123...)</td>
-                                <td>Semilla Maíz (50.5kg)</td>
-                                <td>Sonsonate / Ahuachapán</td>
-                                <td>$45.00</td>
+                                <td>José Diego C.</td>
+                                <td>Semilla Maíz</td>
+                                <td>2025-11-28</td>
                                 <td><span class="badge bg-warning text-dark">En Camión</span></td>
                                 <!-- CORRECCIÓN: Usar d-flex y gap-1 para asegurar la alineación horizontal -->
                                 <td>
-                                    <div class="d-flex gap-1">
-                                        <a href="/editarservicio" class="btn btn-sm btn-success"><i class="">Editar</i></a>
-                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
-                                    </div>
+                                    <button class="btn btn-sm btn-success me-1" title="Editar Servicio"><i>Editar</i></button>
+                                    <button class="btn btn-sm btn-danger" title="Eliminar Servicio"><i>Eliminar</i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-002</td>
-                                <td>René A. H. (9876...)</td>
-                                <td>Abono Orgánico (100kg)</td>
-                                <td>La Paz / San Vicente</td>
-                                <td>$75.50</td>
+                                <td>René A. Hernández</td>
+                                <td>Abono Orgánico</td>
+                                <td>2025-11-20</td>
                                 <td><span class="badge bg-primary">En Ruta</span></td>
                                 <!-- CORRECCIÓN: Usar d-flex y gap-1 -->
                                 <td>
-                                    <div class="d-flex gap-1">
-                                        <a href="/editarservicio" class="btn btn-sm btn-success">Editar</a>
-                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
-                                    </div>
+                                    <button class="btn btn-sm btn-success me-1"><i>Editar</i></button>
+                                    <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-003</td>
-                                <td>Joseph O. (5432...)</td>
-                                <td>Fertilizante Líquido (Frágil)</td>
-                                <td>San Salvador / La Libertad</td>
-                                <td>$120.00</td>
+                                <td>Joseph Orellana</td>
+                                <td>Fertilizante Líquido</td>
+                                <td>2025-11-15</td>
                                 <td><span class="badge bg-success">Entregado</span></td>
                                 <!-- CORRECCIÓN: Usar d-flex y gap-1 (botones deshabilitados) -->
                                 <td>
-                                    <div class="d-flex gap-1">
-                                        <button class="btn btn-sm btn-success" disabled><i class="">Editar</i></button>
-                                        <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
-                                    </div>
+                                    <button class="btn btn-sm btn-success me-1" disabled><i>Editar</i></button>
+                                    <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
                                 </td>
                             </tr>
                         </tbody>
