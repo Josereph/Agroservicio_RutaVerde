@@ -1,4 +1,9 @@
-# app/__init__.py
+from flask import Flask
+from config import DevelopmentConfig, ProductionConfig
+from flask_sqlalchemy import SQLAlchemy
+from app.config import Config
+
+db = SQLAlchemy()
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
