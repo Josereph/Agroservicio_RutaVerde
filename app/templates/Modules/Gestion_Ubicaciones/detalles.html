@@ -37,23 +37,133 @@
                         <div class="mb-3">
                             <label for="detalle-departamento" class="form-label">Departamento</label>
                             <select class="form-select" id="detalle-departamento" required>
-                                <option value="San Salvador" selected>San Salvador</option>
+                                <option value="">Seleccione un Departamento</option>
+                                <option value="Ahuachapán">Ahuachapán</option>
+                                <option value="Santa Ana">Santa Ana</option>
+                                <option value="Sonsonate">Sonsonate</option>
                                 <option value="La Libertad">La Libertad</option>
+                                <option value="Chalatenango">Chalatenango</option>
+                                <option value="San Salvador">San Salvador</option>
+                                <option value="Cuscatlán">Cuscatlán</option>
+                                <option value="La Paz">La Paz</option>
+                                <option value="Cabañas">Cabañas</option>
+                                <option value="San Vicente">San Vicente</option>
+                                <option value="Usulután">Usulután</option>
+                                <option value="San Miguel">San Miguel</option>
+                                <option value="Morazán">Morazán</option>
+                                <option value="La Unión">La Unión</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="detalle-municipio" class="form-label">Municipio</label>
                             <select class="form-select" id="detalle-municipio" required>
-                                <option value="">N/A (Es un Departamento)</option>
+                                <option value="">Seleccione primero un Departamento</option>
+
+                                <optgroup label="Ahuachapán" data-parent="Ahuachapán">
+                                    <option value="Ahuachapán">Ahuachapán</option>
+                                    <option value="Jujutla">Jujutla</option>
+                                    <option value="Atiquizaya">Atiquizaya</option>
+                                    <option value="Concepción de Ataco">Concepción de Ataco</option>
+                                    <option value="Tacuba">Tacuba</option>
+                                </optgroup>
+
+                                <optgroup label="Santa Ana" data-parent="Santa Ana">
+                                    <option value="Santa Ana">Santa Ana</option>
+                                    <option value="Chalchuapa">Chalchuapa</option>
+                                    <option value="Metapán">Metapán</option>
+                                    <option value="Coatepeque">Coatepeque</option>
+                                    <option value="El Congo">El Congo</option>
+                                </optgroup>
+
+                                <optgroup label="Sonsonate" data-parent="Sonsonate">
+                                    <option value="Sonsonate">Sonsonate</option>
+                                    <option value="Acajutla">Acajutla</option>
+                                    <option value="Izalco">Izalco</option>
+                                    <option value="Nahuizalco">Nahuizalco</option>
+                                    <option value="Sonzacate">Sonzacate</option>
+                                </optgroup>
+
+                                <optgroup label="La Libertad" data-parent="La Libertad">
+                                    <option value="Santa Tecla">Santa Tecla</option>
+                                    <option value="Antiguo Cuscatlán">Antiguo Cuscatlán</option>
+                                    <option value="Colón">Colón</option>
+                                    <option value="Quezaltepeque">Quezaltepeque</option>
+                                    <option value="La Libertad">La Libertad</option>
+                                    <option value="Zaragoza">Zaragoza</option>
+                                </optgroup>
+
+                                <optgroup label="Chalatenango" data-parent="Chalatenango">
+                                    <option value="Chalatenango">Chalatenango</option>
+                                    <option value="Nueva Concepción">Nueva Concepción</option>
+                                    <option value="La Palma">La Palma</option>
+                                    <option value="Tejutla">Tejutla</option>
+                                    <option value="El Paraíso">El Paraíso</option>
+                                </optgroup>
+
                                 <optgroup label="San Salvador" data-parent="San Salvador">
                                     <option value="San Salvador">San Salvador</option>
                                     <option value="Soyapango">Soyapango</option>
+                                    <option value="Mejicanos">Mejicanos</option>
+                                    <option value="Apopa">Apopa</option>
+                                    <option value="Ilopango">Ilopango</option>
+                                    <option value="Delgado">Delgado</option>
+                                </optgroup>
 
+                                <optgroup label="Cuscatlán" data-parent="Cuscatlán">
+                                    <option value="Cojutepeque">Cojutepeque</option>
+                                    <option value="Suchitoto">Suchitoto</option>
+                                    <option value="San Pedro Perulapán">San Pedro Perulapán</option>
+                                </optgroup>
+
+                                <optgroup label="La Paz" data-parent="La Paz">
+                                    <option value="Zacatecoluca">Zacatecoluca</option>
+                                    <option value="Olocuilta">Olocuilta</option>
+                                    <option value="San Luis Talpa">San Luis Talpa</option>
+                                    <option value="Santiago Nonualco">Santiago Nonualco</option>
+                                </optgroup>
+
+                                <optgroup label="Cabañas" data-parent="Cabañas">
+                                    <option value="Sensuntepeque">Sensuntepeque</option>
+                                    <option value="Ilobasco">Ilobasco</option>
+                                    <option value="Victoria">Victoria</option>
+                                </optgroup>
+
+                                <optgroup label="San Vicente" data-parent="San Vicente">
+                                    <option value="San Vicente">San Vicente</option>
+                                    <option value="Apastepeque">Apastepeque</option>
+                                    <option value="Tecoluca">Tecoluca</option>
+                                </optgroup>
+
+                                <optgroup label="Usulután" data-parent="Usulután">
+                                    <option value="Usulután">Usulután</option>
+                                    <option value="Jiquilisco">Jiquilisco</option>
+                                    <option value="Santiago de María">Santiago de María</option>
+                                    <option value="Jucuapa">Jucuapa</option>
+                                </optgroup>
+
+                                <optgroup label="San Miguel" data-parent="San Miguel">
+                                    <option value="San Miguel">San Miguel</option>
+                                    <option value="Chinameca">Chinameca</option>
+                                    <option value="Ciudad Barrios">Ciudad Barrios</option>
+                                    <option value="El Tránsito">El Tránsito</option>
+                                </optgroup>
+
+                                <optgroup label="Morazán" data-parent="Morazán">
+                                    <option value="San Francisco Gotera">San Francisco Gotera</option>
+                                    <option value="Corinto">Corinto</option>
+                                    <option value="Jocoro">Jocoro</option>
+                                    <option value="Perquín">Perquín</option>
+                                </optgroup>
+
+                                <optgroup label="La Unión" data-parent="La Unión">
+                                    <option value="La Unión">La Unión</option>
+                                    <option value="Santa Rosa de Lima">Santa Rosa de Lima</option>
+                                    <option value="Conchagua">Conchagua</option>
+                                    <option value="Pasaquina">Pasaquina</option>
                                 </optgroup>
                             </select>
                         </div>
-
 
                         <div class="mb-3">
                             <label for="detalle-direccion" class="form-label">Dirección Exacta (Punto Logístico)</label>
@@ -113,15 +223,6 @@
                                     <td>Ilopango</td>
                                     <td><span class="badge bg-warning">Inactivo</span></td>
                                 </tr>
-
-                                <!-- Mensaje si no hay hijos -->
-                                <!--
-                                <tr id="no-hijos-row" style="display: none;">
-                                    <td colspan="5" class="text-center text-muted p-4">
-                                        Esta ubicación no tiene sub-ubicaciones (hijos).
-                                    </td>
-                                </tr>
-                                -->
                             </tbody>
                         </table>
                     </div>
@@ -131,5 +232,5 @@
 
     </div>
 </div>
-
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}
