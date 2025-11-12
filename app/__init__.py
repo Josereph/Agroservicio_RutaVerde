@@ -1,4 +1,9 @@
 from flask import Flask
+from config import DevelopmentConfig, ProductionConfig
+from flask_sqlalchemy import SQLAlchemy
+from app.config import Config
+
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
