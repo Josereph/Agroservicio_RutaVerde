@@ -201,66 +201,26 @@
           </tr>
         </thead>
         <tbody>
-          {% if vehiculos %}
-            {% for v in vehiculos %}
-              <tr>
-                <td>{{ v.placa }}</td>
-                <td>{{ v.marca }}</td>
-                <td>{{ v.modelo }}</td>
-                <td>{{ v.anio }}</td>
-                <td>{{ v.tipo.nombre|replace('_',' ')|capitalize }}</td>
-                <td>{{ v.capacidad_kg }}</td>
-                <td>
-                  {% if v.estado.nombre in ['disponible', 'en_servicio'] %}
-                    <span class="badge bg-success">
-                      {{ v.estado.nombre.replace('_',' ') }}
-                    </span>
-                  {% elif v.estado.nombre == 'en_mantenimiento' %}
-                    <span class="badge bg-warning text-dark">
-                      En mantenimiento
-                    </span>
-                  {% else %}
-                    <span class="badge bg-secondary">
-                      {{ v.estado.nombre.replace('_',' ') }}
-                    </span>
-                  {% endif %}
-                </td>
-               <td class="text-center">
-  <!-- Botón Editar: redirige a la vista de edición -->
-  <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-     class="btn btn-sm btn-warning me-1"
-     aria-label="Editar {{ v.placa }}">
-    <i class="bi bi-pencil"></i>
-  </a>
-
-  <!-- Botón Eliminar: formulario POST con confirmación -->
-  <form action="{{ url_for('main.eliminar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-        method="POST"
-        class="d-inline"
-        onsubmit="return confirm('¿Seguro que deseas eliminar el vehículo {{ v.placa }}?');">
-    <button type="submit"
-            class="btn btn-sm btn-danger"
-            aria-label="Eliminar {{ v.placa }}">
-      <i class="bi bi-trash"></i>
-    </button>
-  </form>
-</td>
-
-              </tr>
-            {% endfor %}
-          {% else %}
-            <tr>
-              <td colspan="8" class="text-center text-muted">
-                No hay vehículos registrados aún.
-              </td>
-            </tr>
-          {% endif %}
-        </tbody>
+          <!-- Ejemplo de fila -->
+          <tr>
+            <td>P-123456</td>
+            <td>Toyota</td>
+            <td>Hilux</td>
+            <td>2010</td>
+            <td>Pick-up</td>
+            <td>1000</td>
+            <td><span class="badge bg-success">Activo</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-1" aria-label="Editar Toyota Hilux P-123456">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" aria-label="Eliminar Toyota Hilux P-123456">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
       </table>
     </div>
   </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script> 
-
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}

@@ -1,73 +1,67 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // === VALIDACIÓN FORMULARIO DE VEHÍCULOS ===
   const form = document.querySelector("form[novalidate]");
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
+    e.preventDefault();
     let valido = true;
 
-    // Limpiar estados previos
     form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
 
     const placa = form.placa.value.trim();
     const marca = form.marca.value.trim();
     const modelo = form.modelo.value.trim();
     const anio = parseInt(form.anio.value.trim());
-    const tipo = form.tipo.value.trim();          // id="tipo" en el HTML
+    const tipo = form.tipo.value.trim();
     const capacidad = parseFloat(form.capacidad.value.trim());
-    const estado = form.estado.value.trim();      // id="estado" en el HTML
+    const estado = form.estado.value.trim();
 
-    // Validación de placa
     const placaRegex = /^[A-Z]{1,2}-?\d{3,6}$/;
     if (!placa || !placaRegex.test(placa)) {
       marcarInvalido(form.placa, "Formato de placa incorrecto (Ej: P-123456 o AB123456).");
       valido = false;
     }
 
-    // Marca
     if (!marca) {
       marcarInvalido(form.marca, "La marca no puede estar vacía.");
       valido = false;
     }
 
-    // Modelo
     if (!modelo) {
       marcarInvalido(form.modelo, "El modelo es obligatorio.");
       valido = false;
     }
 
-    // Año
     const yearActual = new Date().getFullYear();
     if (isNaN(anio) || anio < 1980 || anio > yearActual + 1) {
       marcarInvalido(form.anio, `El año debe estar entre 1980 y ${yearActual + 1}.`);
       valido = false;
     }
 
-    // Tipo
     if (!tipo) {
       marcarInvalido(form.tipo, "Seleccione un tipo de vehículo.");
       valido = false;
     }
 
-    // Capacidad
     if (isNaN(capacidad) || capacidad <= 0) {
       marcarInvalido(form.capacidad, "Ingrese una capacidad de carga válida (mayor a 0).");
       valido = false;
     }
 
-    // Estado
     if (!estado) {
       marcarInvalido(form.estado, "Seleccione el estado del vehículo.");
       valido = false;
     }
 
-    // Si hay errores, bloqueamos el envío y mostramos alerta
-    if (!valido) {
-      e.preventDefault();
+
+    if (valido) {
+      mostrarAlerta("Vehículo guardado correctamente ✅", "success");
+      form.reset();
+    } else {
       mostrarAlerta("Por favor, corrija los campos marcados en rojo ⚠️", "danger");
     }
-    // Si ES válido, NO hacemos preventDefault → el form se envía normal al backend
   });
+
 
   function marcarInvalido(campo, mensaje) {
     campo.classList.add("is-invalid");
@@ -91,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => alert.remove(), 4000);
   }
 });
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -367,153 +360,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formConductor');
-    const modalElement = document.getElementById('modalRegistroConductor');
-    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-
-    // Campos
-    const nombre = document.getElementById('nombre');
-    const dui = document.getElementById('dui');
-    const licencia = document.getElementById('licencia');
-    const telefono = document.getElementById('telefono');
-    const fechaVencimiento = document.getElementById('fechaVencimiento');
-
-    // Formateos en tiempo real
-    nombre.addEventListener('input', () => {
-        nombre.value = nombre.value.replace(/[^a-zA-ZÁÉÍÓÚáéíóúÑñ\s]/g, '');
-    });
-
-    dui.addEventListener('input', () => {
-        let valor = dui.value.replace(/\D/g, '').slice(0, 9);
-        if (valor.length > 8) valor = valor.slice(0, 8) + '-' + valor.slice(8);
-        dui.value = valor;
-    });
-
-    licencia.addEventListener('input', () => {
-        let valor = licencia.value.replace(/\D/g, '').slice(0, 14);
-        if (valor.length > 4) valor = valor.slice(0, 4) + '-' + valor.slice(4);
-        if (valor.length > 11) valor = valor.slice(0, 11) + '-' + valor.slice(11);
-        if (valor.length > 15) valor = valor.slice(0, 15) + '-' + valor.slice(15);
-        licencia.value = valor;
-    });
-
-    telefono.addEventListener('input', () => {
-        let valor = telefono.value.replace(/\D/g, '').slice(0, 8);
-        if (valor.length > 4) valor = valor.slice(0, 4) + '-' + valor.slice(4);
-        telefono.value = valor;
-    });
-
-    // Validación del formulario
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        let valido = true;
-
-        // DUI
-        if (!/^\d{8}-\d$/.test(dui.value)) {
-            dui.classList.add('is-invalid');
-            valido = false;
-        } else {
-            dui.classList.remove('is-invalid');
-        }
-
-        // Licencia
-        if (!/^\d{4}-\d{6}-\d{3}-\d$/.test(licencia.value)) {
-            licencia.classList.add('is-invalid');
-            valido = false;
-        } else {
-            licencia.classList.remove('is-invalid');
-        }
-
-        // Teléfono
-        if (!/^\d{4}-\d{4}$/.test(telefono.value)) {
-            telefono.classList.add('is-invalid');
-            valido = false;
-        } else {
-            telefono.classList.remove('is-invalid');
-        }
-
-        // Fecha válida
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        const fechaIngresada = new Date(fechaVencimiento.value);
-        if (fechaIngresada < hoy || !fechaVencimiento.value) {
-            fechaVencimiento.classList.add('is-invalid');
-            valido = false;
-        } else {
-            fechaVencimiento.classList.remove('is-invalid');
-        }
-
-        form.classList.add('was-validated');
-
-        if (form.checkValidity() && valido) {
-            const datosConductor = {
-                nombre: nombre.value,
-                dui: dui.value,
-                licencia: licencia.value,
-                telefono: telefono.value,
-                estado: document.getElementById('estado').value,
-            };
-
-            agregarConductorATabla(datosConductor);
-            modal.hide();
-            form.reset();
-            form.classList.remove('was-validated');
-        }
-    });
-
-    // Limpiar formulario al cerrar modal
-    modalElement.addEventListener('hidden.bs.modal', () => {
-        form.reset();
-        form.classList.remove('was-validated');
-        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-    });
-});
-
-// --- Función para agregar dinámicamente un conductor a la tabla ---
-function agregarConductorATabla(conductor) {
-    const tablaBody = document.getElementById('tablaConductoresBody');
-    const nuevaFila = tablaBody.insertRow(0);
-
-    let badgeClass = '';
-    let textClass = '';
-    switch (conductor.estado) {
-        case 'Activo':
-            badgeClass = 'bg-success-subtle';
-            textClass = 'text-success-emphasis';
-            break;
-        case 'Inactivo':
-            badgeClass = 'bg-danger-subtle';
-            textClass = 'text-danger-emphasis';
-            break;
-        case 'Suspendido':
-            badgeClass = 'bg-warning-subtle';
-            textClass = 'text-warning-emphasis';
-            break;
-        default:
-            badgeClass = 'bg-secondary-subtle';
-            textClass = 'text-secondary-emphasis';
-    }
-
-    nuevaFila.innerHTML = `
-        <td>${conductor.nombre}</td>
-        <td>${conductor.dui}</td>
-        <td>${conductor.licencia}</td>
-        <td>${conductor.telefono}</td>
-        <td>
-            <span class="badge ${badgeClass} ${textClass} rounded-pill">${conductor.estado}</span>
-        </td>
-        <td class="text-end">
-            <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                <i class="bi bi-pencil-fill"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-danger" title="Desactivar">
-                <i class="bi bi-trash-fill"></i>
-            </button>
-        </td>
-    `;
-}
 
