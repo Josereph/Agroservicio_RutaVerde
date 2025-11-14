@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from . import db
-from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor
-from datetime import datetime
-
+from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo
 
 bp = Blueprint('main', __name__)
 
@@ -23,17 +21,26 @@ def alertas():
     return render_template('layouts/Alertas.html', title='Sistema de Alertas')
 
 
-
-@bp.route('/gestion_evidencia') 
+# ============================================================
+# GESTIÓN DE EVIDENCIA
+# ============================================================
+@bp.route('/gestion_evidencia')
 def gestion_evidencia():
     servicios = [
         {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
         {'Id_Servicio': 2, 'cliente_nombre': 'Distribuidora San José'},
         {'Id_Servicio': 3, 'cliente_nombre': 'Cooperativa El Progreso'}
     ]
-    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
+    return render_template(
+        'modules/Gestion_Evidencia/Vista.html',
+        title='Gestión de Evidencia',
+        servicios=servicios
+    )
 
 
+# ============================================================
+# UBICACIONES
+# ============================================================
 @bp.route('/ubicaciones')
 def ubicaciones():
     return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
@@ -47,69 +54,17 @@ def detalles():
 # ============================================================
 # SERVICIOS
 # ============================================================
-
-# Alias en minúsculas para evitar confusiones con /Servicios
 @bp.route('/servicios')
 def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
 
-
-
+# ============================================================
+# CONDUCTORES
+# ============================================================
 @bp.route('/conductores')
 def conductores():
-    # ---------- POST → Registrar nuevo conductor ----------
-    if request.method == 'POST':
-        nombre = request.form.get('nombre_completo')
-        documento = request.form.get('documento_identificacion')
-        tipo_licencia = request.form.get('tipo_licencia')
-        fecha_venc_str = request.form.get('fecha_vencimiento_licencia')
-        telefono = request.form.get('telefono') or None
-        correo = request.form.get('correo') or None
-        estado = request.form.get('estado') or 'Activo'
-        experiencia = request.form.get('experiencia_notas') or None
-
-        # Validar obligatorios reales de la BD
-        if not all([nombre, documento, tipo_licencia, fecha_venc_str]):
-            flash("Completa nombre, documento, tipo de licencia y fecha de vencimiento.", "danger")
-            return redirect(url_for('main.conductores'))
-
-        # Convertir fecha
-        try:
-            fecha_venc = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
-        except ValueError:
-            flash("Fecha de vencimiento inválida.", "danger")
-            return redirect(url_for('main.conductores'))
-
-        nuevo = Conductor(
-            nombre_completo=nombre,
-            documento_identificacion=documento,
-            tipo_licencia=tipo_licencia,
-            fecha_vencimiento_licencia=fecha_venc,
-            telefono=telefono,
-            correo=correo,
-            estado=estado,
-            experiencia_notas=experiencia
-        )
-
-        try:
-            db.session.add(nuevo)
-            db.session.commit()
-            flash("Conductor registrado correctamente.", "success")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error al guardar el conductor: {e}", "danger")
-
-        return redirect(url_for('main.conductores'))
-
-    # ---------- GET → Mostrar lista de conductores ----------
-    lista_conductores = Conductor.query.order_by(Conductor.nombre_completo).all()
-
-    return render_template(
-        "Modules/Gestion_Conductores/VistaGestionConductores.html",
-        title="Gestión de Conductores",
-        conductores=lista_conductores
-    )
+    return render_template("Modules/Gestion_Conductores/chepe.html", title='Conductores')
 
 
 # ============================================================
@@ -125,7 +80,6 @@ def recursos():
 # ============================================================
 @bp.route('/vehiculos', methods=['GET', 'POST'])
 def vehiculos():
-
     # ---------- POST → Registrar nuevo vehículo ----------
     if request.method == 'POST':
         print("⚠️ LLEGÓ POST /vehiculos")
@@ -192,145 +146,14 @@ def vehiculos():
         return redirect(url_for('main.vehiculos'))
 
     # ---------- GET → Mostrar formulario y tabla ----------
-       # ---------- GET → Mostrar formulario y tabla con filtros ----------
-    from sqlalchemy import or_
-
-    # Leer parámetros de búsqueda desde la URL (GET)
-    q = request.args.get('q', '', type=str).strip()
-    tipo_filtro = request.args.get('tipo_id', type=int)
-    estado_filtro = request.args.get('estado_id', type=int)
-
-    # Consulta base
-    consulta = Vehiculos.query
-
-    # Filtro de texto: placa, marca o modelo
-    if q:
-        patron = f"%{q}%"
-        consulta = consulta.filter(
-            or_(
-                Vehiculos.placa.ilike(patron),
-                Vehiculos.marca.ilike(patron),
-                Vehiculos.modelo.ilike(patron),
-            )
-        )
-
-    # Filtro por tipo de vehículo
-    if tipo_filtro:
-        consulta = consulta.filter(Vehiculos.tipo_id == tipo_filtro)
-
-    # Filtro por estado
-    if estado_filtro:
-        consulta = consulta.filter(Vehiculos.estado_id == estado_filtro)
-
-    lista_vehiculos = consulta.all()
-
     tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
     estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
+    lista_vehiculos = Vehiculos.query.all()
 
     return render_template(
         'Modules/Gestion_Vehiculos/VistaGestionVehiculos.html',
         title='Gestión de Vehículos',
         vehiculos=lista_vehiculos,
         tipos=tipos,
-        estados=estados,
-        q=q,
-        tipo_sel=tipo_filtro,
-        estado_sel=estado_filtro,
-    )
-
-    
-    # ============================================================
-# EDITAR VEHÍCULO
-# ============================================================
-@bp.route('/vehiculos/editar/<int:id_vehiculo>', methods=['GET', 'POST'])
-def editar_vehiculo(id_vehiculo):
-    vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
-
-    if request.method == 'POST':
-        # Mismos campos que en crear
-        unidad_numero = request.form.get('unidad_numero')
-        placa = request.form.get('placa')
-        marca = request.form.get('marca')
-        modelo = request.form.get('modelo')
-        anio = request.form.get('anio', type=int)
-        capacidad = request.form.get('capacidad', type=float)
-
-        tipo_id = request.form.get('tipo_id', type=int)
-        estado_id = request.form.get('estado_id', type=int)
-
-        vin = request.form.get('vin') or None
-        km = request.form.get('km_actual', type=int)
-        seguro_raw = request.form.get('seguro_vigente')
-        aseguradora = request.form.get('aseguradora') or None
-        poliza = request.form.get('poliza_numero') or None
-        fecha_seguro = request.form.get('fecha_venc_seguro') or None
-        obs = request.form.get('observaciones') or None
-
-        if km is None:
-            km = 0
-        seguro_vigente = True if seguro_raw == "1" else False
-
-        if not all([unidad_numero, placa, tipo_id, capacidad, estado_id]):
-            flash("Debes completar los campos obligatorios: unidad, placa, tipo, capacidad y estado.", "danger")
-            return redirect(url_for('main.editar_vehiculo', id_vehiculo=id_vehiculo))
-
-        # Asignar cambios al objeto existente
-        vehiculo.unidad_numero = unidad_numero
-        vehiculo.placa = placa
-        vehiculo.marca = marca
-        vehiculo.modelo = modelo
-        vehiculo.anio = anio
-        vehiculo.capacidad_kg = capacidad
-        vehiculo.tipo_id = tipo_id
-        vehiculo.estado_id = estado_id
-        vehiculo.vin = vin
-        vehiculo.km_actual = km
-        vehiculo.seguro_vigente = seguro_vigente
-        vehiculo.aseguradora = aseguradora
-        vehiculo.poliza_numero = poliza
-        vehiculo.fecha_venc_seguro = fecha_seguro
-        vehiculo.observaciones = obs
-
-        try:
-            db.session.commit()
-            flash("Vehículo actualizado correctamente.", "success")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error al actualizar el vehículo: {e}", "danger")
-
-        return redirect(url_for('main.vehiculos'))
-
-    # GET → mostrar formulario de edición
-    tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
-    estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
-
-    return render_template(
-        'Modules/Gestion_Vehiculos/EditarVehiculo.html',
-        title='Editar Vehículo',
-        vehiculo=vehiculo,
-        tipos=tipos,
         estados=estados
     )
-
-
-# ============================================================
-# ELIMINAR VEHÍCULO
-# ============================================================
-@bp.route('/vehiculos/eliminar/<int:id_vehiculo>', methods=['POST'])
-def eliminar_vehiculo(id_vehiculo):
-    vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
-
-    try:
-        db.session.delete(vehiculo)
-        db.session.commit()
-        flash(f"Vehículo {vehiculo.placa} eliminado correctamente.", "success")
-    except Exception as e:
-        db.session.rollback()
-        flash(f"Error al eliminar el vehículo: {e}", "danger")
-
-    return redirect(url_for('main.vehiculos'))
-
-
-    """Vista del módulo de gestión de vehículos"""
-    return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
-

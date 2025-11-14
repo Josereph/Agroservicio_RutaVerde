@@ -1,67 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // === VALIDACIÓN FORMULARIO DE VEHÍCULOS ===
   const form = document.querySelector("form[novalidate]");
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
     let valido = true;
 
+    // Limpiar estados previos
     form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
 
     const placa = form.placa.value.trim();
     const marca = form.marca.value.trim();
     const modelo = form.modelo.value.trim();
     const anio = parseInt(form.anio.value.trim());
-    const tipo = form.tipo.value.trim();
+    const tipo = form.tipo.value.trim();          // id="tipo" en el HTML
     const capacidad = parseFloat(form.capacidad.value.trim());
-    const estado = form.estado.value.trim();
+    const estado = form.estado.value.trim();      // id="estado" en el HTML
 
+    // Validación de placa
     const placaRegex = /^[A-Z]{1,2}-?\d{3,6}$/;
     if (!placa || !placaRegex.test(placa)) {
       marcarInvalido(form.placa, "Formato de placa incorrecto (Ej: P-123456 o AB123456).");
       valido = false;
     }
 
+    // Marca
     if (!marca) {
       marcarInvalido(form.marca, "La marca no puede estar vacía.");
       valido = false;
     }
 
+    // Modelo
     if (!modelo) {
       marcarInvalido(form.modelo, "El modelo es obligatorio.");
       valido = false;
     }
 
+    // Año
     const yearActual = new Date().getFullYear();
     if (isNaN(anio) || anio < 1980 || anio > yearActual + 1) {
       marcarInvalido(form.anio, `El año debe estar entre 1980 y ${yearActual + 1}.`);
       valido = false;
     }
 
+    // Tipo
     if (!tipo) {
       marcarInvalido(form.tipo, "Seleccione un tipo de vehículo.");
       valido = false;
     }
 
+    // Capacidad
     if (isNaN(capacidad) || capacidad <= 0) {
       marcarInvalido(form.capacidad, "Ingrese una capacidad de carga válida (mayor a 0).");
       valido = false;
     }
 
+    // Estado
     if (!estado) {
       marcarInvalido(form.estado, "Seleccione el estado del vehículo.");
       valido = false;
     }
 
-
-    if (valido) {
-      mostrarAlerta("Vehículo guardado correctamente ✅", "success");
-      form.reset();
-    } else {
+    // Si hay errores, bloqueamos el envío y mostramos alerta
+    if (!valido) {
+      e.preventDefault();
       mostrarAlerta("Por favor, corrija los campos marcados en rojo ⚠️", "danger");
     }
+    // Si ES válido, NO hacemos preventDefault → el form se envía normal al backend
   });
-
 
   function marcarInvalido(campo, mensaje) {
     campo.classList.add("is-invalid");
@@ -85,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => alert.remove(), 4000);
   }
 });
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
