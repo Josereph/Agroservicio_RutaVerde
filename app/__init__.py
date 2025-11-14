@@ -1,20 +1,22 @@
+# app/__init__.py
 from flask import Flask
-from config import DevelopmentConfig, ProductionConfig
 from flask_sqlalchemy import SQLAlchemy
-from app.config import Config
+from .config import Config  # importa desde app/config.py
 
 db = SQLAlchemy()
 
-def create_app():
+
+def create_app(config_class=Config):
     app = Flask(__name__)
 
-    # Blueprint principal
-    from app.routes import bp as main_bp
-    app.register_blueprint(main_bp)
+    # 1) Cargar configuración (BD, SECRET_KEY, etc.)
+    app.config.from_object(config_class)
 
-    # NOTA: no existe el paquete `app.Gestion_Vehiculos` en el proyecto.
-    # El blueprint de gestión de vehículos está definido en `app/routes.py`
-    # (variable `bp`), por eso no intentamos importar
-    # `app.Gestion_Vehiculos.routes` — eso provocaba ModuleNotFoundError.
+    # 2) Inicializar SQLAlchemy con esta app
+    db.init_app(app)
+
+    # 3) Registrar blueprints
+    from .routes import bp as main_bp
+    app.register_blueprint(main_bp)
 
     return app

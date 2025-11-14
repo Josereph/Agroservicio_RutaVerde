@@ -1,63 +1,151 @@
-from flask import Blueprint, render_template # type: ignore
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from . import db
+from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo
 
 bp = Blueprint('main', __name__)
 
+# ============================================================
+# RUTA PRINCIPAL
+# ============================================================
 @bp.route('/')
 @bp.route('/index')
 def index():
-    """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
 
 
-
-@bp.route('/gestion_evidencia') 
+# ============================================================
+# GESTIÓN DE EVIDENCIA
+# ============================================================
+@bp.route('/gestion_evidencia')
 def gestion_evidencia():
-    """Módulo de Gestión de Evidencias y Documentación"""
     servicios = [
         {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
         {'Id_Servicio': 2, 'cliente_nombre': 'Distribuidora San José'},
         {'Id_Servicio': 3, 'cliente_nombre': 'Cooperativa El Progreso'}
     ]
-    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
+    return render_template(
+        'modules/Gestion_Evidencia/Vista.html',
+        title='Gestión de Evidencia',
+        servicios=servicios
+    )
 
 
-
-
+# ============================================================
+# UBICACIONES
+# ============================================================
 @bp.route('/ubicaciones')
 def ubicaciones():
-    """Ruta de servicios de ubicaciones"""
     return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
+
 
 @bp.route('/detalles')
 def detalles():
-    """Ruta de servicios de detalles"""
-    return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='detalles')
+    return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='Detalles')
 
-# Alias en minúsculas para evitar confusiones con /Servicios
+
+# ============================================================
+# SERVICIOS
+# ============================================================
 @bp.route('/servicios')
 def servicios():
-    """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
 
-
-
+# ============================================================
+# CONDUCTORES
+# ============================================================
 @bp.route('/conductores')
 def conductores():
-    """Ruta de conductores"""
     return render_template("Modules/Gestion_Conductores/chepe.html", title='Conductores')
 
 
-# 🔹 NUEVA RUTA → Mini menú de Recursos Operativos
+# ============================================================
+# MINI MENÚ DE RECURSOS OPERATIVOS
+# ============================================================
 @bp.route('/recursos')
 def recursos():
-    """Mini menú de recursos operativos"""
     return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
 
 
-
-@bp.route('/vehiculos')
+# ============================================================
+# GESTIÓN DE VEHÍCULOS (GET + POST)
+# ============================================================
+@bp.route('/vehiculos', methods=['GET', 'POST'])
 def vehiculos():
-    """Vista del módulo de gestión de vehículos"""
-    return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+    # ---------- POST → Registrar nuevo vehículo ----------
+    if request.method == 'POST':
+        print("⚠️ LLEGÓ POST /vehiculos")
+        print("FORM DATA:", request.form)
 
+        unidad_numero = request.form.get('unidad_numero')
+        placa = request.form.get('placa')
+        marca = request.form.get('marca')
+        modelo = request.form.get('modelo')
+        anio = request.form.get('anio', type=int)
+        capacidad = request.form.get('capacidad', type=float)
+
+        # Estos NOMBRES deben coincidir con name="..." del HTML
+        tipo_id = request.form.get('tipo_id', type=int)
+        estado_id = request.form.get('estado_id', type=int)
+
+        vin = request.form.get('vin') or None
+        km = request.form.get('km_actual', type=int)
+        seguro_raw = request.form.get('seguro_vigente')
+        aseguradora = request.form.get('aseguradora') or None
+        poliza = request.form.get('poliza_numero') or None
+        fecha_seguro = request.form.get('fecha_venc_seguro') or None
+        obs = request.form.get('observaciones') or None
+
+        # Normalizar km y seguro_vigente
+        if km is None:
+            km = 0
+        seguro_vigente = True if seguro_raw == "1" else False
+
+        # Validación mínima (solo campos obligatorios de verdad)
+        if not all([unidad_numero, placa, tipo_id, capacidad, estado_id]):
+            flash("Debes completar los campos obligatorios: unidad, placa, tipo, capacidad y estado.", "danger")
+            return redirect(url_for('main.vehiculos'))
+
+        # Crear objeto vehículo con TODOS los campos que quieres guardar
+        nuevo = Vehiculos(
+            unidad_numero=unidad_numero,
+            placa=placa,
+            vin=vin,
+            marca=marca,
+            modelo=modelo,
+            anio=anio,
+            capacidad_kg=capacidad,
+            tipo_id=tipo_id,
+            estado_id=estado_id,
+            km_actual=km,
+            seguro_vigente=seguro_vigente,
+            aseguradora=aseguradora,
+            poliza_numero=poliza,
+            fecha_venc_seguro=fecha_seguro,
+            observaciones=obs
+        )
+
+        try:
+            db.session.add(nuevo)
+            db.session.commit()
+            print("✅ Vehículo insertado con ID:", nuevo.id_vehiculo)
+            flash("Vehículo registrado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            print("❌ ERROR al guardar vehículo:", e)
+            flash(f"Error al guardar el vehículo: {e}", "danger")
+
+        return redirect(url_for('main.vehiculos'))
+
+    # ---------- GET → Mostrar formulario y tabla ----------
+    tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
+    estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
+    lista_vehiculos = Vehiculos.query.all()
+
+    return render_template(
+        'Modules/Gestion_Vehiculos/VistaGestionVehiculos.html',
+        title='Gestión de Vehículos',
+        vehiculos=lista_vehiculos,
+        tipos=tipos,
+        estados=estados
+    )

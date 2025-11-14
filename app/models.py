@@ -1,14 +1,13 @@
-from . import db
-from datatime import datetime
-
 # app/models.py
 from datetime import datetime
-from app import db
+from . import db  # usa el db que inicializas en __init__.py
+
 from sqlalchemy import CheckConstraint, Index, UniqueConstraint, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import (
     INTEGER, TINYINT, SMALLINT, VARCHAR, TEXT, DECIMAL, BOOLEAN, ENUM, DATETIME, DATE
 )
+
 
 # ============================================
 # MÓDULO: UBICACIONES GEOGRÁFICAS
