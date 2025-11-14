@@ -1,230 +1,110 @@
 /* ========================================== */
-/* ESTILOS MÓDULO DE EVIDENCIAS - MEJORADO */
+/* ESTILOS MÓDULO DE EVIDENCIAS - MINIMALISTA */
 /* ========================================== */
 
-/* Contenedor principal con gradiente sutil */
+/* Contenedor principal */
 .evidencia-container {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+    background-color: #f8f9fa;
     min-height: 100vh;
-    position: relative;
-}
-
-.evidencia-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 300px;
-    background: linear-gradient(135deg, rgba(164, 198, 57, 0.1) 0%, rgba(45, 80, 22, 0.05) 100%);
-    border-radius: 0 0 50% 50%;
-    z-index: 0;
-}
-
-.evidencia-container > * {
-    position: relative;
-    z-index: 1;
+    padding: 2rem;
 }
 
 /* ========================================== */
-/* TÍTULOS CON EFECTOS MODERNOS */
+/* TÍTULOS */
 /* ========================================== */
 .evidencia-titulo {
     color: #2d5016;
-    font-weight: 800;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    background: linear-gradient(135deg, #2d5016 0%, #4a8028 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    padding-bottom: 15px;
-}
-
-.evidencia-titulo::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #a4c639 0%, #2d5016 100%);
-    border-radius: 2px;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .evidencia-subtitulo {
     color: #2d5016;
-    font-weight: 700;
-    font-size: 1.5rem;
-    position: relative;
-    padding-left: 20px;
-}
-
-.evidencia-subtitulo::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 25px;
-    background: linear-gradient(180deg, #a4c639 0%, #2d5016 100%);
-    border-radius: 3px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
 .evidencia-seccion-titulo {
     color: #2d5016;
     font-weight: 600;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.evidencia-seccion-titulo::before {
-    content: '▸';
-    color: #a4c639;
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 /* ========================================== */
-/* LABELS MEJORADOS */
+/* LABELS */
 /* ========================================== */
 .evidencia-label {
     color: #2d5016;
     font-weight: 600;
     font-size: 0.95rem;
-    margin-bottom: 8px;
-    display: block;
-    transition: color 0.3s ease;
 }
 
 /* ========================================== */
-/* PESTAÑAS (TABS) CON EFECTOS 3D */
+/* PESTAÑAS (TABS) */
 /* ========================================== */
 .evidencia-tabs {
     background: white;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: none !important;
 }
 
 .evidencia-tabs .nav-link {
     color: #2d5016;
     border: none;
-    border-radius: 12px;
-    padding: 12px 25px;
-    margin: 0 5px;
+    border-radius: 6px;
+    padding: 12px 24px;
+    margin: 0 4px;
     font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.evidencia-tabs .nav-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(164, 198, 57, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.evidencia-tabs .nav-link:hover::before {
-    left: 100%;
+    transition: all 0.2s ease;
 }
 
 .evidencia-tabs .nav-link:hover {
-    background: linear-gradient(135deg, #d4e89e 0%, #c5e063 100%);
+    background-color: #e8f5e9;
     color: #2d5016;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(164, 198, 57, 0.3);
 }
 
 .evidencia-tabs .nav-link.active {
-    background: linear-gradient(135deg, #a4c639 0%, #8fb030 100%) !important;
-    color: white !important;
-    box-shadow: 0 6px 20px rgba(164, 198, 57, 0.4);
-    transform: translateY(-2px);
-}
-
-.evidencia-tabs .nav-link.active::after {
-    content: '✓';
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: bold;
-    animation: checkmark 0.5s ease;
-}
-
-@keyframes checkmark {
-    0% { opacity: 0; transform: translateY(-50%) scale(0); }
-    50% { transform: translateY(-50%) scale(1.2); }
-    100% { opacity: 1; transform: translateY(-50%) scale(1); }
+    background-color: #a4c639 !important;
+    color: #2d5016 !important;
+    box-shadow: 0 2px 8px rgba(164, 198, 57, 0.3);
 }
 
 /* ========================================== */
-/* TARJETAS CON EFECTO GLASSMORPHISM */
+/* TARJETAS */
 /* ========================================== */
 .evidencia-card {
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(164, 198, 57, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.evidencia-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #a4c639 0%, #2d5016 50%, #a4c639 100%);
-    background-size: 200% 100%;
-    animation: gradientShift 3s ease infinite;
-}
-
-@keyframes gradientShift {
-    0%, 100% { background-position: 0% 0%; }
-    50% { background-position: 100% 0%; }
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
 }
 
 .evidencia-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.evidencia-card .card-body {
-    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* ========================================== */
-/* FORMULARIOS MODERNOS */
+/* FORMULARIOS */
 /* ========================================== */
 .evidencia-card .form-control,
 .evidencia-card .form-select {
-    border: 2px solid #e8f5e9;
-    border-radius: 12px;
-    padding: 12px 18px;
-    transition: all 0.3s ease;
-    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px 14px;
+    transition: border-color 0.2s ease;
 }
 
 .evidencia-card .form-control:focus,
 .evidencia-card .form-select:focus {
     border-color: #a4c639;
-    box-shadow: 0 0 0 4px rgba(164, 198, 57, 0.1);
-    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px rgba(164, 198, 57, 0.1);
+    outline: none;
 }
 
 .evidencia-card .form-check-input:checked {
@@ -232,244 +112,153 @@
     border-color: #a4c639;
 }
 
-.evidencia-card textarea.form-control {
-    resize: vertical;
-    min-height: 100px;
-}
-
 /* ========================================== */
-/* BOTONES CON EFECTOS 3D Y ANIMACIONES */
+/* BOTONES - ESTILO MINIMALISTA */
 /* ========================================== */
 .evidencia-btn-primary {
-    background: linear-gradient(135deg, #a4c639 0%, #8fb030 100%);
-    color: white;
-    border: none;
-    padding: 14px 35px;
-    font-size: 1.1rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(164, 198, 57, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+    background-color: #a4c639;
+    color: #2d5016;
+    border: 2px solid #2d5016;
+    padding: 14px 40px;
+    font-size: 1.05rem;
+    border-radius: 8px;
     font-weight: 700;
-}
-
-.evidencia-btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.evidencia-btn-primary:hover::before {
-    width: 300px;
-    height: 300px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
 }
 
 .evidencia-btn-primary:hover {
-    background: linear-gradient(135deg, #8fb030 0%, #7a9428 100%);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(164, 198, 57, 0.5);
+    background-color: #8fb030;
+    color: #1f3810;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.25);
 }
 
 .evidencia-btn-primary:active {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(164, 198, 57, 0.4);
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
 }
 
 .evidencia-btn-secondary {
-    background: linear-gradient(135deg, #2d5016 0%, #1f3810 100%);
+    background-color: #2d5016;
     color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(45, 80, 22, 0.3);
-    transition: all 0.3s ease;
+    border: 2px solid #2d5016;
+    padding: 12px 32px;
+    border-radius: 8px;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
 }
 
 .evidencia-btn-secondary:hover {
-    background: linear-gradient(135deg, #1f3810 0%, #0f1c08 100%);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(45, 80, 22, 0.5);
+    background-color: #1f3810;
+    border-color: #1f3810;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.25);
+}
+
+.evidencia-btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
 }
 
 /* ========================================== */
-/* TABLAS CON DISEÑO MODERNO */
+/* TABLAS */
 /* ========================================== */
 .evidencia-table {
-    border-radius: 15px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .evidencia-table-header {
-    background: linear-gradient(135deg, #2d5016 0%, #1f3810 100%);
+    background-color: #2d5016;
     color: white;
 }
 
 .evidencia-table thead th {
     border: none;
-    font-weight: 700;
-    padding: 18px 15px;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 16px 12px;
+    font-size: 0.9rem;
 }
 
 .evidencia-table tbody tr {
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease;
     border-bottom: 1px solid #e8f5e9;
 }
 
 .evidencia-table tbody tr:hover {
-    background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e9 100%);
-    transform: scale(1.01);
-    box-shadow: 0 4px 12px rgba(164, 198, 57, 0.1);
+    background-color: #f0f9f0;
 }
 
 .evidencia-table tbody td {
-    padding: 15px;
+    padding: 14px 12px;
     vertical-align: middle;
 }
 
 /* ========================================== */
-/* BADGES PERSONALIZADOS CON ICONOS */
+/* BADGES */
 /* ========================================== */
 .evidencia-badge-cargando {
-    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    background-color: #ffc107;
     color: #000;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 6px 14px;
+    border-radius: 16px;
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+    font-size: 0.85rem;
 }
 
 .evidencia-badge-ruta {
-    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    background-color: #17a2b8;
     color: #fff;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 6px 14px;
+    border-radius: 16px;
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(23, 162, 184, 0.3);
+    font-size: 0.85rem;
 }
 
 .evidencia-badge-espera {
-    background: linear-gradient(135deg, #fd7e14 0%, #e8590c 100%);
+    background-color: #fd7e14;
     color: #fff;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 6px 14px;
+    border-radius: 16px;
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(253, 126, 20, 0.3);
+    font-size: 0.85rem;
 }
 
 /* ========================================== */
-/* ALERTAS PERSONALIZADAS */
+/* ALERTAS */
 /* ========================================== */
 .alert-success {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    border: 2px solid #a4c639;
-    border-radius: 12px;
+    background-color: #d4edda;
+    border: 1px solid #a4c639;
+    border-radius: 8px;
     color: #2d5016;
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(164, 198, 57, 0.2);
-    animation: slideDown 0.5s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* ========================================== */
-/* ANIMACIONES GLOBALES */
-/* ========================================== */
-.btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-/* Efecto de carga en inputs */
-.form-control:focus,
-.form-select:focus {
-    animation: inputGlow 0.5s ease;
-}
-
-@keyframes inputGlow {
-    0% { box-shadow: 0 0 0 0 rgba(164, 198, 57, 0.4); }
-    50% { box-shadow: 0 0 0 8px rgba(164, 198, 57, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(164, 198, 57, 0); }
-}
-
-/* ========================================== */
-/* EFECTOS DE HOVER EN CARDS */
-/* ========================================== */
-.evidencia-card .mb-4:hover .evidencia-seccion-titulo {
-    color: #a4c639;
-    transform: translateX(5px);
-    transition: all 0.3s ease;
-}
-
-/* ========================================== */
-/* SCROLLBAR PERSONALIZADA */
-/* ========================================== */
-.evidencia-container ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-.evidencia-container ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.evidencia-container ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #a4c639 0%, #2d5016 100%);
-    border-radius: 10px;
-}
-
-.evidencia-container ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #8fb030 0%, #1f3810 100%);
-}
-
-/* ========================================== */
-/* RESPONSIVE DESIGN MEJORADO */
+/* RESPONSIVE */
 /* ========================================== */
 @media (max-width: 768px) {
     .evidencia-container {
-        padding: 1rem !important;
+        padding: 1rem;
     }
     
     .evidencia-titulo {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
     
     .evidencia-subtitulo {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .evidencia-tabs .nav-link {
-        padding: 10px 15px;
-        margin: 5px 0;
+        padding: 10px 16px;
+        margin: 4px 0;
         font-size: 0.9rem;
     }
     
@@ -478,38 +267,20 @@
         width: 100%;
         margin-bottom: 10px;
     }
-    
-    .evidencia-card {
-        margin-bottom: 20px;
-    }
 }
 
 /* ========================================== */
-/* ANIMACIONES DE ENTRADA */
+/* ANIMACIÓN SUAVE DE ENTRADA */
 /* ========================================== */
 .tab-pane {
-    animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
-}
-
-/* ========================================== */
-/* ICONOS MEJORADOS EN FORMULARIOS */
-/* ========================================== */
-.form-label::before {
-    content: '📋 ';
-    margin-right: 5px;
-}
-
-select.form-select::after {
-    content: '▼';
 }
