@@ -1,14 +1,8 @@
 from flask import Flask
-from app.config import Config
-from config import DevelopmentConfig
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
 
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(DevelopmentConfig)
 
     # 1) Cargar configuración (BD, SECRET_KEY, etc.)
     app.config.from_object(config_class)
@@ -24,11 +18,5 @@ def create_app(config_class=Config):
     # El blueprint de gestión de vehículos está definido en app/routes.py
     # (variable bp), por eso no intentamos importar
     # app.Gestion_Vehiculos.routes — eso provocaba ModuleNotFoundError.
-
-    @app.errorhandler(404)
-    def page_not_found(error):
-        # Esta función busca '404.html' en la carpeta 'templates'
-        # y devuelve el código de estado 404.
-        return render_template('layouts/404.html'), 404
 
     return app
