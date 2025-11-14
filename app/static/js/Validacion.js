@@ -1,39 +1,30 @@
-<<<<<<< HEAD
-// ============================================================
-// VALIDACIÓN FORMULARIO DE VEHÍCULOS
-// ============================================================
-=======
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
 document.addEventListener("DOMContentLoaded", () => {
+  // === VALIDACIÓN FORMULARIO DE VEHÍCULOS ===
   const form = document.querySelector("form[novalidate]");
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
-<<<<<<< HEAD
-    let valido = true;
 
     // Limpiar estados previos
     form.querySelectorAll(".is-invalid").forEach((el) =>
       el.classList.remove("is-invalid")
     );
-=======
     e.preventDefault();
+
     let valido = true;
 
+    // Limpiar estados previos
     form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
 
     const placa = form.placa.value.trim();
     const marca = form.marca.value.trim();
     const modelo = form.modelo.value.trim();
     const anio = parseInt(form.anio.value.trim());
-    const tipo = form.tipo.value.trim();
+    const tipo = form.tipo.value.trim();          // id="tipo" en el HTML
     const capacidad = parseFloat(form.capacidad.value.trim());
-    const estado = form.estado.value.trim();
+    const estado = form.estado.value.trim();      // id="estado" en el HTML
 
-<<<<<<< HEAD
     // Validación de placa
-    const placaRegex = /^[A-Z]{1,2}-?\d{3,6}$/;
     if (!placa || !placaRegex.test(placa)) {
       marcarInvalido(
         form.placa,
@@ -43,31 +34,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Marca
-=======
+
+    // Validación de placa
     const placaRegex = /^[A-Z]{1,2}-?\d{3,6}$/;
     if (!placa || !placaRegex.test(placa)) {
       marcarInvalido(form.placa, "Formato de placa incorrecto (Ej: P-123456 o AB123456).");
       valido = false;
     }
 
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
+    // Marca
     if (!marca) {
       marcarInvalido(form.marca, "La marca no puede estar vacía.");
       valido = false;
     }
 
-<<<<<<< HEAD
+
     // Modelo
-=======
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
+
+    // Modelo
+
     if (!modelo) {
       marcarInvalido(form.modelo, "El modelo es obligatorio.");
       valido = false;
     }
 
-<<<<<<< HEAD
     // Año
-    const yearActual = new Date().getFullYear();
     if (isNaN(anio) || anio < 1980 || anio > yearActual + 1) {
       marcarInvalido(
         form.anio,
@@ -77,21 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Tipo
-=======
+    // Año
     const yearActual = new Date().getFullYear();
     if (isNaN(anio) || anio < 1980 || anio > yearActual + 1) {
       marcarInvalido(form.anio, `El año debe estar entre 1980 y ${yearActual + 1}.`);
       valido = false;
     }
 
-
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
+    // Tipo
     if (!tipo) {
       marcarInvalido(form.tipo, "Seleccione un tipo de vehículo.");
       valido = false;
     }
 
-<<<<<<< HEAD
     // Capacidad
     if (isNaN(capacidad) || capacidad <= 0) {
       marcarInvalido(
@@ -102,20 +91,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Estado
-=======
+    // Capacidad
     if (isNaN(capacidad) || capacidad <= 0) {
       marcarInvalido(form.capacidad, "Ingrese una capacidad de carga válida (mayor a 0).");
       valido = false;
     }
 
 
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
+
+    // Estado
     if (!estado) {
       marcarInvalido(form.estado, "Seleccione el estado del vehículo.");
       valido = false;
     }
 
-<<<<<<< HEAD
     if (!valido) {
       e.preventDefault();
       mostrarAlerta(
@@ -125,18 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-=======
 
     if (valido) {
       mostrarAlerta("Vehículo guardado correctamente ✅", "success");
       form.reset();
     } else {
+    // Si hay errores, bloqueamos el envío y mostramos alerta
+    if (!valido) {
+      e.preventDefault();
       mostrarAlerta("Por favor, corrija los campos marcados en rojo ⚠️", "danger");
     }
-  });
+    // Si ES válido, NO hacemos preventDefault → el form se envía normal al backend
+  }
 
 
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
   function marcarInvalido(campo, mensaje) {
     campo.classList.add("is-invalid");
     let feedback = campo.nextElementSibling;
@@ -160,16 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-<<<<<<< HEAD
-// ============================================================
-// VALIDACIÓN Y FILTRO FORMULARIO DE UBICACIONES (REGISTRO)
-// ============================================================
-document.addEventListener("DOMContentLoaded", () => {
-=======
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // ======== VALIDACIÓN FORMULARIO DE UBICACIONES ========
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
   const formUbicacion = document.getElementById("form-ubicacion");
   const selectDepto = document.getElementById("ubicacion-departamento");
   const selectMunicipio = document.getElementById("ubicacion-municipio");
@@ -177,31 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Filtro dinámico de municipios según el departamento ---
   if (selectDepto && selectMunicipio) {
     const grupos = Array.from(selectMunicipio.querySelectorAll("optgroup"));
-<<<<<<< HEAD
-
-    function filtrarMunicipios() {
-      const depto = selectDepto.value;
-      selectMunicipio.value = "";
-
-      if (!depto) {
-        selectMunicipio.disabled = true;
-        grupos.forEach((g) => (g.style.display = "none"));
-        return;
-      }
-
-      selectMunicipio.disabled = false;
-
-      grupos.forEach((g) => {
-        g.style.display = g.dataset.parent === depto ? "block" : "none";
-      });
-    }
-
-    // Estado inicial
-    grupos.forEach((g) => (g.style.display = "none"));
-    selectMunicipio.disabled = true;
-
-    selectDepto.addEventListener("change", filtrarMunicipios);
-=======
     grupos.forEach(g => g.style.display = "none");
 
     selectDepto.addEventListener("change", () => {
@@ -211,46 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
         g.style.display = g.dataset.parent === depto ? "block" : "none";
       });
     });
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
   }
 
   // --- Validación del formulario ---
   if (formUbicacion) {
     formUbicacion.addEventListener("submit", (e) => {
-<<<<<<< HEAD
-  e.preventDefault();
-  limpiarMensajes(formUbicacion);
-
-  const depto = selectDepto.value.trim();
-  const municipio = selectMunicipio.value.trim();
-  const direccion = document.getElementById("ubicacion-direccion").value.trim();
-  let valido = true;
-
-  if (!depto) {
-    marcarInvalido(selectDepto, "Debe seleccionar un departamento.");
-    valido = false;
-  }
-
-  if (!municipio) {
-    marcarInvalido(selectMunicipio, "Seleccione un municipio válido.");
-    valido = false;
-  }
-
-  if (direccion.length < 5) {
-    marcarInvalido(document.getElementById("ubicacion-direccion"), "Ingrese una dirección más detallada.");
-    valido = false;
-  }
-
-  if (valido) {
-    // 👉 Aquí ya NO reseteamos: dejamos que vaya al backend
-    formUbicacion.submit();
-  } else {
-    mostrarAlerta("⚠️ Corrige los campos marcados antes de continuar", "danger", formUbicacion);
-  }
-});
-
-  }
-=======
       e.preventDefault();
       limpiarMensajes(formUbicacion);
 
@@ -290,7 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
 
   function marcarInvalido(campo, mensaje) {
     campo.classList.add("is-invalid");
@@ -304,17 +228,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function limpiarMensajes(form) {
-<<<<<<< HEAD
-    form
-      .querySelectorAll(".is-invalid")
-      .forEach((el) => el.classList.remove("is-invalid"));
-    form
-      .querySelectorAll(".invalid-feedback")
-      .forEach((el) => el.remove());
-=======
     form.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
     form.querySelectorAll(".invalid-feedback").forEach(el => el.remove());
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
   }
 
   function mostrarAlerta(mensaje, tipo, form) {
@@ -328,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-<<<<<<< HEAD
+
 // ============================================================
 // DETALLE DE UBICACIÓN (EDICIÓN)
 // ============================================================
@@ -662,7 +577,6 @@ function agregarConductorATabla(conductor) {
     </td>
   `;
 }
-=======
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form-detalle-ubicacion");
@@ -845,11 +759,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-
-<<<<<<< HEAD
->>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
-=======
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formConductor');
     const modalElement = document.getElementById('modalRegistroConductor');
@@ -999,4 +908,3 @@ function agregarConductorATabla(conductor) {
     `;
 }
 
->>>>>>> acd4616 (validacion para gestion conductor)
