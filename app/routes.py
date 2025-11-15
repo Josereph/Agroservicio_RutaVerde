@@ -149,3 +149,95 @@ def vehiculos():
         tipos=tipos,
         estados=estados
     )
+    
+    # ============================================================
+# EDITAR VEHÍCULO
+# ============================================================
+@bp.route('/vehiculos/editar/<int:id_vehiculo>', methods=['GET', 'POST'])
+def editar_vehiculo(id_vehiculo):
+    vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
+
+    if request.method == 'POST':
+        # Mismos campos que en crear
+        unidad_numero = request.form.get('unidad_numero')
+        placa = request.form.get('placa')
+        marca = request.form.get('marca')
+        modelo = request.form.get('modelo')
+        anio = request.form.get('anio', type=int)
+        capacidad = request.form.get('capacidad', type=float)
+
+        tipo_id = request.form.get('tipo_id', type=int)
+        estado_id = request.form.get('estado_id', type=int)
+
+        vin = request.form.get('vin') or None
+        km = request.form.get('km_actual', type=int)
+        seguro_raw = request.form.get('seguro_vigente')
+        aseguradora = request.form.get('aseguradora') or None
+        poliza = request.form.get('poliza_numero') or None
+        fecha_seguro = request.form.get('fecha_venc_seguro') or None
+        obs = request.form.get('observaciones') or None
+
+        if km is None:
+            km = 0
+        seguro_vigente = True if seguro_raw == "1" else False
+
+        if not all([unidad_numero, placa, tipo_id, capacidad, estado_id]):
+            flash("Debes completar los campos obligatorios: unidad, placa, tipo, capacidad y estado.", "danger")
+            return redirect(url_for('main.editar_vehiculo', id_vehiculo=id_vehiculo))
+
+        # Asignar cambios al objeto existente
+        vehiculo.unidad_numero = unidad_numero
+        vehiculo.placa = placa
+        vehiculo.marca = marca
+        vehiculo.modelo = modelo
+        vehiculo.anio = anio
+        vehiculo.capacidad_kg = capacidad
+        vehiculo.tipo_id = tipo_id
+        vehiculo.estado_id = estado_id
+        vehiculo.vin = vin
+        vehiculo.km_actual = km
+        vehiculo.seguro_vigente = seguro_vigente
+        vehiculo.aseguradora = aseguradora
+        vehiculo.poliza_numero = poliza
+        vehiculo.fecha_venc_seguro = fecha_seguro
+        vehiculo.observaciones = obs
+
+        try:
+            db.session.commit()
+            flash("Vehículo actualizado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al actualizar el vehículo: {e}", "danger")
+
+        return redirect(url_for('main.vehiculos'))
+
+    # GET → mostrar formulario de edición
+    tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
+    estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
+
+    return render_template(
+        'Modules/Gestion_Vehiculos/EditarVehiculo.html',
+        title='Editar Vehículo',
+        vehiculo=vehiculo,
+        tipos=tipos,
+        estados=estados
+    )
+
+
+# ============================================================
+# ELIMINAR VEHÍCULO
+# ============================================================
+@bp.route('/vehiculos/eliminar/<int:id_vehiculo>', methods=['POST'])
+def eliminar_vehiculo(id_vehiculo):
+    vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
+
+    try:
+        db.session.delete(vehiculo)
+        db.session.commit()
+        flash(f"Vehículo {vehiculo.placa} eliminado correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error al eliminar el vehículo: {e}", "danger")
+
+    return redirect(url_for('main.vehiculos'))
+
