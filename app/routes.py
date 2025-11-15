@@ -145,17 +145,52 @@ def vehiculos():
         return redirect(url_for('main.vehiculos'))
 
     # ---------- GET → Mostrar formulario y tabla ----------
+       # ---------- GET → Mostrar formulario y tabla con filtros ----------
+    from sqlalchemy import or_
+
+    # Leer parámetros de búsqueda desde la URL (GET)
+    q = request.args.get('q', '', type=str).strip()
+    tipo_filtro = request.args.get('tipo_id', type=int)
+    estado_filtro = request.args.get('estado_id', type=int)
+
+    # Consulta base
+    consulta = Vehiculos.query
+
+    # Filtro de texto: placa, marca o modelo
+    if q:
+        patron = f"%{q}%"
+        consulta = consulta.filter(
+            or_(
+                Vehiculos.placa.ilike(patron),
+                Vehiculos.marca.ilike(patron),
+                Vehiculos.modelo.ilike(patron),
+            )
+        )
+
+    # Filtro por tipo de vehículo
+    if tipo_filtro:
+        consulta = consulta.filter(Vehiculos.tipo_id == tipo_filtro)
+
+    # Filtro por estado
+    if estado_filtro:
+        consulta = consulta.filter(Vehiculos.estado_id == estado_filtro)
+
+    lista_vehiculos = consulta.all()
+
     tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
     estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
-    lista_vehiculos = Vehiculos.query.all()
 
     return render_template(
         'Modules/Gestion_Vehiculos/VistaGestionVehiculos.html',
         title='Gestión de Vehículos',
         vehiculos=lista_vehiculos,
         tipos=tipos,
-        estados=estados
+        estados=estados,
+        q=q,
+        tipo_sel=tipo_filtro,
+        estado_sel=estado_filtro,
     )
+
     
     # ============================================================
 # EDITAR VEHÍCULO
