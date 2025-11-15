@@ -10,7 +10,7 @@
   <h2 class="text-center mb-4">Gestión de Vehículos</h2>
   <p class="text-center text-muted">Administra los vehículos de carga del Agroservicio “Ruta Verde”.</p>
 
-  <!-- Filtros (opcional, aún sin lógica en backend) -->
+  <!-- Formulario de filtros -->
   <form class="row g-2 mb-4" role="search" aria-label="Filtros de vehículos" method="get">
     <div class="col-md-4">
       <label for="q" class="form-label">Buscar</label>
@@ -210,14 +210,27 @@
                     </span>
                   {% endif %}
                 </td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-warning me-1" aria-label="Editar {{ v.placa }}">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button class="btn btn-sm btn-danger" aria-label="Eliminar {{ v.placa }}">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
+               <td class="text-center">
+  <!-- Botón Editar: redirige a la vista de edición -->
+  <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
+     class="btn btn-sm btn-warning me-1"
+     aria-label="Editar {{ v.placa }}">
+    <i class="bi bi-pencil"></i>
+  </a>
+
+  <!-- Botón Eliminar: formulario POST con confirmación -->
+  <form action="{{ url_for('main.eliminar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
+        method="POST"
+        class="d-inline"
+        onsubmit="return confirm('¿Seguro que deseas eliminar el vehículo {{ v.placa }}?');">
+    <button type="submit"
+            class="btn btn-sm btn-danger"
+            aria-label="Eliminar {{ v.placa }}">
+      <i class="bi bi-trash"></i>
+    </button>
+  </form>
+</td>
+
               </tr>
             {% endfor %}
           {% else %}
