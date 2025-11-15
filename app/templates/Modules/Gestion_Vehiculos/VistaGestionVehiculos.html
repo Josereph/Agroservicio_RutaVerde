@@ -12,34 +12,49 @@
 
   <!-- Formulario de filtros -->
   <form class="row g-2 mb-4" role="search" aria-label="Filtros de vehículos" method="get">
-    <div class="col-md-4">
-      <label for="q" class="form-label">Buscar</label>
-      <input id="q" name="q" class="form-control" placeholder="Placa, marca o modelo" inputmode="search" />
-    </div>
-    <div class="col-md-3">
-      <label for="f-tipo" class="form-label">Tipo</label>
-      <select id="f-tipo" name="tipo_id" class="form-select">
-        <option value="">Todos</option>
-        {% for t in tipos %}
-          <option value="{{ t.tipo_id }}">{{ t.nombre|replace('_',' ')|capitalize }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-3">
-      <label for="f-estado" class="form-label">Estado</label>
-      <select id="f-estado" name="estado_id" class="form-select">
-        <option value="">Todos</option>
-        {% for e in estados %}
-          <option value="{{ e.estado_id }}">{{ e.nombre|replace('_',' ')|capitalize }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <button class="btn btn-outline-success w-100" type="submit">
-        <i class="bi bi-funnel"></i> Filtrar
-      </button>
-    </div>
-  </form>
+  <div class="col-md-4">
+    <label for="q" class="form-label">Buscar</label>
+    <input id="q"
+           name="q"
+           class="form-control"
+           placeholder="Placa, marca o modelo"
+           inputmode="search"
+           value="{{ q or '' }}" />
+  </div>
+
+  <div class="col-md-3">
+    <label for="f-tipo" class="form-label">Tipo</label>
+    <select id="f-tipo" name="tipo_id" class="form-select">
+      <option value="" {% if not tipo_sel %}selected{% endif %}>Todos</option>
+      {% for t in tipos %}
+        <option value="{{ t.tipo_id }}"
+                {% if tipo_sel == t.tipo_id %}selected{% endif %}>
+          {{ t.nombre|replace('_',' ')|capitalize }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label for="f-estado" class="form-label">Estado</label>
+    <select id="f-estado" name="estado_id" class="form-select">
+      <option value="" {% if not estado_sel %}selected{% endif %}>Todos</option>
+      {% for e in estados %}
+        <option value="{{ e.estado_id }}"
+                {% if estado_sel == e.estado_id %}selected{% endif %}>
+          {{ e.nombre|replace('_',' ')|capitalize }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end">
+    <button class="btn btn-outline-success w-100" type="submit">
+      <i class="bi bi-funnel"></i> Filtrar
+    </button>
+  </div>
+</form>
+
 
  <!-- Formulario de registro -->
 <div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
