@@ -1,207 +1,290 @@
-<!--plantilla del archivo inicio.html-->
+<!--plantilla del archivo inicio.html - Versión Informativa-->
 {% extends "layouts/base.html" %}
 
 {% block title %}Agroservicio Ruta Verde - Inicio{% endblock %}
 
+
+
 {% block content %}
-<div class="page-header">
+<link rel="stylesheet" href="/static/css/index.css">
+
+<!-- Hero Section Principal -->
+<div class="hero-section">
     <div class="container-fluid">
-        <div class="header-content">
-            <h1 class="page-title">Bienvenido a Agroservicio Ruta Verde</h1>
-            <p class="page-subtitle">Su socio confiable en logística agrícola</p>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="bi bi-award"></i>
+                <span>Más de 10 años de experiencia</span>
+            </div>
+            <h1 class="hero-title">Agroservicio Ruta Verde</h1>
+            <p class="hero-subtitle">Soluciones Logísticas Integrales para el Sector Agrícola</p>
+            <p class="hero-description">
+                Conectamos productores, distribuidores y mercados a través de 
+                servicios logísticos especializados en el sector agrícola de El Salvador
+            </p>
         </div>
     </div>
 </div>
 
-<div class="container-fluid mt-4">
-    <!-- Cards -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card">
-                <div class="stat-icon primary">
+<!-- Estadísticas Generales -->
+<div class="container-fluid stats-section">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="info-stat-card">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">14 Departamentos</h3>
+                    <p class="stat-description">Cobertura nacional completa</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="info-stat-card">
+                <div class="stat-icon-wrapper">
                     <i class="bi bi-truck"></i>
                 </div>
-                <div class="stat-content">
-                    <h3 class="stat-number">1,248</h3>
-                    <p class="stat-label">Entregas Totales</p>
+                <div class="stat-info">
+                    <h3 class="stat-value">+1,500 Entregas</h3>
+                    <p class="stat-description">Mensuales exitosas</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card">
-                <div class="stat-icon success">
-                    <i class="bi bi-box-seam"></i>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="info-stat-card">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-people-fill"></i>
                 </div>
-                <div class="stat-content">
-                    <h3 class="stat-number">456</h3>
-                    <p class="stat-label">Recursos Activos</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card">
-                <div class="stat-icon warning">
-                    <i class="bi bi-bell"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 class="stat-number">12</h3>
-                    <p class="stat-label">Alertas Pendientes</p>
+                <div class="stat-info">
+                    <h3 class="stat-value">+200 Clientes</h3>
+                    <p class="stat-description">Satisfechos y activos</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card">
-                <div class="stat-icon info">
-                    <i class="bi bi-file-earmark-text"></i>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="info-stat-card">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-clock-history"></i>
                 </div>
-                <div class="stat-content">
-                    <h3 class="stat-number">89</h3>
-                    <p class="stat-label">Documentos</p>
+                <div class="stat-info">
+                    <h3 class="stat-value">24/7</h3>
+                    <p class="stat-description">Servicio disponible</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- contenedor de las cards -->
+<!-- Sección: Quiénes Somos -->
+<div class="container-fluid content-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+            <div class="content-image">
+                <img src="/static/images/about.jpg" alt="Sobre Nosotros" class="img-fluid rounded-custom">
+                <div class="image-overlay">
+                    <i class="bi bi-heart-fill"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="content-text">
+                <span class="section-label">Quiénes Somos</span>
+                <h2 class="section-title">Líderes en Logística Agrícola</h2>
+                <p class="section-description">
+                    Somos una empresa salvadoreña especializada en brindar soluciones 
+                    logísticas integrales para el sector agrícola. Nuestro compromiso es 
+                    facilitar el transporte eficiente de productos, asegurando la calidad 
+                    y frescura desde el campo hasta su destino final.
+                </p>
+                <p class="section-description">
+                    Con tecnología de punta y un equipo altamente capacitado, garantizamos 
+                    procesos transparentes, trazabilidad completa y cumplimiento de todas 
+                    las normativas fitosanitarias vigentes.
+                </p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Certificación fitosanitaria completa</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Flota de transporte refrigerado</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Rastreo GPS en tiempo real</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Nuestros Valores -->
+<div class="container-fluid values-section">
+    <div class="section-header text-center">
+        <span class="section-label">Nuestros Valores</span>
+        <h2 class="section-title">Lo que nos define</h2>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h4 class="value-title">Confiabilidad</h4>
+                <p class="value-description">
+                    Cumplimiento garantizado en cada entrega, respetando tiempos y 
+                    condiciones establecidas con nuestros clientes.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-leaf"></i>
+                </div>
+                <h4 class="value-title">Sostenibilidad</h4>
+                <p class="value-description">
+                    Comprometidos con prácticas que respeten el medio ambiente y 
+                    promuevan el desarrollo agrícola sostenible.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-lightbulb"></i>
+                </div>
+                <h4 class="value-title">Innovación</h4>
+                <p class="value-description">
+                    Implementación constante de tecnología y procesos innovadores 
+                    para mejorar la eficiencia operativa.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h4 class="value-title">Compromiso</h4>
+                <p class="value-description">
+                    Dedicación total con nuestros clientes y comunidades agrícolas, 
+                    contribuyendo a su crecimiento y éxito.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-star"></i>
+                </div>
+                <h4 class="value-title">Excelencia</h4>
+                <p class="value-description">
+                    Búsqueda constante de los más altos estándares de calidad en 
+                    cada servicio que ofrecemos.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="bi bi-hand-thumbs-up"></i>
+                </div>
+                <h4 class="value-title">Transparencia</h4>
+                <p class="value-description">
+                    Comunicación clara y honesta en todas nuestras operaciones y 
+                    relaciones comerciales.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Alcance Geográfico -->
+<div class="container-fluid coverage-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 order-lg-2">
+            <div class="content-image">
+                <img src="/static/images/mapa.jpg" alt="Cobertura Nacional" class="img-fluid rounded-custom">
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 order-lg-1">
+            <div class="content-text">
+                <span class="section-label">Alcance Nacional</span>
+                <h2 class="section-title">Presencia en Todo El Salvador</h2>
+                <p class="section-description">
+                    Nuestra red logística cubre los 14 departamentos del país, conectando 
+                    las principales zonas productoras con centros de distribución y mercados 
+                    finales. Operamos rutas optimizadas que garantizan entregas rápidas y 
+                    eficientes.
+                </p>
+                <div class="coverage-stats">
+                    <div class="coverage-item">
+                        <h4 class="coverage-number">8</h4>
+                        <p class="coverage-label">Centros de distribución</p>
+                    </div>
+                    <div class="coverage-item">
+                        <h4 class="coverage-number">35+</h4>
+                        <p class="coverage-label">Rutas logísticas activas</p>
+                    </div>
+                    <div class="coverage-item">
+                        <h4 class="coverage-number">100%</h4>
+                        <p class="coverage-label">Cobertura nacional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Contacto Info -->
+<div class="container-fluid contact-info-section">
     <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card service-card">
-                <div class="card-image">
-                    <img src="/static/images/servicios.jpg" class="card-img-top" alt="Servicios">
-                    <div class="card-overlay">
-                        <i class="bi bi-briefcase"></i>
-                    </div>
+        <div class="col-lg-4 mb-4">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="bi bi-telephone-fill"></i>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Nuestros Servicios</h5>
-                    <p class="card-text">Ofrecemos una amplia gama de servicios logísticos para satisfacer todas sus necesidades agrícolas.</p>
-                    <a href="/servicios" class="btn btn-custom">
-                        Ver Servicios
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card service-card">
-                <div class="card-image">
-                    <img src="/static/images/recursos.jpg" class="card-img-top" alt="Recursos">
-                    <div class="card-overlay">
-                        <i class="bi bi-box-seam"></i>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Recursos Agrícolas</h5>
-                    <p class="card-text">Acceda a un catálogo completo de recursos y herramientas para optimizar su producción.</p>
-                    <a href="/recursos" class="btn btn-custom">
-                        Ver Recursos
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card service-card">
-                <div class="card-image">
-                    <img src="/static/images/reportes.jpg" class="card-img-top" alt="Reportes">
-                    <div class="card-overlay">
-                        <i class="bi bi-bar-chart-line"></i>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Reportes & Análisis</h5>
-                    <p class="card-text">Visualice estadísticas detalladas y genere reportes personalizados de sus operaciones.</p>
-                    <a href="/reportes" class="btn btn-custom">
-                        Ver Reportes
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row mt-4">
-        <div class="col-lg-8 mb-4">
-            <div class="card activity-card">
-                <div class="card-header">
-                    <h5 class="card-header-title">
-                        <i class="bi bi-clock-history"></i>
-                        Actividad Reciente
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <ul class="activity-list">
-                        <li class="activity-item">
-                            <div class="activity-icon success">
-                                <i class="bi bi-check-circle"></i>
-                            </div>
-                            <div class="activity-content">
-                                <h6 class="activity-title">Entrega completada</h6>
-                                <p class="activity-description">Pedido #12458 entregado exitosamente</p>
-                                <span class="activity-time">Hace 2 horas</span>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon warning">
-                                <i class="bi bi-exclamation-triangle"></i>
-                            </div>
-                            <div class="activity-content">
-                                <h6 class="activity-title">Alerta de inventario</h6>
-                                <p class="activity-description">Nivel bajo en fertilizante orgánico</p>
-                                <span class="activity-time">Hace 4 horas</span>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon info">
-                                <i class="bi bi-file-earmark-plus"></i>
-                            </div>
-                            <div class="activity-content">
-                                <h6 class="activity-title">Nuevo documento</h6>
-                                <p class="activity-description">Certificado fitosanitario agregado</p>
-                                <span class="activity-time">Hace 6 horas</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <h5 class="contact-title">Teléfono</h5>
+                <p class="contact-detail">+503 2XXX-XXXX</p>
+                <p class="contact-detail">Lun - Vie: 7:00 AM - 6:00 PM</p>
             </div>
         </div>
 
         <div class="col-lg-4 mb-4">
-            <div class="card quick-actions-card">
-                <div class="card-header">
-                    <h5 class="card-header-title">
-                        <i class="bi bi-lightning"></i>
-                        Acciones Rápidas
-                    </h5>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="bi bi-envelope-fill"></i>
                 </div>
-                <div class="card-body">
-                    <div class="quick-action-list">
-                        <a href="/servicios" class="quick-action-item">
-                            <i class="bi bi-plus-circle"></i>
-                            <span>Nuevo Servicio</span>
-                        </a>
-                        <a href="/recursos" class="quick-action-item">
-                            <i class="bi bi-box"></i>
-                            <span>Agregar Recurso</span>
-                        </a>
-                        <a href="/reportes" class="quick-action-item">
-                            <i class="bi bi-file-text"></i>
-                            <span>Generar Reporte</span>
-                        </a>
-                        <a href="/busqueda" class="quick-action-item">
-                            <i class="bi bi-search"></i>
-                            <span>Búsqueda Avanzada</span>
-                        </a>
-                    </div>
+                <h5 class="contact-title">Email</h5>
+                <p class="contact-detail">info@rutaverde.com.sv</p>
+                <p class="contact-detail">contacto@rutaverde.com.sv</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
                 </div>
+                <h5 class="contact-title">Ubicación</h5>
+                <p class="contact-detail">San Salvador, El Salvador</p>
+                <p class="contact-detail">Zona Industrial</p>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
