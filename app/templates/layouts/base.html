@@ -48,7 +48,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.recursos') }}" id="nav-recursos">
                              <i class="bi bi-box-seam"></i>
-                              <span>Recursos Operativos</span>  <!--Joseph estuvo aqui xdxd--> 
+                              <span>Recursos Operativos</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -97,10 +97,93 @@
     <!-- Bootstrap JS -->
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Custom JS -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Custom JS con Animaciones -->
     <script>
-        // Active link management
-        document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function() {
+            // Agregar elemento de fondo progresivo a cada nav-link
+            $('.nav-link').each(function() {
+                if (!$(this).find('.progress-bg').length) {
+                    $(this).prepend('<div class="progress-bg"></div>');
+                }
+            });
+
+            // Animación al pasar el mouse
+            $('.nav-link').on('mouseenter', function() {
+                const $this = $(this);
+                
+                // Animar el fondo
+                $this.find('.progress-bg').css('left', '-100%');
+                setTimeout(() => {
+                    $this.find('.progress-bg').css('left', '100%');
+                }, 50);
+                
+                // Animar el icono
+                $this.find('i').animate({
+                    fontSize: '22px'
+                }, 200);
+                
+                // Animar el texto
+                $this.find('span').animate({
+                    paddingLeft: '5px'
+                }, 200);
+            });
+
+            $('.nav-link').on('mouseleave', function() {
+                const $this = $(this);
+                
+                // Restaurar el icono
+                $this.find('i').animate({
+                    fontSize: '20px'
+                }, 200);
+                
+                // Restaurar el texto
+                $this.find('span').animate({
+                    paddingLeft: '0px'
+                }, 200);
+            });
+
+            // Animación al hacer clic
+            $('.nav-link').on('click', function(e) {
+                const $this = $(this);
+                
+                // Remover active de todos
+                $('.nav-link').removeClass('active');
+                
+                // Agregar active al clickeado
+                $this.addClass('active');
+                
+                // Efecto de pulso
+                $this.css('transform', 'scale(0.95)');
+                setTimeout(() => {
+                    $this.css('transform', '');
+                }, 150);
+                
+                // Crear efecto de onda
+                const ripple = $('<div class="ripple-effect"></div>');
+                $this.append(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+
+            // Efecto de carga al iniciar
+            $('.nav-item').each(function(index) {
+                const $item = $(this);
+                $item.css('opacity', '0');
+                
+                setTimeout(() => {
+                    $item.animate({
+                        opacity: 1,
+                        marginLeft: '12px'
+                    }, 400, 'swing');
+                }, index * 100);
+            });
+
+            // Active link management
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.nav-link');
             
