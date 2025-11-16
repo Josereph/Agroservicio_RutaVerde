@@ -1,0 +1,99 @@
+/* ===== Variables de Colores (Tus variables) ===== */
+:root {
+    --color-primary: #2d5f4f; /* Verde Bosque */
+    --color-primary-dark: #1a3d32;
+    --color-accent: #8bc34a; /* Verde Lima (Acento) */
+    --color-text-light: #e0e0e0;
+    --color-text-dark: #1a3d32;
+    --color-white: #ffffff;
+}
+
+/* --- Global Reset and Full Screen Centering --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light);
+    
+    /* Centrado total usando Flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    margin: 0;
+    
+    /* AJUSTE CLAVE 1: Permite scroll si el contenido no cabe */
+    overflow-y: auto; 
+    
+    /* AJUSTE CLAVE 2: Añade espacio de seguridad en la parte inferior */
+    padding-bottom: 50px; 
+}
+
+/* --- Contenido Principal Centrado --- */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    max-width: 90%;
+    animation: fadeIn 1s ease-out; 
+}
+
+/* --- Título 404 Más Pequeño --- */
+h1 {
+    /* AJUSTE CLAVE 3: Tamaño de fuente más pequeño */
+    font-size: 4em; 
+    margin: 0;
+    color: var(--color-accent);
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 5px 15px rgba(139, 195, 74, 0.4); 
+}
+p {
+     font-size: 2em;
+     margin: 0;
+}
+
+/* --- Contenedor de la Animación Más Pequeño --- */
+#lottie-animation {
+    /* AJUSTE CLAVE 4: Reducción del tamaño */
+    width: 60vw; 
+    height: 60vh; 
+    max-width: 400px; /* Reducción de la limitación máxima */
+    max-height: 400px;
+    margin: 20px 0 30px 0; /* Menos margen superior */
+}
+
+/* --- Botón de Regreso (sin cambios) --- */
+.back-link {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--color-accent); 
+    color: var(--color-primary-dark); 
+    text-decoration: none;
+    border-radius: 50px; 
+    font-weight: 700;
+    font-size: 1.1em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.back-link:hover {
+    background-color: var(--color-primary); 
+    color: var(--color-white);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Animación de Entrada --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
