@@ -23,11 +23,6 @@ def alertas():
     return render_template('layouts/Alertas.html', title='Sistema de Alertas')
 
 
-# ============================================================
-# GESTIÓN DE EVIDENCIA
-# ============================================================
-@bp.route('/gestion_evidencia')
-
 
 @bp.route('/gestion_evidencia') 
 def gestion_evidencia():
