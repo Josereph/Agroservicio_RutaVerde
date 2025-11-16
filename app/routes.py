@@ -54,8 +54,6 @@ def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
 
-
-
 @bp.route('/conductores')
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
