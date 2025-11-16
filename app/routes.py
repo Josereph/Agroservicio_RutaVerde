@@ -13,10 +13,15 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 
+<<<<<<< HEAD
 # ============================================================
 # GESTIÓN DE EVIDENCIA
 # ============================================================
 @bp.route('/gestion_evidencia')
+=======
+
+@bp.route('/gestion_evidencia') 
+>>>>>>> Gestion_Evidencia_Documentacion
 def gestion_evidencia():
     servicios = [
         {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
@@ -42,14 +47,23 @@ def ubicaciones():
 def detalles():
     return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='Detalles')
 
+<<<<<<< HEAD
 
 # ============================================================
 # SERVICIOS
 # ============================================================
+=======
+# Alias en minúsculas para evitar confusiones con /Servicios
+>>>>>>> Gestion_Evidencia_Documentacion
 @bp.route('/servicios')
 def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> Gestion_Evidencia_Documentacion
 
 # ============================================================
 # CONDUCTORES
@@ -72,6 +86,7 @@ def recursos():
 # ============================================================
 @bp.route('/vehiculos', methods=['GET', 'POST'])
 def vehiculos():
+<<<<<<< HEAD
     # ---------- POST → Registrar nuevo vehículo ----------
     if request.method == 'POST':
         print("⚠️ LLEGÓ POST /vehiculos")
@@ -276,3 +291,7 @@ def eliminar_vehiculo(id_vehiculo):
 
     return redirect(url_for('main.vehiculos'))
 
+=======
+    """Vista del módulo de gestión de vehículos"""
+    return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+>>>>>>> Gestion_Evidencia_Documentacion

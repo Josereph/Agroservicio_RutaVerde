@@ -9,7 +9,14 @@
     --card-shadow: 0 6px 18px rgba(34,51,43,0.08);
     --glass: rgba(255,255,255,0.6);
     --radius: 12px;
+<<<<<<< HEAD
     --primary-green: #38761d;
+=======
+<<<<<<< HEAD
+    --primary-green: #38761d;
+=======
+>>>>>>> Gestion_Conductores
+>>>>>>> Gestion_Evidencia_Documentacion
 }
 
 .agro-cards-grid{
@@ -140,8 +147,16 @@
 .btn-cta.secondary{
     background: transparent;
     color: var(--verde-oscuro);
+<<<<<<< HEAD
     border: 1px solid #38761d;
     border: 1px solid rgba(31,138,62,0.12);
+=======
+<<<<<<< HEAD
+    border: 1px solid #38761d;
+=======
+    border: 1px solid rgba(31,138,62,0.12);
+>>>>>>> Gestion_Conductores
+>>>>>>> Gestion_Evidencia_Documentacion
     box-shadow: none;
 }
 .status{
@@ -159,8 +174,13 @@
     .btn-cta{ padding: 7px 10px; }
 }
 .u-muted{ color: var(--muted); font-size: .9rem; }
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Gestion_Evidencia_Documentacion
 .img-bg-seed {
     background-image: url('/static/img/seed.jpg');
     background-size: cover;
@@ -171,4 +191,8 @@
     background-size: cover;
     background-position: center;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> Gestion_Conductores
+>>>>>>> Gestion_Evidencia_Documentacion
