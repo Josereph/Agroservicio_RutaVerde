@@ -67,10 +67,9 @@ body {
   box-shadow: 0 0 0 2px rgba(255,255,255,.25);
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> Gestion_Evidencia_Documentacion
+
+
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -319,8 +318,8 @@ main {
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
 
-<<<<<<< HEAD
-=======
+
+
 
 /* ===== ANIMACIONES JQUERY - Efecto Paleta de Carga ===== */
 
@@ -420,4 +419,3 @@ main {
         opacity: 0;
     }
 }
->>>>>>> Gestion_Evidencia_Documentacion

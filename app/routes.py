@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from . import db
-from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo
+from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor
+from datetime import datetime
+
 
 bp = Blueprint('main', __name__)
 
@@ -13,15 +15,14 @@ def index():
     return render_template('layouts/index.html', title='Inicio')
 
 
-<<<<<<< HEAD
+
 # ============================================================
 # GESTIÓN DE EVIDENCIA
 # ============================================================
 @bp.route('/gestion_evidencia')
-=======
+
 
 @bp.route('/gestion_evidencia') 
->>>>>>> Gestion_Evidencia_Documentacion
 def gestion_evidencia():
     servicios = [
         {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
@@ -47,30 +48,76 @@ def ubicaciones():
 def detalles():
     return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='Detalles')
 
-<<<<<<< HEAD
+
 
 # ============================================================
 # SERVICIOS
 # ============================================================
-=======
+
 # Alias en minúsculas para evitar confusiones con /Servicios
->>>>>>> Gestion_Evidencia_Documentacion
 @bp.route('/servicios')
 def servicios():
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> Gestion_Evidencia_Documentacion
 
 # ============================================================
 # CONDUCTORES
 # ============================================================
-@bp.route('/conductores')
+@bp.route('/conductores', methods=['GET', 'POST'])
 def conductores():
-    return render_template("Modules/Gestion_Conductores/chepe.html", title='Conductores')
+    # ---------- POST → Registrar nuevo conductor ----------
+    if request.method == 'POST':
+        nombre = request.form.get('nombre_completo')
+        documento = request.form.get('documento_identificacion')
+        tipo_licencia = request.form.get('tipo_licencia')
+        fecha_venc_str = request.form.get('fecha_vencimiento_licencia')
+        telefono = request.form.get('telefono') or None
+        correo = request.form.get('correo') or None
+        estado = request.form.get('estado') or 'Activo'
+        experiencia = request.form.get('experiencia_notas') or None
+
+        # Validar obligatorios reales de la BD
+        if not all([nombre, documento, tipo_licencia, fecha_venc_str]):
+            flash("Completa nombre, documento, tipo de licencia y fecha de vencimiento.", "danger")
+            return redirect(url_for('main.conductores'))
+
+        # Convertir fecha
+        try:
+            fecha_venc = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
+        except ValueError:
+            flash("Fecha de vencimiento inválida.", "danger")
+            return redirect(url_for('main.conductores'))
+
+        nuevo = Conductor(
+            nombre_completo=nombre,
+            documento_identificacion=documento,
+            tipo_licencia=tipo_licencia,
+            fecha_vencimiento_licencia=fecha_venc,
+            telefono=telefono,
+            correo=correo,
+            estado=estado,
+            experiencia_notas=experiencia
+        )
+
+        try:
+            db.session.add(nuevo)
+            db.session.commit()
+            flash("Conductor registrado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al guardar el conductor: {e}", "danger")
+
+        return redirect(url_for('main.conductores'))
+
+    # ---------- GET → Mostrar lista de conductores ----------
+    lista_conductores = Conductor.query.order_by(Conductor.nombre_completo).all()
+
+    return render_template(
+        "Modules/Gestion_Conductores/VistaGestionConductores.html",
+        title="Gestión de Conductores",
+        conductores=lista_conductores
+    )
 
 
 # ============================================================
@@ -86,7 +133,7 @@ def recursos():
 # ============================================================
 @bp.route('/vehiculos', methods=['GET', 'POST'])
 def vehiculos():
-<<<<<<< HEAD
+
     # ---------- POST → Registrar nuevo vehículo ----------
     if request.method == 'POST':
         print("⚠️ LLEGÓ POST /vehiculos")
@@ -291,7 +338,7 @@ def eliminar_vehiculo(id_vehiculo):
 
     return redirect(url_for('main.vehiculos'))
 
-=======
+
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
->>>>>>> Gestion_Evidencia_Documentacion
+
