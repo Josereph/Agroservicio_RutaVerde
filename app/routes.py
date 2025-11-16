@@ -331,3 +331,8 @@ def eliminar_vehiculo(id_vehiculo):
 
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+
+@bp.route('/busqueda')
+def busqueda():
+    """Vista busqueda"""
+    return render_template('layouts/busqueda.html', title='Busqueda')
