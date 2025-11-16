@@ -50,12 +50,13 @@
     box-sizing: border-box; /* Importante para el padding */
 }
 
+/* Botón de búsqueda que ocupa toda la fila al final */
 .search-button-full {
-    grid-column: 4 / -1;
+    grid-column: 1 / -1; /* Ocupa de la primera a la última columna */
     background-color: #008000;
     color: white;
     border: none;
-    padding: 10px 10px;
+    padding: 15px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 1.1em;
