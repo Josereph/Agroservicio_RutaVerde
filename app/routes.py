@@ -8,6 +8,14 @@ def index():
     """Ruta principal de la aplicacion"""
     return render_template('layouts/index.html', title='Inicio')
 
+@bp.route('/alertas')
+def alertas():
+    """
+    Sistema de Alertas
+    Muestra el dashboard de alertas sin registros activos
+    """
+    return render_template('layouts/Alertas.html', title='Sistema de Alertas')
+
 
 
 @bp.route('/gestion_evidencia') 
@@ -38,8 +46,6 @@ def detalles():
 def servicios():
     """Ruta de servicios"""
     return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
-
-
 
 
 @bp.route('/conductores')

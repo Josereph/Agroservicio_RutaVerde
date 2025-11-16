@@ -1,0 +1,354 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Sistema de Alertas - Agroservicio Ruta Verde{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/Alertas.css">
+
+<!-- Hero Section -->
+<div class="alertas-hero-section">
+    <div class="container-fluid">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="bi bi-bell-fill"></i>
+                <span>Sistema de Monitoreo</span>
+            </div>
+            <h1 class="hero-title">Centro de Alertas</h1>
+            <p class="hero-subtitle">Monitoreo en Tiempo Real de Operaciones Logísticas</p>
+        </div>
+    </div>
+</div>
+
+<!-- Resumen de Alertas -->
+<div class="container-fluid alertas-stats-section">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="alerta-stat-card critica">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Alertas Críticas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="alerta-stat-card alta">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Prioridad Alta</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="alerta-stat-card media">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Prioridad Media</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="alerta-stat-card baja">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-bell-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Prioridad Baja</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Categorías de Alertas -->
+<div class="container-fluid alertas-categorias-section">
+    <div class="section-header text-center">
+        <span class="section-label">Categorías de Monitoreo</span>
+        <h2 class="section-title">Tipos de Alertas del Sistema</h2>
+    </div>
+
+    <div class="row mt-5">
+        <!-- Alertas de Vehículos -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon vehiculos">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <h4 class="categoria-title">Vehículos</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Mantenimiento preventivo</li>
+                    <li><i class="bi bi-check2"></i> Vencimiento de seguros</li>
+                    <li><i class="bi bi-check2"></i> Kilometraje alto</li>
+                    <li><i class="bi bi-check2"></i> Estado operativo</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas de Conductores -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon conductores">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <h4 class="categoria-title">Conductores</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Licencias por vencer</li>
+                    <li><i class="bi bi-check2"></i> Licencias vencidas</li>
+                    <li><i class="bi bi-check2"></i> Disponibilidad</li>
+                    <li><i class="bi bi-check2"></i> Capacitaciones pendientes</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas de Servicios -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon servicios">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <h4 class="categoria-title">Servicios/Envíos</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Retrasos en entregas</li>
+                    <li><i class="bi bi-check2"></i> Incidentes en ruta</li>
+                    <li><i class="bi bi-check2"></i> Control de calidad</li>
+                    <li><i class="bi bi-check2"></i> Evidencias faltantes</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas de Documentación -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon documentacion">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <h4 class="categoria-title">Documentación</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Documentos ilegibles</li>
+                    <li><i class="bi bi-check2"></i> Documentación vencida</li>
+                    <li><i class="bi bi-check2"></i> Firmas pendientes</li>
+                    <li><i class="bi bi-check2"></i> Fotografías faltantes</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas de Inventario -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon inventario">
+                    <i class="bi bi-clipboard-data"></i>
+                </div>
+                <h4 class="categoria-title">Inventario</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Stock bajo</li>
+                    <li><i class="bi bi-check2"></i> Productos por vencer</li>
+                    <li><i class="bi bi-check2"></i> Sobrecarga de pedidos</li>
+                    <li><i class="bi bi-check2"></i> Disponibilidad</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alertas Críticas del Sistema -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="categoria-card">
+                <div class="categoria-icon sistema">
+                    <i class="bi bi-shield-exclamation"></i>
+                </div>
+                <h4 class="categoria-title">Alertas Críticas</h4>
+                <ul class="categoria-lista">
+                    <li><i class="bi bi-check2"></i> Accidentes reportados</li>
+                    <li><i class="bi bi-check2"></i> Condiciones climáticas</li>
+                    <li><i class="bi bi-check2"></i> Errores de pago</li>
+                    <li><i class="bi bi-check2"></i> Rutas bloqueadas</li>
+                </ul>
+                <div class="categoria-badge">
+                    <span class="badge bg-secondary">0 activas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Estado Actual -->
+<div class="container-fluid alertas-estado-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+            <div class="estado-content">
+                <span class="section-label">Estado Operativo</span>
+                <h2 class="section-title">Sistema sin Alertas Activas</h2>
+                <p class="section-description">
+                    Actualmente no hay alertas registradas en el sistema. Todas las 
+                    operaciones están funcionando dentro de los parámetros normales.
+                </p>
+                <div class="estado-detalles">
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Todos los vehículos operativos</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Conductores con documentación vigente</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Entregas dentro del tiempo estimado</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Documentación completa y actualizada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="estado-visual">
+                <div class="sistema-ok-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="sistema-ok-text">Sistema Operando Normalmente</h3>
+                <p class="sistema-ok-descripcion">Monitoreo activo 24/7</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Niveles de Prioridad -->
+<div class="container-fluid prioridades-section">
+    <div class="section-header text-center">
+        <span class="section-label">Clasificación de Alertas</span>
+        <h2 class="section-title">Niveles de Prioridad</h2>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="prioridad-card prioridad-critica">
+                <div class="prioridad-icon">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <h4 class="prioridad-titulo">Crítica</h4>
+                <p class="prioridad-descripcion">
+                    Requiere acción inmediata. Afecta operaciones principales del negocio.
+                </p>
+                <div class="prioridad-tiempo">
+                    <span>Tiempo de respuesta: Inmediato</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="prioridad-card prioridad-alta">
+                <div class="prioridad-icon">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                </div>
+                <h4 class="prioridad-titulo">Alta</h4>
+                <p class="prioridad-descripcion">
+                    Atención necesaria en 24 horas. Puede generar problemas operativos.
+                </p>
+                <div class="prioridad-tiempo">
+                    <span>Tiempo de respuesta: 24 horas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="prioridad-card prioridad-media">
+                <div class="prioridad-icon">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div>
+                <h4 class="prioridad-titulo">Media</h4>
+                <p class="prioridad-descripcion">
+                    Revisar en 48 horas. Situaciones que requieren seguimiento.
+                </p>
+                <div class="prioridad-tiempo">
+                    <span>Tiempo de respuesta: 48 horas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="prioridad-card prioridad-baja">
+                <div class="prioridad-icon">
+                    <i class="bi bi-bell-fill"></i>
+                </div>
+                <h4 class="prioridad-titulo">Baja</h4>
+                <p class="prioridad-descripcion">
+                    Informativa. No requiere acción inmediata pero se debe revisar.
+                </p>
+                <div class="prioridad-tiempo">
+                    <span>Tiempo de respuesta: 1 semana</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Configuración de Notificaciones -->
+<div class="container-fluid notificaciones-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 order-lg-2">
+            <div class="notif-visual">
+                <div class="notif-icon-grande">
+                    <i class="bi bi-envelope-check"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 order-lg-1">
+            <div class="notif-content">
+                <span class="section-label">Notificaciones</span>
+                <h2 class="section-title">Sistema de Alertas Automáticas</h2>
+                <p class="section-description">
+                    El sistema monitorea constantemente todas las operaciones y genera 
+                    alertas automáticas cuando detecta situaciones que requieren atención.
+                </p>
+                <div class="notif-canales">
+                    <h5 class="notif-canales-titulo">Canales de Notificación:</h5>
+                    <div class="canal-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>Correo electrónico</span>
+                    </div>
+                    <div class="canal-item">
+                        <i class="bi bi-phone-fill"></i>
+                        <span>SMS</span>
+                    </div>
+                    <div class="canal-item">
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Notificaciones del sistema</span>
+                    </div>
+                    <div class="canal-item">
+                        <i class="bi bi-app-indicator"></i>
+                        <span>Panel de control</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
