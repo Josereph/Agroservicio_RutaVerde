@@ -64,3 +64,4 @@ def recursos():
 def vehiculos():
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
+
