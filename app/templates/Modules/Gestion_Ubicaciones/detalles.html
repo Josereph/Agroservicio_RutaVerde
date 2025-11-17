@@ -10,19 +10,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/ubicaciones.css') }}">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0 text-success">
-            Detalle de Ubicación:
-            <span class="fw-bold">
-                {{ m.Nombre_Municipio }} ({{ d.Nombre_Departamento }})
-            </span>
-        </h3>
-        <a href="{{ url_for('main.ubicaciones') }}" class="btn btn-outline-success">
+        <h3 class="mb-0 text-success">Detalle de Ubicación: <span class="fw-bold">San Salvador</span></h3>
+        <a href="/ubicaciones" class="btn btn-outline-success">
             &laquo; Volver al Inventario
         </a>
     </div>
 
     <div class="row">
-        <!-- FORMULARIO DE EDICIÓN -->
         <div class="col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header text-white">
@@ -30,33 +24,16 @@
                 </div>
                 <div class="card-body">
                     <form id="form-detalle-ubicacion">
-                        <!-- Nombre de ubicación/ruta (tomamos el municipio como nombre) -->
                         <div class="mb-3">
-                            <label for="detalle-nombre" class="form-label">
-                                Nombre de Ubicación/Ruta
-                            </label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="detalle-nombre"
-                                value="{{ m.Nombre_Municipio }}"
-                                required
-                            >
+                            <label for="detalle-nombre" class="form-label">Nombre de Ubicación/Ruta</label>
+                            <input type="text" class="form-control" id="detalle-nombre" value="San Salvador" required>
                         </div>
 
-                        <!-- Código generado desde la BD -->
                         <div class="mb-3">
                             <label for="detalle-codigo" class="form-label">Código</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="detalle-codigo"
-                                value="UB-{{ u.Id_Ubicacion }}"
-                                readonly
-                            >
+                            <input type="text" class="form-control" id="detalle-codigo" value="SS" required>
                         </div>
 
-                        <!-- Departamento -->
                         <div class="mb-3">
                             <label for="detalle-departamento" class="form-label">Departamento</label>
                             <select class="form-select" id="detalle-departamento" required>
@@ -78,7 +55,6 @@
                             </select>
                         </div>
 
-                        <!-- Municipio (agrupado por departamento, todo desde la BD) -->
                         <div class="mb-3">
                             <label for="detalle-municipio" class="form-label">Municipio</label>
                             <select class="form-select" id="detalle-municipio" required>
@@ -190,21 +166,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="detalle-direccion" class="form-label">
-                                Dirección Exacta (Punto Logístico)
-                            </label>
-                            <textarea
-                                class="form-control"
-                                id="detalle-direccion"
-                                rows="2"
-                                placeholder="N/A para esta jerarquía"
-                            >{{ dir.Detalle_Direccion or '' }}</textarea>
+                            <label for="detalle-direccion" class="form-label">Dirección Exacta (Punto Logístico)</label>
+                            <textarea class="form-control" id="detalle-direccion" rows="2" placeholder="N/A para esta jerarquía"></textarea>
                         </div>
 
-                        <!-- Estado -->
-                        {# OJO: en la BD actual Ubicaciones NO tiene campo estado.
-                           Esto está fijo por ahora. Si agregas una columna en la tabla,
-                           aquí solo cambias a {{ u.Estado }} o similar. #}
+
                         <div class="mb-3">
                             <label for="detalle-estado" class="form-label">Estado</label>
                             <select class="form-select" id="detalle-estado" required>
@@ -212,7 +178,6 @@
                                 <option value="inactivo">Inactivo</option>
                             </select>
                         </div>
-
                         <div class="d-flex justify-content-between">
                             <button type="submit" class="btn-cta w-75">Guardar Cambios</button>
                             <button type="button" class="btn btn-danger w-20">Eliminar</button>
@@ -222,13 +187,11 @@
             </div>
         </div>
 
-        <!-- SUB-UBICACIONES (TOTALMENTE DESDE BD) -->
+
         <div class="col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header text-white header-tierra d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        Sub-Ubicaciones del departamento "{{ d.Nombre_Departamento }}"
-                    </h5>
+                    <h5 class="mb-0">Sub-Ubicaciones de "San Salvador"</h5>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
