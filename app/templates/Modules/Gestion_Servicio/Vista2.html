@@ -30,119 +30,110 @@
             <div class="tab-pane fade *show active*" id="registro" role="tabpanel" aria-labelledby="registro-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
                 
-                <form action="#" method="POST">
-                    <div class="row g-4">
-                        <div class="col-12"><h3 class="h6 text-section-header">Información del Cliente y Contacto</h3></div>
-                        
-                        <div class="col-md-4">
-                            <label for="cliente_nombre" class="form-label text-inter-regular">Nombre del Cliente</label>
-                            <input type="text" class="form-control custom-input" id="cliente_nombre" name="cliente_nombre" placeholder="Nombre completo" required>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <label for="cliente_email" class="form-label text-inter-regular">Correo Electrónico (Para Cliente)</label>
-                            <input type="email" class="form-control custom-input" id="cliente_email" name="cliente_email" placeholder="Para factura y notificaciones" required>
-                        </div>
+                <form action="{{ url_for('main.servicios') }}" method="POST">
+    <div class="row g-4">
 
-                        <div class="col-md-4">
-                            <label for="cliente_dui" class="form-label text-inter-regular">DUI de Cliente/Empresa</label>
-                            <input type="text" class="form-control custom-input" id="cliente_dui" name="cliente_dui" placeholder="Documento Único de Identidad" required>
-                        </div>
+        <!-- CLIENTE -->
+        <div class="col-md-6">
+            <label class="form-label">Cliente</label>
+            <select class="form-select" name="Id_Cliente" required>
+                <option value="">Seleccione...</option>
+                {% for c in clientes %}
+                    <option value="{{ c.Id_Cliente }}">{{ c.Nombre_Cliente }} ({{ c.Dui }})</option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Detalles de la Carga</h3></div>
-                        
-                        <div class="col-md-4">
-                            <label for="tipo_servicio" class="form-label text-inter-regular">Tipo de Servicio</label>
-                            <select class="form-select custom-input" id="tipo_servicio" name="tipo_servicio" required>
-                                <option value="">Seleccione...</option>
-                                <option value="1">Entrega de producto</option>
-                                <option value="2">Retiro de producto</option>
-                            </select>
-                        </div>
+        <!-- VEHÍCULO -->
+        <div class="col-md-6">
+            <label class="form-label">Vehículo Asignado</label>
+            <select class="form-select" name="Id_Vehiculo" required>
+                <option value="">Seleccione...</option>
+                {% for v in vehiculos %}
+                    <option value="{{ v.id_vehiculo }}">{{ v.unidad_numero }} - {{ v.placa }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-md-4">
-                            <label for="peso_carga" class="form-label text-inter-regular">Peso de la Carga (kg)</label>
-                            <input type="number" step="0.01" class="form-control custom-input" id="peso_carga" name="peso_carga" min="0.01" placeholder="Ej: 50.50" required>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <label for="id_fragilidad" class="form-label text-inter-regular">Nivel de Fragilidad</label>
-                            <select class="form-select custom-input" id="id_fragilidad" name="id_fragilidad" required>
-                                <option value="">Seleccione...</option>
-                                <option value="1">Muy Alta</option>
-                                <option value="2">Alta</option>
-                                <option value="3">Media</option>
-                                <option value="4">Baja</option>
-                                <option value="5">Nula</option>
-                            </select>
-                        </div>
-                        
-                        <div class="col-12">
-                            <label for="descripcion_carga" class="form-label text-inter-regular">Descripción de la Carga</label>
-                            <textarea class="form-control custom-input" id="descripcion_carga" name="descripcion_carga" rows="2" placeholder="Detalles, productos específicos, o requerimientos especiales (Ej: 10 sacos de Maíz Híbrido, 5 bidones de Herbicida)"></textarea>
-                        </div>
+        <!-- CONDUCTOR -->
+        <div class="col-md-6">
+            <label class="form-label">Conductor</label>
+            <select class="form-select" name="id_conductor" required>
+                <option value="">Seleccione...</option>
+                {% for con in conductores %}
+                    <option value="{{ con.id_conductor }}">{{ con.nombre_completo }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Logística, Asignación y Tiempos</h3></div>
+        <!-- TIPO SERVICIO -->
+        <div class="col-md-6">
+            <label class="form-label">Tipo de Servicio</label>
+            <select class="form-select" name="Id_Tipo_Servicio" required>
+                <option value="">Seleccione...</option>
+                {% for ts in tipos_servicio %}
+                    <option value="{{ ts.Id_Tipo_Servicio }}">{{ ts.Nombre_Servicio }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="ubicacion_origen" class="form-label text-inter-regular">Ubicación de Origen</label>
-                            <input type="text" class="form-control custom-input" id="ubicacion_origen" name="ubicacion_origen" placeholder="Dirección o punto de recolección" required>
-                        </div>
+        <!-- FRAGILIDAD -->
+        <div class="col-md-6">
+            <label class="form-label">Nivel de Fragilidad</label>
+            <select class="form-select" name="Id_Fragilidad" required>
+                <option value="">Seleccione...</option>
+                {% for f in fragilidades %}
+                    <option value="{{ f.Id_Fragilidad }}">{{ f.Nivel }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="ubicacion_destino" class="form-label text-inter-regular">Ubicación de Destino</label>
-                            <input type="text" class="form-control custom-input" id="ubicacion_destino" name="ubicacion_destino" placeholder="Lugar de entrega final" required>
-                        </div>
+        <!-- UBICACION -->
+        <div class="col-md-6">
+            <label class="form-label">Ubicación Logística</label>
+            <select class="form-select" name="Id_Ubicacion" required>
+                <option value="">Seleccione...</option>
+                {% for u in ubicaciones %}
+                    <option value="{{ u.Id_Ubicacion }}">
+                        UB-{{ u.Id_Ubicacion }} | {{ u.municipio.Nombre_Municipio }} ({{ u.departamento.Nombre_Departamento }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="id_vehiculo" class="form-label text-inter-regular">Vehículo Asignado (ID_Vehiculo)</label>
-                            <input type="number" class="form-control custom-input" id="id_vehiculo" name="id_vehiculo" placeholder="Ej: 1 (Camión pequeño)" required>
-                            <small class="text-muted small-text">*ID del vehículo para el cargamento.</small>
-                        </div>
+        <!-- PESO -->
+        <div class="col-md-6">
+            <label class="form-label">Peso de la Carga (kg)</label>
+            <input type="number" step="0.01" name="Peso_Carga" class="form-control" required>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="id_conductor" class="form-label text-inter-regular">Conductor Asignado (id_conductor)</label>
-                            <input type="number" class="form-control custom-input" id="id_conductor" name="id_conductor" placeholder="Ej: 5 (Nombre del Chofer)" required>
-                            <small class="text-muted small-text">*ID del conductor responsable.</small>
-                        </div>
+        <!-- PRECIO -->
+        <div class="col-md-6">
+            <label class="form-label">Precio Total ($)</label>
+            <input type="number" step="0.01" name="Precio_Total" class="form-control" required>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="fecha_pedido" class="form-label text-inter-regular">Fecha de Pedido (Registro)</label>
-                            <input type="date" class="form-control custom-input" id="fecha_pedido" name="fecha_pedido" required>
-                        </div>
+        <!-- FECHAS -->
+        <div class="col-md-6">
+            <label class="form-label">Fecha de Pedido</label>
+            <input type="date" name="Fecha_Pedido" class="form-control" required>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="fecha_entrega" class="form-label text-inter-regular">Fecha Límite de Entrega</label>
-                            <input type="date" class="form-control custom-input" id="fecha_entrega" name="fecha_entrega" required>
-                            <small class="text-muted small-text">*La fecha de entrega debe ser posterior a la fecha de pedido.</small>
-                        </div>
+        <div class="col-md-6">
+            <label class="form-label">Fecha de Entrega</label>
+            <input type="date" name="Fecha_Entrega" class="form-control" required>
+        </div>
 
-                        <div class="col-12"><h3 class="h6 text-section-header mt-3">Pago y Precio</h3></div>
+        <!-- BOTÓN -->
+        <div class="col-12 mt-4 text-end">
+            <button type="submit" class="btn btn-lg btn-primary">
+                Registrar Servicio
+            </button>
+        </div>
 
-                        <div class="col-md-6">
-                            <label for="precio_total" class="form-label text-inter-regular">Precio Total ($)</label>
-                            <input type="number" step="0.01" class="form-control custom-input" id="precio_total" name="precio_total" min="0.00" placeholder="0.00" required>
-                        </div>
+    </div>
+</form>
 
-                        <div class="col-md-6">
-                            <label for="metodo_pago" class="form-label text-inter-regular">Método de Pago</label>
-                            <select class="form-select custom-input" id="metodo_pago" name="metodo_pago" required>
-                                <option value="">Seleccione...</option>
-                                <option value="efectivo">Efectivo</option>
-                                <option value="tarjeta">Tarjeta</option>
-                                <option value="transferencia">Transferencia Bancaria</option>
-                            </select>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                            <div class="d-flex justify-content-end"> 
-                                <button type="submit" class="btn btn-lg primary-submit-btn w-60 w-md-50">
-                                    <i class="fas fa-save me-2"></i> Registrar Servicio
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
 
             <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
