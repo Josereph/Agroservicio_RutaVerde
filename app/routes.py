@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash
 from . import db
-from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor, Departamento, Municipio, Direccion, Ubicaciones
+from .models import Clientes, Evidencia, NivelFragilidad, Servicios, TipoServicio, Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor, Departamento, Municipio, Direccion, Ubicaciones
 from datetime import datetime
 
 
@@ -27,14 +27,72 @@ def alertas():
 
 
 
-@bp.route('/gestion_evidencia') 
+# ============================================================
+# GESTIÓN DE EVIDENCIA
+# ============================================================
+
+
+@bp.route('/gestion_evidencia')
 def gestion_evidencia():
-    servicios = [
-        {'Id_Servicio': 1, 'cliente_nombre': 'Agropecuaria Los Pinos'},
-        {'Id_Servicio': 2, 'cliente_nombre': 'Distribuidora San José'},
-        {'Id_Servicio': 3, 'cliente_nombre': 'Cooperativa El Progreso'}
-    ]
-    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
+    servicios = db.session.query(
+        Servicios.Id_Servicio,
+        Clientes.Nombre_Cliente.label('cliente_nombre')
+    ).join(Clientes).all()
+
+    return render_template(
+        'Modules/Gestion_Evidencia/Vista.html',
+        servicios=servicios
+    )
+
+
+@bp.route('/evidencia/registrar', methods=['POST'])
+def registrar_evidencia():
+
+    id_servicio = request.form.get('id_servicio')
+    tipo_evidencia = request.form.get('tipo_evidencia')
+    es_legible = True if request.form.get('es_legible') == "1" else False
+    fecha_captura = request.form.get('fecha_captura')
+
+    archivo = request.files.get('archivo')
+
+    # Validar archivo
+    if not archivo or archivo.filename == "":
+        flash("Debe subir un archivo válido", "danger")
+        return redirect(url_for('main.gestion_evidencia'))
+
+    if not allowed_file(archivo.filename):
+        flash("Formato no permitido. Use JPG, PNG o PDF.", "danger")
+        return redirect(url_for('main.gestion_evidencia'))
+
+    # Asegurar nombre seguro
+    filename = secure_filename(archivo.filename)
+
+    # Guardar archivo en la carpeta configurada
+    ruta_guardado = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    archivo.save(ruta_guardado)
+
+    # Guardar registro en BD
+    nueva = Evidencia(
+        id_servicio=id_servicio,
+        tipo_evidencia=tipo_evidencia,
+        nombre_archivo=filename,
+        es_legible=es_legible,
+        fecha_captura=fecha_captura
+    )
+
+    db.session.add(nueva)
+    db.session.commit()
+
+    flash("Evidencia registrada correctamente", "success")
+    return redirect(url_for('main.gestion_evidencia'))
+
+
+import os
+from werkzeug.utils import secure_filename
+
+def allowed_file(filename):
+    allowed = {'png', 'jpg', 'jpeg', 'pdf'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed
 
   
 # ============================================================
@@ -130,11 +188,51 @@ def detalles_ubicacion(id_ubicacion):
 # SERVICIOS
 # ============================================================
 
-# Alias en minúsculas para evitar confusiones con /Servicios
-@bp.route('/servicios')
+@bp.route('/servicios', methods=['GET', 'POST'])
 def servicios():
-    return render_template('Modules/Gestion_Servicio/Vista2.html', title='Servicios')
 
+    # 🔹 Cargar catálogos para los selects
+    clientes = Clientes.query.all()
+    vehiculos = Vehiculos.query.all()
+    conductores = Conductor.query.all()
+    tipos_servicio = TipoServicio.query.all()
+    fragilidades = NivelFragilidad.query.all()
+    ubicaciones = Ubicaciones.query.all()
+
+    if request.method == 'POST':
+        nuevo = Servicios(
+            Id_Cliente=request.form['Id_Cliente'],
+            Id_Vehiculo=request.form['Id_Vehiculo'],
+            id_conductor=request.form['id_conductor'],
+            Id_Tipo_Servicio=request.form['Id_Tipo_Servicio'],
+            Id_Fragilidad=request.form['Id_Fragilidad'],
+            Id_Ubicacion=request.form['Id_Ubicacion'],
+
+            Peso_Carga=request.form['Peso_Carga'],
+            Fecha_Pedido=request.form['Fecha_Pedido'],
+            Fecha_Entrega=request.form['Fecha_Entrega'],
+            Precio_Total=request.form['Precio_Total']
+        )
+        db.session.add(nuevo)
+        db.session.commit()
+        flash("Servicio registrado correctamente", "success")
+        return redirect(url_for('main.servicios'))
+
+    return render_template(
+        'Modules/Gestion_Servicio/Vista2.html',
+        clientes=clientes,
+        vehiculos=vehiculos,
+        conductores=conductores,
+        tipos_servicio=tipos_servicio,
+        fragilidades=fragilidades,
+        ubicaciones=ubicaciones
+    )
+
+
+# ============================================================
+# CONDUCTORES
+# ============================================================
+@bp.route('/conductores', methods=['GET', 'POST'])
 @bp.route('/conductores')
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
