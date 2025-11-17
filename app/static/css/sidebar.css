@@ -71,8 +71,6 @@ body {
 }
 
 
-
-
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -320,26 +318,6 @@ main {
 .nav-item:nth-child(7) { animation-delay: 0.4s; }
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
 
-
-
-
-/* ===== ANIMACIONES JQUERY - Efecto Paleta de Carga ===== */
-
-/* Barra de progreso animada */
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, 
-        var(--color-accent) 0%, 
-        var(--color-accent-light) 50%, 
-        var(--color-accent) 100%);
-    background-size: 200% 100%;
-    transition: width 0.4s ease;
-    animation: shimmer 1.5s infinite;
 /* ===== Ajustes para Main Content ===== */
 main {
     margin-left: 280px;
@@ -354,5 +332,4 @@ main {
         margin-left: 0;
         padding: 20px;
     }
-}
 }

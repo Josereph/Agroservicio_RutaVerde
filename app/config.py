@@ -9,14 +9,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:U22qrv88*@localhost/RutaVerdeBD'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    # Mostrar consultas SQL en la consola
-    SQLALCHEMY_ECHO = True   # estaba mal escrito como SQLALCHEMY_ECO
-
-
-class DevelopmentConfig(Config):
+    
+    # Otras configuraciones
     DEBUG = True
-
-
-class ProductionConfig(Config):
-    DEBUG = False

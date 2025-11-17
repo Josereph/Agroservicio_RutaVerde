@@ -132,7 +132,6 @@ class CatEstadoVehiculo(db.Model):
 class Vehiculos(db.Model):
     """Registro maestro de vehículos de carga del agroservicio"""
     __tablename__ = 'Vehiculos'
-
     __table_args__ = (
         CheckConstraint('capacidad_kg > 0', name='chk_capacidad_pos'),
         CheckConstraint('km_actual >= 0', name='chk_km_no_neg'),
@@ -140,7 +139,6 @@ class Vehiculos(db.Model):
         Index('ix_vehiculo_tipo', 'tipo_id'),
         Index('ix_vehiculo_capacidad', 'capacidad_kg'),
     )
-
     id_vehiculo = db.Column(db.Integer, primary_key=True, autoincrement=True)
     unidad_numero = db.Column(db.String(10), nullable=False, unique=True)
     placa = db.Column(db.String(10), nullable=False, unique=True)
@@ -290,7 +288,6 @@ class Servicios(db.Model):
         Index('ix_servicios_fecha', 'Fecha_Pedido', 'Fecha_Entrega'),
         Index('ix_servicios_conductor', 'id_conductor'),
     )
-
     Id_Servicio = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Id_Cliente = db.Column(db.Integer, db.ForeignKey('Clientes.Id_Cliente'), nullable=False)
     Id_Vehiculo = db.Column(db.Integer, db.ForeignKey('Vehiculos.id_vehiculo'), nullable=False)
@@ -330,7 +327,6 @@ class Evidencia(db.Model):
         Index('ix_evidencia_servicio', 'id_servicio'),
         Index('ix_evidencia_tipo', 'tipo_evidencia'),
     )
-
     id_evidencia = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_servicio = db.Column(db.Integer, db.ForeignKey('Servicios.Id_Servicio'), nullable=False)
     tipo_evidencia = db.Column(
@@ -356,7 +352,6 @@ class SeguimientoControl(db.Model):
         Index('ix_seguimiento_estado', 'estado_actual'),
         Index('ix_seguimiento_fecha', 'fecha_hora'),
     )
-
     id_seguimiento = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_servicio = db.Column(db.Integer, db.ForeignKey('Servicios.Id_Servicio'), nullable=False)
     estado_actual = db.Column(
