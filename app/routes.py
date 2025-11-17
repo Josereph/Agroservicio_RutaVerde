@@ -69,3 +69,8 @@ def vehiculos():
 def busqueda():
     """Vista busqueda"""
     return render_template('layouts/busqueda.html', title='Busqueda')
+
+@bp.route('/Reportes')
+def reportes():
+    """Vista del módulo de reportes"""
+    return render_template('layouts/Reportes.html', title='Reportes')

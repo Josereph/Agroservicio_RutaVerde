@@ -1,0 +1,408 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Sistema de Reportes - Agroservicio Ruta Verde{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/Reportes.css">
+
+<!-- Hero Section -->
+<div class="reportes-hero-section">
+    <div class="container-fluid">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="bi bi-bar-chart-line-fill"></i>
+                <span>Business Intelligence</span>
+            </div>
+            <h1 class="hero-title">Centro de Reportes</h1>
+            <p class="hero-subtitle">Análisis y Visualización de Datos Operativos</p>
+        </div>
+    </div>
+</div>
+
+<!-- Resumen de Reportes -->
+<div class="container-fluid reportes-stats-section">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card evidencias">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-file-earmark-image"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Evidencias Capturadas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card servicios">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Servicios Completados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card incidentes">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0</h3>
+                    <p class="stat-description">Incidentes Reportados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card entregas">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">0%</h3>
+                    <p class="stat-description">Entregas a Tiempo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Tipos de Reportes -->
+<div class="container-fluid reportes-tipos-section">
+    <div class="section-header text-center">
+        <span class="section-label">Categorías de Reportes</span>
+        <h2 class="section-title">Informes Disponibles</h2>
+    </div>
+
+    <div class="row mt-5">
+        <!-- Reportes de Evidencias -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon evidencias-icon">
+                    <i class="bi bi-camera-fill"></i>
+                </div>
+                <h4 class="tipo-titulo">Evidencias y Documentación</h4>
+                <p class="tipo-descripcion">
+                    Análisis completo de fotografías, documentos firmados y control de legibilidad.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Evidencias por tipo</li>
+                    <li><i class="bi bi-check2"></i> Documentos legibles vs ilegibles</li>
+                    <li><i class="bi bi-check2"></i> Cobertura de documentación</li>
+                    <li><i class="bi bi-check2"></i> Historial de capturas</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes de Seguimiento -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon seguimiento-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <h4 class="tipo-titulo">Seguimiento de Entregas</h4>
+                <p class="tipo-descripcion">
+                    Monitoreo de estados, tiempos de entrega y notificaciones enviadas.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Estados por servicio</li>
+                    <li><i class="bi bi-check2"></i> Tiempo promedio de entrega</li>
+                    <li><i class="bi bi-check2"></i> Notificaciones enviadas</li>
+                    <li><i class="bi bi-check2"></i> Receptores registrados</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes de Calidad -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon calidad-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h4 class="tipo-titulo">Control de Calidad</h4>
+                <p class="tipo-descripcion">
+                    Inspecciones realizadas, productos aprobados y rechazos registrados.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Inspecciones aprobadas</li>
+                    <li><i class="bi bi-check2"></i> Productos rechazados</li>
+                    <li><i class="bi bi-check2"></i> Observaciones frecuentes</li>
+                    <li><i class="bi bi-check2"></i> Tendencias de calidad</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes de Incidentes -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon incidentes-icon">
+                    <i class="bi bi-exclamation-octagon"></i>
+                </div>
+                <h4 class="tipo-titulo">Incidentes y Eventos</h4>
+                <p class="tipo-descripcion">
+                    Registro de problemas durante entregas: clima, mecánicos, cambios de ruta.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Incidentes por tipo</li>
+                    <li><i class="bi bi-check2"></i> Frecuencia de eventos</li>
+                    <li><i class="bi bi-check2"></i> Impacto en entregas</li>
+                    <li><i class="bi bi-check2"></i> Resoluciones aplicadas</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes de Vehículos -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon vehiculos-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <h4 class="tipo-titulo">Vehículos y Flota</h4>
+                <p class="tipo-descripcion">
+                    Análisis de uso de vehículos, mantenimientos y estado operativo.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Vehículos más utilizados</li>
+                    <li><i class="bi bi-check2"></i> Kilometraje acumulado</li>
+                    <li><i class="bi bi-check2"></i> Mantenimientos realizados</li>
+                    <li><i class="bi bi-check2"></i> Estado de la flota</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes de Conductores -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon conductores-icon">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <h4 class="tipo-titulo">Conductores</h4>
+                <p class="tipo-descripcion">
+                    Desempeño de conductores, entregas realizadas y disponibilidad.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Entregas por conductor</li>
+                    <li><i class="bi bi-check2"></i> Tiempo promedio de viaje</li>
+                    <li><i class="bi bi-check2"></i> Licencias y documentación</li>
+                    <li><i class="bi bi-check2"></i> Disponibilidad del personal</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Filtros y Exportación -->
+<div class="container-fluid filtros-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+            <div class="filtros-content">
+                <span class="section-label">Herramientas de Análisis</span>
+                <h2 class="section-title">Filtros y Exportación</h2>
+                <p class="section-description">
+                    El sistema permite filtrar reportes por múltiples criterios y exportar 
+                    los datos en diferentes formatos para análisis externo.
+                </p>
+                <div class="filtros-disponibles">
+                    <h5 class="filtros-titulo">Filtros Disponibles:</h5>
+                    <div class="filtro-item">
+                        <i class="bi bi-calendar-range"></i>
+                        <span>Por rango de fechas (día, semana, mes, año)</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Por cliente o empresa</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-truck"></i>
+                        <span>Por vehículo o conductor</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-box-seam"></i>
+                        <span>Por tipo de producto</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>Por ruta o ubicación</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="exportacion-visual">
+                <div class="export-icon-grande">
+                    <i class="bi bi-file-earmark-arrow-down"></i>
+                </div>
+                <h4 class="export-titulo">Formatos de Exportación</h4>
+                <div class="export-formatos">
+                    <div class="formato-btn">
+                        <i class="bi bi-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="formato-btn">
+                        <i class="bi bi-file-earmark-excel"></i>
+                        <span>Excel</span>
+                    </div>
+                    <div class="formato-btn">
+                        <i class="bi bi-printer"></i>
+                        <span>Imprimir</span>
+                    </div>
+                    <div class="formato-btn">
+                        <i class="bi bi-envelope"></i>
+                        <span>Enviar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Gráficos Simulados -->
+<div class="container-fluid graficos-section">
+    <div class="section-header text-center">
+        <span class="section-label">Visualización de Datos</span>
+        <h2 class="section-title">Dashboard de Análisis</h2>
+    </div>
+
+    <div class="row mt-5">
+        <!-- Gráfico 1: Evidencias por Tipo -->
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-bar-chart"></i> Evidencias por Tipo
+                    </h5>
+                </div>
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico 2: Estados de Envíos -->
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-pie-chart"></i> Estados de Envíos
+                    </h5>
+                </div>
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="bi bi-pie-chart-fill"></i>
+                    </div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico 3: Entregas por Mes -->
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-calendar3"></i> Entregas por Mes
+                    </h5>
+                </div>
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico 4: Incidentes Frecuentes -->
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-exclamation-triangle"></i> Incidentes Frecuentes
+                    </h5>
+                </div>
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección: Estado Actual -->
+<div class="container-fluid reportes-estado-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 order-lg-2">
+            <div class="estado-visual">
+                <div class="sistema-sin-datos-icon">
+                    <i class="bi bi-database-slash"></i>
+                </div>
+                <h3 class="sistema-text">Sin Datos Registrados</h3>
+                <p class="sistema-descripcion">Sistema listo para generar reportes</p>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 order-lg-1">
+            <div class="estado-content">
+                <span class="section-label">Estado del Sistema</span>
+                <h2 class="section-title">Reportes en Espera</h2>
+                <p class="section-description">
+                    El sistema de reportes está configurado y listo para generar análisis 
+                    automáticamente. Una vez que se registren servicios, evidencias y 
+                    seguimientos, los reportes se generarán automáticamente.
+                </p>
+                <div class="estado-detalles">
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Sistema de reportes configurado</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Plantillas de reportes listas</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Filtros y exportación habilitados</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-clock text-warning"></i>
+                        <span>Esperando datos para generar reportes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
