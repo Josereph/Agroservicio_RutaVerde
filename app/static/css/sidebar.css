@@ -42,7 +42,7 @@ body {
 /* ===== Sidebar Header / Brand ===== */
 .sidebar-header {
     padding: 25px 20px;
-    background: rgba(0, 0, 0, 0.25);
+    background: #ffffff;
     border-bottom: 2px solid rgba(139, 195, 74, 0.3);
     position: sticky;
     top: 0;
@@ -62,9 +62,12 @@ body {
     animation: pulse 2s ease-in-out infinite;
 }
 
-.brand-logo{
-  width: 36px; height: 36px; border-radius: 8px; object-fit: cover;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.25);
+.brand-logo {
+    width: 42px;                
+    height: 42px;
+    border-radius: 8px;         
+    object-fit: cover;          
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
 }
 
 
@@ -87,8 +90,8 @@ body {
 }
 
 .brand-title {
-    color: var(--color-white);
-    font-size: 16px;
+    color: var(--color-primary-dark);
+    font-size: 14px;
     font-weight: 700;
     margin: 0;
     line-height: 1.2;
@@ -316,7 +319,6 @@ main {
 .nav-item:nth-child(6) { animation-delay: 0.35s; }
 .nav-item:nth-child(7) { animation-delay: 0.4s; }
 .nav-item:nth-child(8) { animation-delay: 0.45s; }
-.nav-item:nth-child(8) { animation-delay: 0.45s; }
 
 
 
@@ -338,84 +340,19 @@ main {
     background-size: 200% 100%;
     transition: width 0.4s ease;
     animation: shimmer 1.5s infinite;
+/* ===== Ajustes para Main Content ===== */
+main {
+    margin-left: 280px;
+    padding: 30px;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    transition: margin-left 0.3s ease;
 }
 
-@keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.nav-link.active::after {
-    width: 100%;
-    height: 4px;
-    animation: shimmer 2s infinite, pulse-glow 1.5s infinite;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        box-shadow: 0 0 5px var(--color-accent);
-    }
-    50% {
-        box-shadow: 0 0 15px var(--color-accent-light);
+@media (max-width: 768px) {
+    main {
+        margin-left: 0;
+        padding: 20px;
     }
 }
-
-/* Efecto de fondo progresivo */
-.nav-link .progress-bg {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        var(--color-bg-hover) 50%, 
-        transparent 100%);
-    transition: left 0.5s ease;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.nav-link:hover .progress-bg {
-    left: 100%;
-}
-
-/* Efecto de brillo en el icono */
-.nav-link i::before {
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover i::before,
-.nav-link.active i::before {
-    filter: drop-shadow(0 0 8px var(--color-accent));
-}
-
-/* Estilos para el efecto ripple */
-.ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(139, 195, 74, 0.5);
-    width: 0;
-    height: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: ripple-animation 0.6s ease-out;
-    pointer-events: none;
-}
-
-@keyframes ripple-animation {
-    to {
-        width: 200%;
-        height: 200%;
-        opacity: 0;
-    }
 }

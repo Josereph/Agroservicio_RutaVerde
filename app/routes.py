@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from . import db
-from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor
+from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor, Departamento, Municipio, Ubicaciones, Direccion
 from datetime import datetime
+
+
 
 
 bp = Blueprint('main', __name__)
@@ -13,6 +15,14 @@ bp = Blueprint('main', __name__)
 @bp.route('/index')
 def index():
     return render_template('layouts/index.html', title='Inicio')
+
+@bp.route('/alertas')
+def alertas():
+    """
+    Sistema de Alertas
+    Muestra el dashboard de alertas sin registros activos
+    """
+    return render_template('layouts/Alertas.html', title='Sistema de Alertas')
 
 
 
@@ -34,19 +44,50 @@ def gestion_evidencia():
         title='Gestión de Evidencia',
         servicios=servicios
     )
-
+    return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
 
 # ============================================================
 # UBICACIONES
 # ============================================================
+  
 @bp.route('/ubicaciones')
 def ubicaciones():
-    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
+    # Catálogo de departamentos para el combo
+    departamentos = Departamento.query.order_by(Departamento.Nombre_Departamento).all()
+
+    # Inventario de ubicaciones (join para mostrar nombres)
+    inventario = (
+        db.session.query(Ubicaciones, Departamento, Municipio, Direccion)
+        .join(Departamento, Ubicaciones.Id_Departamento == Departamento.Id_Departamento)
+        .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio)
+        .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion)
+        .all()
+    )
+
+    return render_template(
+        'Modules/Gestion_Ubicaciones/Vista4.html',
+        title='Ubicaciones',
+        departamentos=departamentos,
+        inventario=inventario
+    )
 
 
-@bp.route('/detalles')
-def detalles():
-    return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='Detalles')
+@bp.route('/ubicaciones/<int:id_ubicacion>')
+def detalles_ubicacion(id_ubicacion):
+    ubicacion = (
+        db.session.query(Ubicaciones, Departamento, Municipio, Direccion)
+        .join(Departamento, Ubicaciones.Id_Departamento == Departamento.Id_Departamento)
+        .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio)
+        .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion)
+        .filter(Ubicaciones.Id_Ubicacion == id_ubicacion)
+        .first_or_404()
+    )
+
+    return render_template(
+        'Modules/Gestion_Ubicaciones/detalles.html',
+        title='Detalle de Ubicación',
+        ubicacion=ubicacion
+    )
 
 
 
@@ -65,6 +106,7 @@ def servicios():
 # CONDUCTORES
 # ============================================================
 @bp.route('/conductores', methods=['GET', 'POST'])
+@bp.route('/conductores')
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
     if request.method == 'POST':
@@ -342,3 +384,7 @@ def eliminar_vehiculo(id_vehiculo):
     """Vista del módulo de gestión de vehículos"""
     return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
 
+@bp.route('/busqueda')
+def busqueda():
+    """Vista busqueda"""
+    return render_template('layouts/busqueda.html', title='Busqueda')
