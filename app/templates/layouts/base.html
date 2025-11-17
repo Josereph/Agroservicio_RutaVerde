@@ -12,24 +12,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/static/css/sidebar.css">
     <link rel="stylesheet" href="/static/css/footer.css">
-    <link rel="stylesheet" href="/static/css/pantallascarga.css">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
     
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-
-    <div id="preloader">
-        <lottie-player 
-            id="loader-lottie"
-            src="{{ url_for('static', filename='image/animaciondecarga.json') }}" 
-            speed="1" 
-            style="width: 250px; height: 250px;" 
-            loop 
-            autoplay
-        ></lottie-player>
-    </div>
 
     <!-- ================================================ Sidebar Navigation ================================================ -->
     <header>
@@ -66,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.gestion_evidencia') }}" id="nav-evidencia">
+                    <a class="nav-link" href="/evidencia" id="nav-evidencia">
                         <i class="bi bi-file-earmark-text"></i>
                         <span>Evidencia y Documentación</span>
                     </a>
@@ -214,6 +200,5 @@
     </script>
     
     {% block extra_js %}{% endblock %}
-    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
 </body>
 </html>
