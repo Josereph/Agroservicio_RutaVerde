@@ -3,93 +3,59 @@ from datetime import datetime
 from . import db  # usa el db inicializado en __init__.py
 from sqlalchemy import CheckConstraint, Index, ForeignKey
 from sqlalchemy.orm import relationship
+from app import db
 
 # ============================================================
 # MÓDULO: UBICACIONES GEOGRÁFICAS
 # ============================================================
 
 class Departamento(db.Model):
-    """Departamentos de El Salvador"""
     __tablename__ = 'Departamento'
 
     Id_Departamento = db.Column(db.Integer, primary_key=True)
     Nombre_Departamento = db.Column(db.String(100), nullable=False)
 
-    # Relaciones
-    municipios = db.relationship('Municipio', back_populates='departamento', lazy='dynamic')
-    ubicaciones = db.relationship('Ubicaciones', back_populates='departamento', lazy='dynamic')
+    municipios = db.relationship('Municipio', backref='departamento', lazy=True)
+    ubicaciones = db.relationship('Ubicaciones', backref='departamento', lazy=True)
 
     def __repr__(self):
         return f'<Departamento {self.Nombre_Departamento}>'
 
 
 class Municipio(db.Model):
-    """Municipios de El Salvador"""
     __tablename__ = 'Municipio'
 
     Id_Municipio = db.Column(db.Integer, primary_key=True)
-    Id_Departamento = db.Column(
-        db.Integer,
-        db.ForeignKey('Departamento.Id_Departamento'),
-        nullable=False
-    )
+    Id_Departamento = db.Column(db.Integer, db.ForeignKey('Departamento.Id_Departamento'), nullable=False)
     Nombre_Municipio = db.Column(db.String(100), nullable=False)
 
-    # Relaciones
-    departamento = db.relationship('Departamento', back_populates='municipios')
-    direcciones = db.relationship('Direccion', back_populates='municipio', lazy='dynamic')
-    ubicaciones = db.relationship('Ubicaciones', back_populates='municipio', lazy='dynamic')
+    direcciones = db.relationship('Direccion', backref='municipio', lazy=True)
+    ubicaciones = db.relationship('Ubicaciones', backref='municipio', lazy=True)
 
     def __repr__(self):
         return f'<Municipio {self.Nombre_Municipio}>'
 
 
 class Direccion(db.Model):
-    """Direcciones específicas"""
     __tablename__ = 'Direccion'
 
     Id_Direccion = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Id_Municipio = db.Column(
-        db.Integer,
-        db.ForeignKey('Municipio.Id_Municipio'),
-        nullable=False
-    )
+    Id_Municipio = db.Column(db.Integer, db.ForeignKey('Municipio.Id_Municipio'), nullable=False)
     Detalle_Direccion = db.Column(db.Text, nullable=True)
 
-    # Relaciones
-    municipio = db.relationship('Municipio', back_populates='direcciones')
-    ubicaciones = db.relationship('Ubicaciones', back_populates='direccion', lazy='dynamic')
+    ubicaciones = db.relationship('Ubicaciones', backref='direccion', lazy=True)
 
     def __repr__(self):
         return f'<Direccion {self.Id_Direccion}>'
 
 
 class Ubicaciones(db.Model):
-    """Ubicaciones completas para envíos"""
     __tablename__ = 'Ubicaciones'
 
     Id_Ubicacion = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Id_Departamento = db.Column(
-        db.Integer,
-        db.ForeignKey('Departamento.Id_Departamento'),
-        nullable=False
-    )
-    Id_Municipio = db.Column(
-        db.Integer,
-        db.ForeignKey('Municipio.Id_Municipio'),
-        nullable=False
-    )
-    Id_Direccion = db.Column(
-        db.Integer,
-        db.ForeignKey('Direccion.Id_Direccion'),
-        nullable=False
-    )
-
-    # Relaciones
-    departamento = db.relationship('Departamento', back_populates='ubicaciones')
-    municipio = db.relationship('Municipio', back_populates='ubicaciones')
-    direccion = db.relationship('Direccion', back_populates='ubicaciones')
-    servicios = db.relationship('Servicios', back_populates='ubicacion', lazy='dynamic')
+    Id_Departamento = db.Column(db.Integer, db.ForeignKey('Departamento.Id_Departamento'), nullable=False)
+    Id_Municipio = db.Column(db.Integer, db.ForeignKey('Municipio.Id_Municipio'), nullable=False)
+    Id_Direccion = db.Column(db.Integer, db.ForeignKey('Direccion.Id_Direccion'), nullable=False)
 
     def __repr__(self):
         return f'<Ubicacion {self.Id_Ubicacion}>'
@@ -277,9 +243,7 @@ class NivelFragilidad(db.Model):
 # ============================================================
 # MÓDULO: SERVICIOS (TABLA CENTRAL)
 # ============================================================
-
 class Servicios(db.Model):
-    """Registro de servicios de envío solicitados"""
     __tablename__ = 'Servicios'
     __table_args__ = (
         CheckConstraint('Peso_Carga > 0', name='chk_peso_pos'),
@@ -301,13 +265,14 @@ class Servicios(db.Model):
     Fecha_Entrega = db.Column(db.Date, nullable=False)
     Precio_Total = db.Column(db.Numeric(10, 2), nullable=False)
 
-    # Relaciones
     cliente = db.relationship('Clientes', back_populates='servicios')
     vehiculo = db.relationship('Vehiculos', back_populates='servicios')
     conductor = db.relationship('Conductor', back_populates='servicios')
     tipo_servicio = db.relationship('TipoServicio', back_populates='servicios')
     fragilidad = db.relationship('NivelFragilidad', back_populates='servicios')
-    ubicacion = db.relationship('Ubicaciones', back_populates='servicios')
+
+    # ESTA LÍNEA SE ELIMINA
+    # ubicacion = db.relationship('Ubicaciones', back_populates='servicios')
 
     evidencias = db.relationship('Evidencia', back_populates='servicio', lazy='dynamic', cascade='all, delete-orphan')
     seguimientos = db.relationship('SeguimientoControl', back_populates='servicio', lazy='dynamic', cascade='all, delete-orphan')

@@ -1,7 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from . import db
-from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor
+from .models import Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor, Departamento, Municipio, Direccion, Ubicaciones
 from datetime import datetime
+
+
+
 
 
 bp = Blueprint('main', __name__)
@@ -33,15 +36,94 @@ def gestion_evidencia():
     ]
     return render_template('modules/Gestion_Evidencia/Vista.html', title='Gestión de Evidencia',servicios=servicios)
 
-
+  
+# ============================================================
+# UBICACIONES
+# ============================================================
 @bp.route('/ubicaciones')
 def ubicaciones():
-    return render_template('Modules/Gestion_Ubicaciones/Vista4.html', title='Ubicaciones')
+
+    departamentos = Departamento.query.all()
+    municipios = Municipio.query.all()
+
+    inventario = (
+        db.session.query(Ubicaciones, Departamento, Municipio, Direccion)
+        .join(Departamento, Ubicaciones.Id_Departamento == Departamento.Id_Departamento)
+        .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio)
+        .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion)
+        .all()
+    )
+
+    return render_template(
+        "Modules/Gestion_Ubicaciones/Vista4.html",
+        departamentos=departamentos,
+        municipios=municipios,
+        inventario=inventario
+    )
 
 
-@bp.route('/detalles')
-def detalles():
-    return render_template('Modules/Gestion_Ubicaciones/detalles.html', title='Detalles')
+
+@bp.route("/registrar_ubicacion", methods=["POST"])
+def registrar_ubicacion():
+    dep = request.form["Id_Departamento"]
+    muni = request.form["Id_Municipio"]
+    direccion_texto = request.form.get("Direccion") or ""
+
+    # 1) Crear dirección
+    nueva_dir = Direccion(
+        Id_Municipio=muni,
+        Detalle_Direccion=direccion_texto
+    )
+    db.session.add(nueva_dir)
+    db.session.commit()
+
+    # 2) Crear ubicación
+    nueva = Ubicaciones(
+        Id_Departamento=dep,
+        Id_Municipio=muni,
+        Id_Direccion=nueva_dir.Id_Direccion
+    )
+    db.session.add(nueva)
+    db.session.commit()
+
+    flash("Ubicación registrada correctamente", "success")
+    return redirect(url_for("main.ubicaciones"))
+
+
+@bp.route("/ubicaciones/<int:id_ubicacion>")
+def detalles_ubicacion(id_ubicacion):
+
+    u = Ubicaciones.query.get_or_404(id_ubicacion)
+
+    d = Departamento.query.get(u.Id_Departamento)
+    m = Municipio.query.get(u.Id_Municipio)
+    dir = Direccion.query.get(u.Id_Direccion)
+
+    # Sububicaciones del MISMO departamento
+    sub_ubicaciones = (
+        db.session.query(Ubicaciones, Municipio, Direccion)
+        .join(Municipio)
+        .join(Direccion)
+        .filter(Ubicaciones.Id_Departamento == u.Id_Departamento)
+        .filter(Ubicaciones.Id_Ubicacion != id_ubicacion)
+        .all()
+    )
+
+    departamentos = Departamento.query.all()
+    municipios = Municipio.query.all()
+    
+    return render_template(
+    "Modules/Gestion_Ubicaciones/detalles.html",
+    u=u,
+    d=d,
+    m=m,
+    dir=dir,
+    sub_ubicaciones=sub_ubicaciones,
+    departamentos=departamentos,
+    municipios=municipios
+    )
+
+
 
 
 # ============================================================
