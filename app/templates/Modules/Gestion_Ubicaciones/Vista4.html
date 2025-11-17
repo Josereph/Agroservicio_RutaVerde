@@ -19,26 +19,29 @@
                     <h5 class="mb-0">Registrar Ubicación o Ruta 🚜</h5>
                 </div>
                 <div class="card-body">
-                    <form id="form-ubicacion">
+                    <form id="form-ubicacion" method="POST" action="{{ url_for('main.registrar_ubicacion') }}">
+
+
+                      
 
                         <div class="mb-3">
-                            <label for="ubicacion-departamento" class="form-label">Departamento</label>
-                           <select class="form-select" id="ubicacion-departamento" name="Id_Departamento" required>
-    <option value="">Seleccione un Departamento</option>
-    {% for d in departamentos %}
-        <option value="{{ d.Id_Departamento }}">{{ d.Nombre_Departamento }}</option>
-    {% endfor %}
-</select>
+   <div class="mb-3">
+    <label for="ubicacion-departamento" class="form-label">Departamento</label>
+    <select class="form-select" id="ubicacion-departamento" name="Id_Departamento" required>
+        <option value="">Seleccione un Departamento</option>
+        {% for d in departamentos %}
+            <option value="{{ d.Id_Departamento }}">{{ d.Nombre_Departamento }}</option>
+        {% endfor %}
+    </select>
+</div>
 
-                        </div>
-
-                        <div class="mb-3">
+<div class="mb-3">
     <label for="ubicacion-municipio" class="form-label">Municipio</label>
-    <select class="form-select" id="ubicacion-municipio" name="Id_Municipio" required>
+    <select class="form-select" id="ubicacion-municipio" name="Id_Municipio" required disabled>
         <option value="">Seleccione primero un Departamento</option>
 
         {% for dep in departamentos %}
-            <optgroup label="{{ dep.Nombre_Departamento }}" data-parent="{{ dep.Nombre_Departamento }}">
+            <optgroup label="{{ dep.Nombre_Departamento }}" data-parent="{{ dep.Id_Departamento }}">
                 {% for muni in municipios if muni.Id_Departamento == dep.Id_Departamento %}
                     <option value="{{ muni.Id_Municipio }}">
                         {{ muni.Nombre_Municipio }}
@@ -47,6 +50,8 @@
             </optgroup>
         {% endfor %}
     </select>
+</div>
+
 </div>
 
 
