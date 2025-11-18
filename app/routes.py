@@ -69,3 +69,10 @@ def vehiculos():
 def busqueda():
     """Vista busqueda"""
     return render_template('layouts/busqueda.html', title='Busqueda')
+
+@bp.route('/clientes')
+def clientes():
+    """
+    Sistema de clientes
+    """
+    return render_template('layouts/Clientes.html', title='Clientes')
