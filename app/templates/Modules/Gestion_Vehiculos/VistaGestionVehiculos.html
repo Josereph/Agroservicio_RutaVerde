@@ -201,6 +201,7 @@
           </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
           {% if vehiculos %}
             {% for v in vehiculos %}
               <tr>
@@ -256,11 +257,34 @@
             </tr>
           {% endif %}
         </tbody>
+=======
+          <!-- Ejemplo de fila -->
+          <tr>
+            <td>P-123456</td>
+            <td>Toyota</td>
+            <td>Hilux</td>
+            <td>2010</td>
+            <td>Pick-up</td>
+            <td>1000</td>
+            <td><span class="badge bg-success">Activo</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-1" aria-label="Editar Toyota Hilux P-123456">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" aria-label="Eliminar Toyota Hilux P-123456">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+>>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
       </table>
     </div>
   </div>
 </div>
+<<<<<<< HEAD
 
 <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script> 
 
+=======
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+>>>>>>> bb3ae60 (creacion de validacion de todas las vistas)
 {% endblock %}
