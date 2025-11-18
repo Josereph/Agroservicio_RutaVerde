@@ -180,26 +180,38 @@ def registrar_ubicacion():
 
 @bp.route("/ubicaciones/<int:id_ubicacion>")
 def detalles_ubicacion(id_ubicacion):
+
+    # 1. DEFINIR 'u' (Obtener la Ubicación principal)
     u = Ubicaciones.query.get_or_404(id_ubicacion)
+
+    # El resto del código que usa 'u'
     d = Departamento.query.get(u.Id_Departamento)
     m = Municipio.query.get(u.Id_Municipio)
     dir = Direccion.query.get(u.Id_Direccion)
 
-    sub = (
+    # 2. Sububicaciones del MISMO departamento (Usando 'u' ya definida)
+    sub_ubicaciones = (
         db.session.query(Ubicaciones, Municipio, Direccion)
-        .join(Municipio)
-        .join(Direccion)
-        .filter(Ubicaciones.Id_Departamento == u.Id_Departamento)
+        .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio) 
+        .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion) 
+        .filter(Ubicaciones.Id_Departamento == u.Id_Departamento) 
         .filter(Ubicaciones.Id_Ubicacion != id_ubicacion)
         .all()
     )
 
+    # ... resto de la función ...
+    departamentos = Departamento.query.all()
+    municipios = Municipio.query.all()
+    
     return render_template(
         "Modules/Gestion_Ubicaciones/detalles.html",
-        u=u, d=d, m=m, dir=dir,
-        sub_ubicaciones=sub,
-        departamentos=Departamento.query.all(),
-        municipios=Municipio.query.all()
+        u=u,
+        d=d,
+        m=m,
+        dir=dir,
+        sub_ubicaciones=sub_ubicaciones,
+        departamentos=departamentos,
+        municipios=municipios
     )
 
 @bp.route("/ubicaciones/actualizar/<int:id_ubicacion>", methods=["POST"])
@@ -207,24 +219,6 @@ def actualizar_ubicacion(id_ubicacion):
     u = Ubicaciones.query.get_or_404(id_ubicacion)
     id_direccion = request.form.get("Id_Direccion", type=int)
     dir = Direccion.query.get(id_direccion)
-
-    if not dir:
-        flash("Error: Dirección no encontrada.", "danger")
-        return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
-
-    u.Id_Departamento = request.form["Id_Departamento"]
-    u.Id_Municipio = request.form["Id_Municipio"]
-    dir.Detalle_Direccion = request.form.get("Direccion", "").strip()
-
-    try:
-        db.session.commit()
-        flash("Ubicación actualizada.", "success")
-    except Exception as e:
-        db.session.rollback()
-        flash(f"Error al actualizar: {e}", "danger")
-
-    return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
-
 
 # ============================================================
 # GESTIÓN DE SERVICIOS
