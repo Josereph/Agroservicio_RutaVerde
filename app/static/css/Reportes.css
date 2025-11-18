@@ -1,0 +1,671 @@
+/* ========================================== */
+/* ESTILOS MÓDULO DE REPORTES */
+/* Agroservicio Ruta Verde */
+/* ========================================== */
+
+/* ========================================== */
+/* HERO SECTION */
+/* ========================================== */
+.reportes-hero-section {
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%);
+    padding: 80px 0;
+    color: white;
+    text-align: center;
+}
+
+.reportes-hero-section .hero-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.reportes-hero-section .hero-badge i {
+    font-size: 1.2rem;
+}
+
+.reportes-hero-section .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.reportes-hero-section .hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.reportes-hero-section .hero-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* ========================================== */
+/* ESTADÍSTICAS DE REPORTES */
+/* ========================================== */
+.reportes-stats-section {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+}
+
+.reporte-stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.reporte-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.reporte-stat-card.evidencias {
+    border-left: 5px solid #17a2b8;
+}
+
+.reporte-stat-card.servicios {
+    border-left: 5px solid #28a745;
+}
+
+.reporte-stat-card.incidentes {
+    border-left: 5px solid #ffc107;
+}
+
+.reporte-stat-card.entregas {
+    border-left: 5px solid #a4c639;
+}
+
+.reporte-stat-card .stat-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.reporte-stat-card.evidencias .stat-icon-wrapper {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.reporte-stat-card.servicios .stat-icon-wrapper {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.reporte-stat-card.incidentes .stat-icon-wrapper {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.reporte-stat-card.entregas .stat-icon-wrapper {
+    background-color: rgba(164, 198, 57, 0.1);
+    color: #a4c639;
+}
+
+.reporte-stat-card .stat-info {
+    flex: 1;
+}
+
+.reporte-stat-card .stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #2d5016;
+    line-height: 1;
+}
+
+.reporte-stat-card .stat-description {
+    margin: 5px 0 0 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* ========================================== */
+/* TIPOS DE REPORTES */
+/* ========================================== */
+.reportes-tipos-section {
+    padding: 80px 20px;
+    background-color: white;
+}
+
+.section-header {
+    margin-bottom: 40px;
+}
+
+.section-label {
+    color: #a4c639;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2d5016;
+    margin: 0;
+}
+
+.tipo-reporte-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 2px solid transparent;
+}
+
+.tipo-reporte-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-color: #a4c639;
+}
+
+.tipo-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 20px;
+}
+
+.evidencias-icon {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.seguimiento-icon {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.calidad-icon {
+    background-color: rgba(164, 198, 57, 0.1);
+    color: #a4c639;
+}
+
+.incidentes-icon {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.vehiculos-icon {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.conductores-icon {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.tipo-titulo {
+    text-align: center;
+    font-weight: bold;
+    color: #2d5016;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.tipo-descripcion {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.tipo-lista {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.tipo-lista li {
+    padding: 8px 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.tipo-lista li i {
+    color: #a4c639;
+    font-size: 1.1rem;
+}
+
+.tipo-badge {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* ========================================== */
+/* FILTROS Y EXPORTACIÓN */
+/* ========================================== */
+.filtros-section {
+    padding: 80px 20px;
+    background-color: #f8f9fa;
+}
+
+.filtros-content {
+    padding: 40px 20px;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+.filtros-disponibles {
+    margin-top: 30px;
+}
+
+.filtros-titulo {
+    font-weight: bold;
+    color: #2d5016;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.filtro-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.filtro-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateX(5px);
+}
+
+.filtro-item i {
+    font-size: 1.5rem;
+    color: #a4c639;
+}
+
+.filtro-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.exportacion-visual {
+    text-align: center;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.export-icon-grande {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #a4c639, #2d5016);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: white;
+    box-shadow: 0 10px 40px rgba(164, 198, 57, 0.3);
+}
+
+.export-titulo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2d5016;
+    margin-bottom: 30px;
+}
+
+.export-formatos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.formato-btn {
+    width: 120px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.formato-btn:hover {
+    background: #a4c639;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(164, 198, 57, 0.3);
+    border-color: #2d5016;
+}
+
+.formato-btn i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.formato-btn span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ========================================== */
+/* GRÁFICOS */
+/* ========================================== */
+.graficos-section {
+    padding: 80px 20px;
+    background-color: white;
+}
+
+.grafico-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    height: 100%;
+}
+
+.grafico-header {
+    background: linear-gradient(135deg, #2d5016, #4a7c2a);
+    padding: 20px;
+    color: white;
+}
+
+.grafico-titulo {
+    margin: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.grafico-placeholder {
+    padding: 80px 40px;
+    text-align: center;
+    background: #f8f9fa;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    background: rgba(164, 198, 57, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #a4c639;
+}
+
+.placeholder-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.placeholder-subtext {
+    color: #aaa;
+    font-size: 0.9rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ========================================== */
+/* ESTADO ACTUAL */
+/* ========================================== */
+.reportes-estado-section {
+    padding: 80px 20px;
+    background-color: #f8f9fa;
+}
+
+.estado-content {
+    padding: 40px 20px;
+}
+
+.estado-detalles {
+    margin-top: 30px;
+}
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.detalle-item i {
+    font-size: 1.5rem;
+}
+
+.detalle-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.estado-visual {
+    text-align: center;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.sistema-sin-datos-icon {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #6c757d, #495057);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: white;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.sistema-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.sistema-descripcion {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* ========================================== */
+/* RESPONSIVE */
+/* ========================================== */
+@media (max-width: 992px) {
+    .reportes-hero-section .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .reporte-stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .reporte-stat-card .stat-icon-wrapper {
+        margin: 0 auto 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reportes-hero-section {
+        padding: 60px 20px;
+    }
+    
+    .reportes-hero-section .hero-title {
+        font-size: 2rem;
+    }
+    
+    .reportes-hero-section .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .reporte-stat-card .stat-value {
+        font-size: 2rem;
+    }
+    
+    .export-icon-grande,
+    .sistema-sin-datos-icon {
+        width: 120px;
+        height: 120px;
+        font-size: 4rem;
+    }
+    
+    .export-formatos {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .formato-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .filtros-content,
+    .estado-content {
+        padding: 20px 10px;
+    }
+    
+    .grafico-placeholder {
+        padding: 60px 20px;
+        min-height: 250px;
+    }
+    
+    .placeholder-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .placeholder-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .reportes-stats-section,
+    .reportes-tipos-section,
+    .filtros-section,
+    .graficos-section,
+    .reportes-estado-section {
+        padding: 40px 15px;
+    }
+    
+    .tipo-reporte-card,
+    .filtros-content,
+    .exportacion-visual,
+    .estado-visual {
+        padding: 25px 20px;
+    }
+}
+
+/* ========================================== */
+/* ANIMACIONES */
+/* ========================================== */
+.tipo-reporte-card,
+.reporte-stat-card,
+.filtro-item,
+.formato-btn {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================== */
+/* UTILIDADES */
+/* ========================================== */
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.bg-secondary {
+    background-color: #6c757d !important;
+}
