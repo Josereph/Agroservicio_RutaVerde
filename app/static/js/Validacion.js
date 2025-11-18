@@ -274,6 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================================================
 // FORMULARIO DE SERVICIOS (REGISTRO)
 // ============================================================
+/*
+// ============================================================
+// FORMULARIO DE SERVICIOS (REGISTRO) — ESTE BLOQUE ES VIEJO Y DEBE ELIMINARSE
+// ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#registro form");
   if (!form) return;
@@ -311,6 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (valido) form.submit();
   });
 });
+*/
+
 
 // ============================================================
 // GESTIÓN DE EVIDENCIA Y SEGUIMIENTO
