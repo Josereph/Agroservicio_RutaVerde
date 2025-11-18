@@ -2,7 +2,6 @@
 
 {% block title %}Gestión de Evidencias{% endblock %}
 
-
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/Gestion_Evidencia.css') }}">
 {% endblock %}
@@ -285,13 +284,39 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="7" class="text-center text-muted">
-                                        No hay evidencias registradas
-                                    </td>
-                                </tr>
-                            </tbody>
+                           <tbody>
+{% if evidencias %}
+    {% for e, s, c in evidencias %}
+    <tr>
+        <td>{{ e.id_evidencia }}</td>
+        <td>#{{ s.Id_Servicio }} - {{ c.Nombre_Cliente }}</td>
+        <td>{{ e.tipo_evidencia }}</td>
+        <td>
+            <a href="{{ url_for('static', filename='uploads/' ~ e.nombre_archivo) }}"
+               target="_blank" class="btn btn-sm btn-outline-primary">
+                Ver Archivo
+            </a>
+        </td>
+        <td>
+            {% if e.es_legible %}
+                <span class="badge bg-success">Sí</span>
+            {% else %}
+                <span class="badge bg-danger">No</span>
+            {% endif %}
+        </td>
+        <td>{{ e.fecha_captura }}</td>
+        <td>
+            <button class="btn btn-danger btn-sm" disabled>Eliminar</button>
+        </td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="7" class="text-center text-muted">No hay evidencias registradas</td>
+    </tr>
+{% endif %}
+</tbody>
+
                         </table>
                     </div>
 
@@ -313,12 +338,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="8" class="text-center text-muted">
-                                        No hay seguimientos registrados
-                                    </td>
-                                </tr>
-                            </tbody>
+{% if seguimientos %}
+    {% for seg, serv, cli in seguimientos %}
+    <tr>
+        <td>{{ seg.id_seguimiento }}</td>
+        <td>#{{ serv.Id_Servicio }} - {{ cli.Nombre_Cliente }}</td>
+        <td>{{ seg.estado_actual }}</td>
+        <td>{{ seg.control_calidad }}</td>
+        <td>{{ seg.incidente or '—' }}</td>
+        <td>
+            {% if seg.notificacion_enviada %}
+                <span class="badge bg-success">Sí</span>
+            {% else %}
+                <span class="badge bg-secondary">No</span>
+            {% endif %}
+        </td>
+        <td>{{ seg.nombre_receptor or '—' }}</td>
+        <td>{{ seg.fecha_hora }}</td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="8" class="text-center text-muted">No hay seguimientos registrados</td>
+    </tr>
+{% endif %}
+</tbody>
+
                         </table>
                     </div>
 
