@@ -340,3 +340,22 @@ def eliminar_vehiculo(id_vehiculo):
 def busqueda():
     """Vista busqueda"""
     return render_template('layouts/busqueda.html', title='Busqueda')
+
+@bp.route('/clientes')
+def clientes():
+    """
+    Sistema de clientes
+    """
+    return render_template('layouts/Clientes.html', title='Clientes')
+
+@bp.route('/editarservicio')
+def editarservicio():
+    """
+    Editar los servicios
+    """
+    return render_template('Modules/Gestion_Servicio/Editar_Servicio.html', title='Editar ServisioS')
+
+@bp.route('/Reportes')
+def reportes():
+    """Vista del módulo de reportes"""
+    return render_template('layouts/Reportes.html', title='Reportes')

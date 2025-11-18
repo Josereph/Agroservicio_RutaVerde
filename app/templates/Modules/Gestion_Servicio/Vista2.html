@@ -10,10 +10,7 @@
 
         <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
             <li class="nav-item" role="presentation">
-
-                
-                <button class="nav-link *active* tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="true">
-
+                <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="false">
                     Registrar Nuevo Servicio
                 </button>
             </li>
@@ -25,9 +22,7 @@
         </ul>
 
         <div class="tab-content tab-content-card" id="serviciosTabContent">
-
-            
-            <div class="tab-pane fade *show active*" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+            <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
                 
                 <form action="#" method="POST">
@@ -163,45 +158,58 @@
                         <thead class="thead-custom">
                             <tr>
                                 <th>ID Servicio</th>
-                                <th>Cliente</th>
-                                <th>Producto</th>
-                                <th>Fecha Entrega</th>
-                                <th>Estado del Cargamento</th>
+                                <th>Cliente (DUI)</th>
+                                <th>Producto/Carga</th>
+                                <th>Origen/Destino</th>
+                                <th>Precio Total</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>SRV-001</td>
-                                <td>José Diego C.</td>
-                                <td>Semilla Maíz</td>
-                                <td>2025-11-28</td>
+                                <td>José Diego C. (0123...)</td>
+                                <td>Semilla Maíz (50.5kg)</td>
+                                <td>Sonsonate / Ahuachapán</td>
+                                <td>$45.00</td>
                                 <td><span class="badge bg-warning text-dark">En Camión</span></td>
+                                <!-- CORRECCIÓN: Usar d-flex y gap-1 para asegurar la alineación horizontal -->
                                 <td>
-                                    <button class="btn btn-sm btn-success me-1" title="Editar Servicio"><i>Editar</i></button>
-                                    <button class="btn btn-sm btn-danger" title="Eliminar Servicio"><i>Eliminar</i></button>
+                                    <div class="d-flex gap-1">
+                                        <a href="/editarservicio" class="btn btn-sm btn-success"><i class="">Editar</i></a>
+                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-002</td>
-                                <td>René A. Hernández</td>
-                                <td>Abono Orgánico</td>
-                                <td>2025-11-20</td>
+                                <td>René A. H. (9876...)</td>
+                                <td>Abono Orgánico (100kg)</td>
+                                <td>La Paz / San Vicente</td>
+                                <td>$75.50</td>
                                 <td><span class="badge bg-primary">En Ruta</span></td>
+                                <!-- CORRECCIÓN: Usar d-flex y gap-1 -->
                                 <td>
-                                    <button class="btn btn-sm btn-success me-1"><i>Editar</i></button>
-                                    <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
+                                    <div class="d-flex gap-1">
+                                        <a href="/editarservicio" class="btn btn-sm btn-success">Editar</a>
+                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>SRV-003</td>
-                                <td>Joseph Orellana</td>
-                                <td>Fertilizante Líquido</td>
-                                <td>2025-11-15</td>
+                                <td>Joseph O. (5432...)</td>
+                                <td>Fertilizante Líquido (Frágil)</td>
+                                <td>San Salvador / La Libertad</td>
+                                <td>$120.00</td>
                                 <td><span class="badge bg-success">Entregado</span></td>
+                                <!-- CORRECCIÓN: Usar d-flex y gap-1 (botones deshabilitados) -->
                                 <td>
-                                    <button class="btn btn-sm btn-success me-1" disabled><i>Editar</i></button>
-                                    <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
+                                    <div class="d-flex gap-1">
+                                        <button class="btn btn-sm btn-success" disabled><i class="">Editar</i></button>
+                                        <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
