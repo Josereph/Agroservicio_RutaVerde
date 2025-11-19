@@ -190,7 +190,7 @@
 
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ url_for('main.editar_servicio', id_servicio=s.Id_Servicio) }}"
+                                    <a href="{{ url_for('main.editar_servicio_get', id_servicio=s.Id_Servicio) }}"
                                        class="btn btn-sm btn-success">Editar</a>
 
                                     <form action="{{ url_for('main.eliminar_servicio', id_servicio=s.Id_Servicio) }}"

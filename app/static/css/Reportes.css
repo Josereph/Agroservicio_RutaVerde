@@ -669,3 +669,8 @@
 .bg-secondary {
     background-color: #6c757d !important;
 }
+
+@media print {
+    /* Estilos que solo se aplican al imprimir o generar PDF */
+    .grafico-card { border: 1px solid black; }
+}
