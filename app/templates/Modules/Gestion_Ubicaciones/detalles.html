@@ -8,46 +8,47 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/ubicaciones.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalles.css') }}">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0 text-success">
+        <h3 class="mb-0 text-agro-strong">
             Detalle de Ubicación:
             <span class="fw-bold">
                 {{ m.Nombre_Municipio }} ({{ d.Nombre_Departamento }})
             </span>
         </h3>
-        <a href="{{ url_for('main.ubicaciones') }}" class="btn btn-outline-success">
-            &laquo; Volver al Inventario
+        <a href="{{ url_for('main.ubicaciones') }}" class="btn btn-agro">
+            « Volver al Inventario
         </a>
     </div>
 
     <div class="row">
-        <!-- FORMULARIO DE EDICIÓN -->
-        <div class="col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header text-white">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4 card-shadow">
+                <div class="card-header bg-agro text-white">
                     <h5 class="mb-0">Editar Detalles ✏️</h5>
                 </div>
                 <div class="card-body">
-                    <form id="form-detalle-ubicacion">
-                        <!-- Nombre de ubicación/ruta (tomamos el municipio como nombre) -->
+
+                    <form id="form-ubicacion" method="POST" 
+                        action="{{ url_for('main.actualizar_ubicacion', id_ubicacion=u.Id_Ubicacion) }}">
+
+                        <input type="hidden" name="Id_Direccion" value="{{ dir.Id_Direccion }}">
+
                         <div class="mb-3">
-                            <label for="detalle-nombre" class="form-label">
-                                Nombre de Ubicación/Ruta
-                            </label>
-                            <input
+                            <label for="detalle-nombre" class="form-label">Nombre de Ubicación/Ruta</label>
+                            <input 
                                 type="text"
                                 class="form-control"
                                 id="detalle-nombre"
                                 value="{{ m.Nombre_Municipio }}"
-                                required
+                                readonly
                             >
                         </div>
 
-                        <!-- Código generado desde la BD -->
                         <div class="mb-3">
                             <label for="detalle-codigo" class="form-label">Código</label>
-                            <input
+                            <input 
                                 type="text"
                                 class="form-control"
                                 id="detalle-codigo"
@@ -56,31 +57,29 @@
                             >
                         </div>
 
-                        <!-- Departamento -->
                         <div class="mb-3">
-                            <label for="detalle-departamento" class="form-label">Departamento</label>
-                            <select class="form-select" id="detalle-departamento" required>
+                            <label for="ubicacion-departamento" class="form-label">Departamento</label>
+                            <select class="form-select" id="ubicacion-departamento" name="Id_Departamento" required>
                                 <option value="">Seleccione un Departamento</option>
                                 {% for dep in departamentos %}
-                                    <option value="{{ dep.Id_Departamento }}"
-                                            {% if dep.Id_Departamento == d.Id_Departamento %}selected{% endif %}>
+                                    <option value="{{ dep.Id_Departamento }}" 
+                                        {% if dep.Id_Departamento == u.Id_Departamento %}selected{% endif %}>
                                         {{ dep.Nombre_Departamento }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
 
-                        <!-- Municipio (agrupado por departamento, todo desde la BD) -->
                         <div class="mb-3">
-                            <label for="detalle-municipio" class="form-label">Municipio</label>
-                            <select class="form-select" id="detalle-municipio" required>
+                            <label for="ubicacion-municipio" class="form-label">Municipio</label>
+                            <select class="form-select" id="ubicacion-municipio" name="Id_Municipio" required>
                                 <option value="">Seleccione un Municipio</option>
 
                                 {% for dep in departamentos %}
-                                    <optgroup label="{{ dep.Nombre_Departamento }}">
+                                    <optgroup label="{{ dep.Nombre_Departamento }}" data-parent="{{ dep.Id_Departamento }}">
                                         {% for muni in municipios if muni.Id_Departamento == dep.Id_Departamento %}
-                                            <option value="{{ muni.Id_Municipio }}"
-                                                    {% if muni.Id_Municipio == m.Id_Municipio %}selected{% endif %}>
+                                            <option value="{{ muni.Id_Municipio }}" 
+                                                {% if muni.Id_Municipio == u.Id_Municipio %}selected{% endif %}>
                                                 {{ muni.Nombre_Municipio }}
                                             </option>
                                         {% endfor %}
@@ -89,82 +88,29 @@
                             </select>
                         </div>
 
-                        <!-- Dirección exacta -->
                         <div class="mb-3">
-                            <label for="detalle-direccion" class="form-label">
-                                Dirección Exacta (Punto Logístico)
-                            </label>
-                          <textarea class="form-control" id="ubicacion-direccion" name="Direccion" rows="2"></textarea>
-
+                            <label for="ubicacion-direccion" class="form-label">Dirección Exacta (Punto Logístico)</label>
+                            <textarea class="form-control" id="ubicacion-direccion" name="Direccion" rows="2">
+{{ dir.Detalle_Direccion }}</textarea>
                         </div>
 
-                        <!-- Estado -->
-                        {# OJO: en la BD actual Ubicaciones NO tiene campo estado.
-                           Esto está fijo por ahora. Si agregas una columna en la tabla,
-                           aquí solo cambias a {{ u.Estado }} o similar. #}
                         <div class="mb-3">
                             <label for="detalle-estado" class="form-label">Estado</label>
-                            <select class="form-select" id="detalle-estado" required>
-                                <option value="activo" selected>Activo</option>
-                                <option value="inactivo">Inactivo</option>
+                            <select class="form-select" id="detalle-estado" name="Estado" required>
+                                <option value="Activo" {% if u.Estado == "Activo" %}selected{% endif %}>Activo</option>
+                                <option value="Inactivo" {% if u.Estado == "Inactivo" %}selected{% endif %}>Inactivo</option>
                             </select>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn-cta w-75">Guardar Cambios</button>
-                            <button type="button" class="btn btn-danger w-20">Eliminar</button>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-agro w-auto px-4">Guardar Cambios</button>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         </div>
-
-        <!-- SUB-UBICACIONES (TOTALMENTE DESDE BD) -->
-        <div class="col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header text-white header-tierra d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        Sub-Ubicaciones del departamento "{{ d.Nombre_Departamento }}"
-                    </h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th scope="col">Jerarquía (Hijo)</th>
-                                    <th scope="col">Código</th>
-                                    <th scope="col">Municipio</th>
-                                    <th scope="col">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sub-inventario-tbody">
-                                {% for sub_u, sub_m, sub_dir in sub_ubicaciones %}
-                                    <tr class="ubicacion-nivel-2">
-                                        <td>
-                                            <span class="hierarchy-level nivel-2"></span>
-                                            {{ sub_m.Nombre_Municipio }}
-                                        </td>
-                                        <td>UB-{{ sub_u.Id_Ubicacion }}</td>
-                                        <td>{{ sub_m.Nombre_Municipio }}</td>
-                                        <td>
-                                            <span class="badge bg-success">Activo</span>
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">
-                                            No hay otras ubicaciones registradas en este departamento.
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 

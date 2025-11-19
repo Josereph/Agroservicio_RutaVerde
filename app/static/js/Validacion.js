@@ -228,145 +228,50 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ============================================================
-// DETALLE DE UBICACIÓN (EDICIÓN)
+// VALIDACIÓN Y FILTRO FORMULARIO DE UBICACIONES (DETALLES)
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("form-detalle-ubicacion");
-    if (!form) return;
 
-    const departamentoSelect = document.getElementById("detalle-departamento");
-    const municipioSelect = document.getElementById("detalle-municipio");
+    const selectDepto = document.getElementById("detalle-departamento");
+    const selectMunicipio = document.getElementById("detalle-municipio");
 
-    // Filtro dinámico de municipios según departamento
-    function filtrarDetallesMunicipios() {
-        const departamento = departamentoSelect.value;
-        const grupos = municipioSelect.querySelectorAll("optgroup");
-        
-        // Limpiamos la selección si el departamento cambia
-        if (municipioSelect.getAttribute('data-initial-loaded') !== 'true' && departamentoSelect.getAttribute('data-initial-loaded') === 'true') {
-             municipioSelect.value = "";
-        }
-        
-        grupos.forEach((g) => {
-            g.style.display =
-                g.getAttribute("data-parent") === departamento
-                    ? "block"
-                    : "none";
-        });
-        
-        municipioSelect.setAttribute('data-initial-loaded', 'true');
-        departamentoSelect.setAttribute('data-initial-loaded', 'true');
-    }
+    if (selectDepto && selectMunicipio) {
 
-    departamentoSelect.addEventListener("change", filtrarDetallesMunicipios);
+        const grupos = Array.from(selectMunicipio.querySelectorAll("optgroup"));
 
-    // Aplicar filtro al cargar (para que coincida con el depto seleccionado)
-    filtrarDetallesMunicipios(); 
+        function filtrarMunicipios() {
+            const depto = selectDepto.value;
 
+            grupos.forEach(g => g.style.display = "none");
 
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const nombre = document
-            .getElementById("detalle-nombre")
-            .value.trim();
-        const codigo = document
-            .getElementById("detalle-codigo")
-            .value.trim();
-        const departamento = departamentoSelect.value;
-        const municipio = municipioSelect.value;
-        const direccion = document
-            .getElementById("detalle-direccion")
-            .value.trim();
-        const estado = document.getElementById("detalle-estado").value;
-
-        // Validación mejorada:
-        if (!nombre || nombre.length < 3) return alert("El nombre de la ubicación o ruta es obligatorio y debe tener al menos 3 caracteres.");
-        if (!codigo) return alert("El código es obligatorio.");
-        if (!departamento) return alert("Debes seleccionar un departamento.");
-        if (estado !== "activo" && estado !== "inactivo")
-            return alert("Selecciona un estado válido.");
-
-        // Lógica de confirmación:
-        if (municipio === "" && direccion === "") {
-            const confirmar = confirm(
-                "No seleccionaste municipio ni dirección. ¿Deseas guardar esta ubicación como jerarquía superior?"
-            );
-            if (!confirmar) return;
-        }
-        
-        // Si todo es válido, enviamos el formulario
-        form.submit();
-    });
-});
-
-// ============================================================
-// GESTIÓN DE EVIDENCIA Y SEGUIMIENTO
-// ============================================================
-document.addEventListener("DOMContentLoaded", () => {
-    // === VALIDAR REGISTRO DE EVIDENCIA ===
-    const formEvidencia = document.querySelector("#registrar form");
-    if (formEvidencia) {
-        formEvidencia.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            const servicio = formEvidencia.id_servicio.value;
-            const tipoEvidencia = formEvidencia.tipo_evidencia.value;
-            const archivo = formEvidencia.archivo.files[0];
-            const legible = formEvidencia.es_legible.value;
-            const fechaCaptura = formEvidencia.fecha_captura.value;
-
-            let valido = true;
-
-            if (!servicio) valido = false;
-            if (!tipoEvidencia) valido = false;
-
-            if (!archivo) valido = false;
-            else {
-                const tiposPermitidos = [
-                    "image/jpeg",
-                    "image/png",
-                    "application/pdf",
-                ];
-                if (!tiposPermitidos.includes(archivo.type)) valido = false;
-                // 5MB límite
-                if (archivo.size > 5 * 1024 * 1024) valido = false; 
+            if (!depto) {
+                selectMunicipio.disabled = true;
+                selectMunicipio.value = "";
+                return;
             }
 
-            if (!fechaCaptura) valido = false;
-            if (legible !== "1" && legible !== "0") valido = false;
+            selectMunicipio.disabled = false;
+            selectMunicipio.value = "";
 
-            if (valido) formEvidencia.submit();
-        });
-    }
+            grupos.forEach(g => {
+                g.style.display = g.dataset.parent === depto ? "block" : "none";
+            });
+        }
 
-    // === VALIDAR REGISTRO DE SEGUIMIENTO ===
-    const formSeguimiento = document.querySelector("#seguimiento form");
-    if (formSeguimiento) {
-        formSeguimiento.addEventListener("submit", (e) => {
-            e.preventDefault();
+        // Estado inicial: ocultar todos
+        grupos.forEach(g => g.style.display = "none");
+        selectMunicipio.disabled = true;
 
-            const servicio = formSeguimiento.id_servicio.value;
-            const estadoActual = formSeguimiento.estado_actual.value;
-            const controlCalidad = formSeguimiento.control_calidad.value;
-            const incidente = formSeguimiento.incidente.value.trim();
-            const receptor = formSeguimiento.nombre_receptor.value.trim();
+        // Si ya viene preseleccionado el departamento → activar el filtro
+        if (selectDepto.value) {
+            filtrarMunicipios();
+            selectMunicipio.value = "{{ m.Id_Municipio }}";
+        }
 
-            let valido = true;
-
-            if (!servicio) valido = false;
-            if (!estadoActual) valido = false;
-            if (!controlCalidad) valido = false;
-
-            if (estadoActual === "entregado" && receptor === "")
-                valido = false;
-
-            if (incidente && incidente.length < 5) valido = false;
-
-            if (valido) formSeguimiento.submit();
-        });
+        selectDepto.addEventListener("change", filtrarMunicipios);
     }
 });
+
 
 // ============================================================
 // VALIDACIÓN Y FORMATEO DE CONDUCTORES (MODAL)
