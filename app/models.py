@@ -252,7 +252,8 @@ class Servicios(db.Model):
         Index('ix_servicios_fecha', 'Fecha_Pedido', 'Fecha_Entrega'),
         Index('ix_servicios_conductor', 'id_conductor'),
     )
-    Id_Servicio = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    Id_Servicio = db.Column(db.Integer, primary_key=True)
     Id_Cliente = db.Column(db.Integer, db.ForeignKey('Clientes.Id_Cliente'), nullable=False)
     Id_Vehiculo = db.Column(db.Integer, db.ForeignKey('Vehiculos.id_vehiculo'), nullable=False)
     id_conductor = db.Column(db.Integer, db.ForeignKey('conductor.id_conductor'), nullable=False)
@@ -266,6 +267,7 @@ class Servicios(db.Model):
     Precio_Total = db.Column(db.Numeric(10, 2), nullable=False)
 
     cliente = db.relationship('Clientes', back_populates='servicios')
+    ubicacion = db.relationship('Ubicaciones', backref='servicios', lazy='joined')
     vehiculo = db.relationship('Vehiculos', back_populates='servicios')
     conductor = db.relationship('Conductor', back_populates='servicios')
     tipo_servicio = db.relationship('TipoServicio', back_populates='servicios')
