@@ -671,6 +671,54 @@ def buscar_servicios():
     )
 
 
+# ============================================================
+# EDITAR CLIENTE
+# ============================================================
+@bp.route('/clientes/editar/<int:id_cliente>', methods=['GET', 'POST'])
+def editar_cliente(id_cliente):
+    cliente = Clientes.query.get_or_404(id_cliente)
+
+    if request.method == 'POST':
+        cliente.Nombre_Cliente = request.form.get('nombre_cliente')
+        cliente.Dui = request.form.get('dui_cliente')
+        cliente.CorreoElectronico = request.form.get('correo_electronico')
+
+        try:
+            db.session.commit()
+            flash("Cliente actualizado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al actualizar cliente: {e}", "danger")
+
+        return redirect(url_for('main.clientes'))
+
+    return render_template(
+        "layouts/EditarCliente.html",
+        cliente=cliente
+    )
+
+
+# ============================================================
+# ELIMINAR CLIENTE
+# ============================================================
+@bp.route('/clientes/eliminar/<int:id_cliente>', methods=['POST'])
+def eliminar_cliente(id_cliente):
+    cliente = Clientes.query.get_or_404(id_cliente)
+
+    try:
+        db.session.delete(cliente)
+        db.session.commit()
+        flash("Cliente eliminado correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error al eliminar cliente: {e}", "danger")
+
+    return redirect(url_for('main.clientes'))
+
+
+
+
+
 
 # ============================================================
 # GESTIÓN DE CONDUCTORES
