@@ -222,8 +222,33 @@
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">
-                                No hay servicios registrados.
+                            <td>{{ s.Id_Servicio }}</td>
+                            <td>{{ s.cliente.Nombre_Cliente }} ({{ s.cliente.Dui }})</td>
+                            <td>{{ s.Peso_Carga }} kg</td>
+                            <td>{{ s.vehiculo.marca }} / {{ s.vehiculo.modelo }}</td>
+                            <td>${{ s.Precio_Total }}</td>
+
+                            <td>
+                                {% if estado %}
+                                    <span class="badge bg-primary">
+                                        {{ estado.estado_actual }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Sin seguimiento</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url_for('main.editar_servicio_get', id_servicio=s.Id_Servicio) }}"
+                                       class="btn btn-sm btn-success">Editar</a>
+
+                                    <form action="{{ url_for('main.eliminar_servicio', id_servicio=s.Id_Servicio) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('¿Seguro que deseas eliminar este servicio?');">
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     {% endif %}
