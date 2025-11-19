@@ -12,7 +12,7 @@ class Config:
     
     # Otras configuraciones
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:U22qrv88*@localhost/RutaVerdeBD'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/RutaVerdeBD'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

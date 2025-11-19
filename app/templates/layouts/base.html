@@ -6,7 +6,6 @@
     <meta name="description" content="Sistema de gestión logística para agroservicio">
     <meta name="author" content="Agroservicio Ruta Verde">
     <title>{% block title %}Agroservicio Ruta Verde{% endblock %}</title>
-
     
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -45,20 +44,15 @@
                         <span>Servicios Logísticos</span>
                     </a>
                 </li>
+                
+                <!-- CORREGIDO: Se eliminó el duplicado aquí -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.recursos') }}" id="nav-recursos">
-<<<<<<< HEAD
                         <i class="bi bi-box-seam"></i>
                         <span>Recursos Operativos</span>
-=======
-                             <i class="bi bi-box-seam"></i>
-
-                              <span>Recursos Operativos</span>  <!--Joseph estuvo aqui xdxd--> 
-
-
->>>>>>> Gestion_Vehiculos
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/gestion_evidencia" id="nav-evidencia">
                         <i class="bi bi-file-earmark-text"></i>
@@ -78,14 +72,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Reportes" id="nav-reportes">
+                    <a class="nav-link" href="/reportes" id="nav-reportes">
                         <i class="bi bi-bar-chart-line"></i>
                         <span>Reportes</span>
                     </a>
                 </li>
+                
+                <!-- CORREGIDO: Se agregó la clase 'bi' faltante al icono -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/clientes" id="nav-configuracion">
-                        <i class="bi-people-fill"></i>
+                    <a class="nav-link" href="/clientes" id="nav-clientes">
+                        <i class="bi bi-people-fill"></i>
                         <span>Clientes</span>
                     </a>
                 </li>
@@ -155,12 +151,11 @@
 
             // Animación al hacer clic
             $('.nav-link').on('click', function(e) {
+                // Nota: Si el enlace recarga la página, esta animación apenas se verá,
+                // pero sirve para dar feedback visual inmediato.
                 const $this = $(this);
                 
-                // Remover active de todos
                 $('.nav-link').removeClass('active');
-                
-                // Agregar active al clickeado
                 $this.addClass('active');
                 
                 // Efecto de pulso
@@ -178,7 +173,7 @@
                 }, 600);
             });
 
-            // Efecto de carga al iniciar
+            // Efecto de carga al iniciar (Entrada de los items)
             $('.nav-item').each(function(index) {
                 const $item = $(this);
                 $item.css('opacity', '0');
@@ -186,22 +181,32 @@
                 setTimeout(() => {
                     $item.animate({
                         opacity: 1,
-                        marginLeft: '12px'
+                        marginLeft: '12px' // Ajuste para que queden alineados tras la animación
                     }, 400, 'swing');
                 }, index * 100);
             });
 
-            // Active link management
+            // Active link management (Lógica para mantener el link activo tras recargar)
             const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-link');
             
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const linkPath = link.getAttribute('href');
+            // Normalizar paths para evitar errores con barras finales
+            const normalizePath = (path) => path.replace(/\/+$/, "");
+            const currentPathNorm = normalizePath(currentPath);
+
+            $('.nav-link').each(function() {
+                const link = $(this);
+                const linkPath = link.attr('href');
                 
-                if (linkPath === currentPath || 
-                    (currentPath === '/' && linkPath === '/inicio')) {
-                    link.classList.add('active');
+                if (linkPath) {
+                    const linkPathNorm = normalizePath(linkPath);
+                    
+                    // Coincidencia exacta o inicio (para subrutas)
+                    if (linkPathNorm === currentPathNorm || 
+                        (currentPathNorm === '' && linkPathNorm === '/index') ||
+                        (currentPathNorm !== '' && linkPathNorm !== '' && currentPathNorm.startsWith(linkPathNorm) && linkPathNorm !== '/')) {
+                        
+                        link.addClass('active');
+                    }
                 }
             });
         });

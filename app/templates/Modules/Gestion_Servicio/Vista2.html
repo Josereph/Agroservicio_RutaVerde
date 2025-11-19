@@ -10,8 +10,8 @@
 
     <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro"
-                    type="button" role="tab" aria-controls="registro" aria-selected="false">
+            <button class="nav-link tab-link active" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro"
+                    type="button" role="tab" aria-controls="registro" aria-selected="true">
                 Registrar Nuevo Servicio
             </button>
         </li>
@@ -28,10 +28,10 @@
         <!-- ==========================
              REGISTRAR SERVICIO
         =========================== -->
-        <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+        <div class="tab-pane fade show active" id="registro" role="tabpanel" aria-labelledby="registro-tab">
             <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
 
-            <form action="{{ url_for('main.servicios') }}" method="POST">
+            <form action="{{ url_for('main.servicios') }}" method="POST" class="needs-validation" novalidate>
                 <div class="row g-4">
 
                     <!-- CLIENTE -->
@@ -121,14 +121,14 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Fecha de Entrega</label>
+                        <label class="form-label">Fecha de Entrega Estimada</label>
                         <input type="date" name="Fecha_Entrega" class="form-control" required>
                     </div>
 
                     <!-- BOTÓN -->
                     <div class="col-12 mt-4 text-end">
                         <button type="submit" class="btn btn-lg btn-primary">
-                            Registrar Servicio
+                            <i class="bi bi-save-fill me-2"></i> Registrar Servicio
                         </button>
                     </div>
                 </div>
@@ -144,11 +144,12 @@
 
             <div class="row mb-3 align-items-center">
                 <div class="col-md-4">
-                    <input type="text" class="form-control custom-input" placeholder="Buscar por ID, Cliente o Estado...">
+                    <input type="text" class="form-control custom-input" id="buscadorServicios" placeholder="Buscar por ID, Cliente o Estado...">
                 </div>
                 <div class="col-md-8 text-end">
-                    <button class="btn btn-outline-secondary me-2 btn-secondary-action">Filtrar por Estado</button>
-                    <button class="btn btn-outline-secondary btn-secondary-action">Exportar Reporte</button>
+                    <button class="btn btn-outline-secondary btn-secondary-action">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> Exportar Reporte
+                    </button>
                 </div>
             </div>
 
@@ -156,55 +157,77 @@
                 <table class="table table-hover align-middle custom-table">
                     <thead class="thead-custom">
                         <tr>
-                            <th>ID Servicio</th>
-                            <th>Cliente (DUI)</th>
+                            <th>ID</th>
+                            <th>Cliente</th>
                             <th>Carga</th>
                             <th>Vehículo</th>
-                            <th>Precio Total</th>
-                            <th>Estado</th>
+                            <th>Precio</th>
+                            <th>Estado Actual</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                    {% for s in servicios %}
+                    <tbody id="tablaServiciosBody">
+                    {% if servicios %}
+                        {% for s in servicios %}
+                            <!-- Intentamos obtener el último estado de forma segura -->
+                            {% set estado = s.seguimientos|sort(attribute='id_seguimiento', reverse=true)|first %}
 
-                        {% set estado = s.ultimo_estado %}
+                            <tr>
+                                <td class="fw-bold">#{{ s.Id_Servicio }}</td>
+                                <td>
+                                    <div>{{ s.cliente.Nombre_Cliente }}</div>
+                                    <small class="text-muted">{{ s.cliente.Dui }}</small>
+                                </td>
+                                <td>{{ s.Peso_Carga }} kg</td>
+                                <td>
+                                    <div>{{ s.vehiculo.marca }} {{ s.vehiculo.modelo }}</div>
+                                    <small class="text-muted">{{ s.vehiculo.placa }}</small>
+                                </td>
+                                <td class="text-success fw-bold">${{ s.Precio_Total }}</td>
 
+                                <td>
+                                    {% if estado %}
+                                        {% if estado.estado_actual == 'entregado' %}
+                                            <span class="badge bg-success">Entregado</span>
+                                        {% elif estado.estado_actual == 'en_ruta' %}
+                                            <span class="badge bg-primary">En Ruta</span>
+                                        {% elif estado.estado_actual == 'cargando' %}
+                                            <span class="badge bg-warning text-dark">Cargando</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ estado.estado_actual }}</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="badge bg-light text-dark border">Pendiente</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ url_for('main.editar_servicio', id_servicio=s.Id_Servicio) }}"
+                                           class="btn btn-sm btn-outline-primary" title="Editar / Actualizar Estado">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        <form action="{{ url_for('main.eliminar_servicio', id_servicio=s.Id_Servicio) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('¿Estás SEGURO de eliminar el Servicio #{{ s.Id_Servicio }}? Esto borrará también sus evidencias y seguimientos.');">
+                                            <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td>{{ s.Id_Servicio }}</td>
-                            <td>{{ s.cliente.Nombre_Cliente }} ({{ s.cliente.Dui }})</td>
-                            <td>{{ s.Peso_Carga }} kg</td>
-                            <td>{{ s.vehiculo.marca }} / {{ s.vehiculo.modelo }}</td>
-                            <td>${{ s.Precio_Total }}</td>
-
-                            <td>
-                                {% if estado %}
-                                    <span class="badge bg-primary">
-                                        {{ estado.estado_actual }}
-                                    </span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Sin seguimiento</span>
-                                {% endif %}
-                            </td>
-
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <a href="{{ url_for('main.editar_servicio', id_servicio=s.Id_Servicio) }}"
-                                       class="btn btn-sm btn-success">Editar</a>
-
-                                    <form action="{{ url_for('main.eliminar_servicio', id_servicio=s.Id_Servicio) }}"
-                                          method="POST"
-                                          onsubmit="return confirm('¿Seguro que deseas eliminar este servicio?');">
-                                        <button class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
-                                </div>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No hay servicios registrados.
                             </td>
                         </tr>
-
-                    {% endfor %}
+                    {% endif %}
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -212,5 +235,34 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+<!-- Script Simple para Validacion y Búsqueda -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Validación de Bootstrap
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        // 2. Buscador Simple en Tabla
+        const inputBusqueda = document.getElementById('buscadorServicios');
+        if(inputBusqueda){
+            inputBusqueda.addEventListener('keyup', function() {
+                const valor = this.value.toLowerCase();
+                const filas = document.querySelectorAll('#tablaServiciosBody tr');
+
+                filas.forEach(fila => {
+                    const texto = fila.textContent.toLowerCase();
+                    fila.style.display = texto.includes(valor) ? '' : 'none';
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}

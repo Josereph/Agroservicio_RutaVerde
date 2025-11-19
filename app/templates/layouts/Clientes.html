@@ -2,16 +2,18 @@
 
 {% block title %}Agroservicio Ruta Verde - Gestión de Clientes{% endblock %}
 
-{% block content %}
+{% block extra_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/clientes.css') }}">
-        
+{% endblock %}
+
+{% block content %}
     <div class="container mt-5">
         <h1 class="mb-4 display-4 text-primary-green">Gestión de Clientes</h1>
 
+        <!-- Pestañas de Navegación -->
         <ul class="nav nav-tabs" id="clientesTab" role="tablist">
             <li class="nav-item" role="presentation">
-                {# CAMBIO 1: CLASE 'active' ELIMINADA del botón #}
-                <button class="nav-link tab-link" id="registro-cliente-tab" data-bs-toggle="tab" data-bs-target="#registro-cliente" type="button" role="tab" aria-controls="registro-cliente" aria-selected="false">
+                <button class="nav-link tab-link active" id="registro-cliente-tab" data-bs-toggle="tab" data-bs-target="#registro-cliente" type="button" role="tab" aria-controls="registro-cliente" aria-selected="true">
                     Registrar Nuevo Cliente
                 </button>
             </li>
@@ -24,34 +26,39 @@
 
         <div class="tab-content tab-content-card" id="clientesTabContent">
             
-            {# Pestaña: Registrar Nuevo Cliente #}
-            {# CAMBIO 2: CLASES 'show active' ELIMINADAS del panel de contenido #}
-            <div class="tab-pane fade" id="registro-cliente" role="tabpanel" aria-labelledby="registro-cliente-tab"> 
+            <!-- =========================================
+                 PESTAÑA 1: REGISTRAR NUEVO CLIENTE 
+            ========================================== -->
+            <div class="tab-pane fade show active" id="registro-cliente" role="tabpanel" aria-labelledby="registro-cliente-tab"> 
                 <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo cliente:</h2>
                 
-                <form action="" method="POST">
+                <!-- Formulario de Registro -->
+                <form action="" method="POST" class="needs-validation" novalidate>
                     <div class="row g-4">
                         
-                        {# Nombre del Cliente #}
+                        <!-- Nombre del Cliente -->
                         <div class="col-md-6">
                             <label for="nombre_cliente" class="form-label text-inter-regular">Nombre del Cliente</label>
                             <input type="text" class="form-control custom-input" id="nombre_cliente" name="nombre_cliente" placeholder="Nombre completo del cliente o empresa" maxlength="100" required>
+                            <div class="invalid-feedback">Por favor ingrese el nombre.</div>
                         </div>
                         
-                        {# DUI/NIT #}
+                        <!-- DUI/NIT -->
                         <div class="col-md-6">
                             <label for="dui_cliente" class="form-label text-inter-regular">DUI o Documento Único</label>
                             <input type="text" class="form-control custom-input" id="dui_cliente" name="dui_cliente" placeholder="Documento de Identidad (Único)" maxlength="20" required>
                             <small class="text-muted small-text">*Campo con restricción UNIQUE en la base de datos.</small>
+                            <div class="invalid-feedback">Este campo es obligatorio.</div>
                         </div>
 
-                        {# Correo Electrónico #}
+                        <!-- Correo Electrónico -->
                         <div class="col-12">
                             <label for="correo_electronico" class="form-label text-inter-regular">Correo Electrónico</label>
                             <input type="email" class="form-control custom-input" id="correo_electronico" name="correo_electronico" placeholder="Correo para notificaciones y facturación" maxlength="200" required>
+                            <div class="invalid-feedback">Ingrese un correo válido.</div>
                         </div>
 
-                        {# Botón de Registro #}
+                        <!-- Botón de Registro -->
                         <div class="col-12 mt-4">
                             <div class="d-flex justify-content-end"> 
                                 <button type="submit" class="btn btn-lg primary-submit-btn w-60 w-md-50">
@@ -64,13 +71,16 @@
                 </form>
             </div>
 
-            {# Pestaña: Clientes Existentes (Tabla) #}
+            <!-- =========================================
+                 PESTAÑA 2: CLIENTES EXISTENTES (TABLA)
+            ========================================== -->
             <div class="tab-pane fade" id="consulta-clientes" role="tabpanel" aria-labelledby="consulta-clientes-tab">
                 <h2 class="h5 mb-4 text-secondary-title">Listado y gestión de clientes registrados:</h2>
                 
+                <!-- Barra de Búsqueda y Botones -->
                 <div class="row mb-3 align-items-center">
                     <div class="col-md-5">
-                        <input type="text" class="form-control custom-input" placeholder="Buscar por Nombre, ID o DUI...">
+                        <input type="text" class="form-control custom-input" id="buscadorClientes" placeholder="Buscar por Nombre, ID o DUI...">
                     </div>
                     <div class="col-md-7 text-end">
                         <button class="btn btn-outline-secondary btn-secondary-action">
@@ -79,6 +89,7 @@
                     </div>
                 </div>
 
+                <!-- Tabla de Datos -->
                 <div class="table-responsive">
                     <table class="table table-hover align-middle custom-table">
                         <thead class="thead-custom">
@@ -90,60 +101,36 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-<<<<<<< HEAD
-                        <tbody>
-                            {# Aquí usarías un bucle Jinja2 (ej: {% for cliente in clientes %}) para llenar la tabla #}
-                            <tr>
-                                <td>1</td>
-                                <td>José Diego C.</td>
-                                <td>01234567-8</td>
-                                <td>jose.diego@ejemplo.com</td>
-                                <td>
-                                    <button class="btn btn-sm btn-success me-1" title="Editar Cliente">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" title="Eliminar Cliente">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>René A. Hernández</td>
-                                <td>98765432-1</td>
-                                <td>rene.hernandez@ejemplo.com</td>
-                                <td>
-                                    <button class="btn btn-sm btn-success me-1" title="Editar Cliente">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" title="Eliminar Cliente">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            {# Fin del bucle Jinja2 #}
+                        <tbody id="tablaClientesBody">
+                            <!-- Bucle Dinámico: Se llena con datos de la base de datos -->
+                            {% if clientes %}
+                                {% for cliente in clientes %}
+                                <tr>
+                                    <td>{{ cliente.Id_Cliente }}</td>
+                                    <td>{{ cliente.Nombre_Cliente }}</td>
+                                    <td>{{ cliente.Dui }}</td>
+                                    <td>{{ cliente.CorreoElectronico }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-success" title="Editar Cliente">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <!-- Aquí podrías agregar un formulario para eliminar si lo necesitas -->
+                                            <button class="btn btn-sm btn-danger" title="Eliminar Cliente">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        No hay clientes registrados todavía.
+                                    </td>
+                                </tr>
+                            {% endif %}
                         </tbody>
-=======
-                       <tbody>
-    {% for cliente in clientes %}
-    <tr>
-        <td>{{ cliente.Id_Cliente }}</td>
-        <td>{{ cliente.Nombre_Cliente }}</td>
-        <td>{{ cliente.Dui }}</td>
-        <td>{{ cliente.CorreoElectronico }}</td>
-        <td>
-            <button class="btn btn-sm btn-success me-1">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger">
-                <i class="bi bi-trash"></i>
-            </button>
-        </td>
-    </tr>
-    {% endfor %}
-</tbody>
-
->>>>>>> Gestion_Vehiculos
                     </table>
                 </div>
             </div>
@@ -151,5 +138,27 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+    
+    <!-- Script simple para búsqueda en tiempo real (opcional) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputBusqueda = document.getElementById('buscadorClientes');
+            if(inputBusqueda){
+                inputBusqueda.addEventListener('keyup', function() {
+                    const valor = this.value.toLowerCase();
+                    const filas = document.querySelectorAll('#tablaClientesBody tr');
+
+                    filas.forEach(fila => {
+                        // Si la fila es el mensaje de "No hay datos", ignorar
+                        if(fila.cells.length < 2) return;
+                        
+                        const texto = fila.textContent.toLowerCase();
+                        fila.style.display = texto.includes(valor) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
 {% endblock %}

@@ -15,12 +15,12 @@
 <div class="container-fluid p-4 evidencia-container">
     
     <!-- Mensaje de confirmación (opcional) -->
-   
+    {% if mensaje %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ mensaje }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-   
+    {% endif %}
 
     <!-- Encabezado -->
     <div class="mb-4">
