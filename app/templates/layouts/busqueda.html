@@ -99,52 +99,44 @@
         </button>
     </form>
 
-    <div class="search-results">
-        <h2>Resultados encontrados (3)</h2>
-        
-        <p class="no-results" style="display: none;">
-            No se encontraron servicios que coincidan con los filtros seleccionados.
-        </p>
+   <div class="search-results">
+    <h2>Resultados encontrados ({{ total }})</h2>
 
-        <div class="results-list">
-            
-            <article class="result-item">
-                <a href="/servicio/T-892" class="result-link">
-                    <div class="result-icon-box">
-                        <i class="fas fa-dolly fa-3x"></i>
-                    </div>
-                    <div class="result-details">
-                        <h3>Servicio de Flete Pesado a San Miguel</h3>
-                        <p class="description">Transporte de granel agrícola con destino a la zona oriental del país. Fecha límite estricta.</p>
-                        <p class="category">Tipo: <span class="badge type-heavy">Flete Pesado</span> | Peso: **15,000 kg**</p>
-                        <p class="location">Origen: San Salvador | Destino: San Miguel</p>
-                    </div>
-                    <div class="result-price">
-                        <span class="price-tag status-in-transit">EN TRÁNSITO</span>
-                        <p class="small-detail">Vehículo: Hino</p>
-                    </div>
-                </a>
-            </article>
+    {% if total == 0 %}
+    <p class="no-results">
+        No se encontraron servicios que coincidan con los filtros seleccionados.
+    </p>
+    {% endif %}
 
-            <article class="result-item">
-                <a href="/servicio/P-045" class="result-link">
-                    <div class="result-icon-box">
-                        <i class="fas fa-box-open fa-3x"></i>
-                    </div>
-                    <div class="result-details">
-                        <h3>Paquetería de Semillas Frágiles</h3>
-                        <p class="description">Entrega urgente de material vegetal delicado. Requiere manejo de alta fragilidad.</p>
-                        <p class="category">Tipo: <span class="badge type-agile">Paquetería Ágil</span> | Peso: **85 kg**</p>
-                        <p class="location">Origen: La Libertad | Destino: Santa Ana</p>
-                    </div>
-                    <div class="result-price">
-                        <span class="price-tag status-pending">PENDIENTE</span>
-                        <p class="small-detail">Vehículo: Foton</p>
-                    </div>
-                </a>
-            </article>
-            
-            </div>
+    <div class="results-list">
+        {% for s, c, v, seg in resultados %}
+        <article class="result-item">
+            <a href="/servicios/editar/{{ s.Id_Servicio }}" class="result-link">
+
+                <div class="result-icon-box">
+                    <i class="fas fa-truck fa-3x"></i>
+                </div>
+
+                <div class="result-details">
+                    <h3>Servicio #{{ s.Id_Servicio }} - {{ c.Nombre_Cliente }}</h3>
+                    <p class="description">
+                        Peso: {{ s.Peso_Carga }} kg |
+                        Vehículo: {{ v.marca if v else "N/A" }}
+                    </p>
+
+                    <p class="category">
+                        Estado: 
+                        <span class="badge">
+                            {{ seg.estado_actual if seg else "Sin registro" }}
+                        </span>
+                    </p>
+                </div>
+
+            </a>
+        </article>
+        {% endfor %}
     </div>
+</div>
+
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'tu-clave-secreta-aqui-cambiar-en-produccion'
 
     # Conexión a MySQL (ajusta usuario/pass/host según tu entorno)
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/RutaVerdeBD'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:U22qrv88*@localhost/RutaVerdeBD'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
