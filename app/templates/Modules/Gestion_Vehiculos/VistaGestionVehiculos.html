@@ -1,460 +1,187 @@
-{% extends 'layouts/base.html' %}
-{% block title %}Gestión de Vehículos{% endblock %}
+{% extends "layouts/base.html" %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/Vehiculos.css') }}">
-{% endblock %}
+{% block title %}Gestión de Conductores{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Gestión de Vehículos</h2>
-  <p class="text-center text-muted">Administra los vehículos de carga del Agroservicio “Ruta Verde”.</p>
 
-  <!-- Formulario de filtros -->
-  <form class="row g-2 mb-4" role="search" aria-label="Filtros de vehículos" method="get">
-  <div class="col-md-4">
-    <label for="q" class="form-label">Buscar</label>
-    <input id="q"
-           name="q"
-           class="form-control"
-           placeholder="Placa, marca o modelo"
-           inputmode="search"
-           value="{{ q or '' }}" />
-<<<<<<< HEAD
-  </div>
+<div id="modulo-conductores">
+    <div class="container-xl mt-4 p-4">
 
-  <div class="col-md-3">
-    <label for="f-tipo" class="form-label">Tipo</label>
-    <select id="f-tipo" name="tipo_id" class="form-select">
-      <option value="" {% if not tipo_sel %}selected{% endif %}>Todos</option>
-      {% for t in tipos %}
-        <option value="{{ t.tipo_id }}"
-                {% if tipo_sel == t.tipo_id %}selected{% endif %}>
-          {{ t.nombre|replace('_',' ')|capitalize }}
-        </option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="col-md-3">
-    <label for="f-estado" class="form-label">Estado</label>
-    <select id="f-estado" name="estado_id" class="form-select">
-      <option value="" {% if not estado_sel %}selected{% endif %}>Todos</option>
-      {% for e in estados %}
-        <option value="{{ e.estado_id }}"
-                {% if estado_sel == e.estado_id %}selected{% endif %}>
-          {{ e.nombre|replace('_',' ')|capitalize }}
-        </option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="col-md-2 d-flex align-items-end">
-    <button class="btn btn-outline-success w-100" type="submit">
-      <i class="bi bi-funnel"></i> Filtrar
-    </button>
-  </div>
-</form>
-
-
-  <!-- Formulario de registro -->
-  <div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
-    <h5 id="titulo-form" class="mb-3">Registrar nuevo vehículo</h5>
-
-    <form action="{{ url_for('main.vehiculos') }}" method="POST" novalidate>
-      <div class="row g-3">
-
-        <!-- Número Unidad -->
-        <div class="col-md-6">
-          <label for="unidad_numero" class="form-label">Número de unidad</label>
-          <input id="unidad_numero" name="unidad_numero" type="text" class="form-control" required>
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h1 class="h2 mb-0">Gestión de Conductores</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistroConductor">
+                <i class="bi bi-person-plus-fill me-2"></i>
+                Registrar Nuevo Conductor
+            </button>
         </div>
 
-        <!-- Placa -->
-        <div class="col-md-6">
-          <label for="placa" class="form-label">Placa</label>
-          <input id="placa" name="placa" type="text" class="form-control"
-                 pattern="^[A-Z]{1,2}-?\d{3,6}$" required>
+        <div class="card-table-wrapper">
+            <h5 class="mb-3">Conductores Registrados</h5>
+
+            <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Buscar por nombre o documento...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option value="">Filtrar por estado...</option>
+                        <option value="Activo">Activo</option>
+                        <option value="De Vacaciones">De Vacaciones</option>
+                        <option value="Suspendido">Suspendido</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>Documento</th>
+                            <th>Tipo Licencia</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaConductoresBody">
+
+                        {% if conductores %}
+                            {% for c in conductores %}
+                            <tr>
+                                <td>{{ c.nombre_completo }}</td>
+                                <td>{{ c.documento_identificacion }}</td>
+                                <td>{{ c.tipo_licencia }}</td>
+                                <td>{{ c.telefono or '—' }}</td>
+                                <td>{{ c.correo or '—' }}</td>
+                                <td>
+                                    {% if c.estado == 'Activo' %}
+                                        <span class="badge bg-success-subtle text-success-emphasis rounded-pill">Activo</span>
+                                    {% elif c.estado == 'De Vacaciones' %}
+                                        <span class="badge bg-info-subtle text-info-emphasis rounded-pill">De Vacaciones</span>
+                                    {% elif c.estado == 'Suspendido' %}
+                                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Suspendido</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">{{ c.estado }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr><td colspan="7" class="text-center text-muted">No hay conductores registrados.</td></tr>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-
-        <!-- VIN -->
-        <div class="col-md-6">
-          <label for="vin" class="form-label">VIN</label>
-          <input id="vin" name="vin" type="text" class="form-control" maxlength="17"
-                 placeholder="17 caracteres">
-        </div>
-
-        <!-- Marca -->
-        <div class="col-md-6">
-          <label for="marca" class="form-label">Marca</label>
-          <input id="marca" name="marca" type="text" class="form-control" required>
-        </div>
-
-        <!-- Modelo -->
-        <div class="col-md-6">
-          <label for="modelo" class="form-label">Modelo</label>
-          <input id="modelo" name="modelo" type="text" class="form-control" required>
-        </div>
-
-        <!-- Año -->
-        <div class="col-md-6">
-          <label for="anio" class="form-label">Año</label>
-          <input id="anio" name="anio" type="number" class="form-control"
-                 min="1980" max="2099" required>
-        </div>
-
-        <!-- Tipo -->
-        <div class="col-md-6">
-          <label for="tipo_id" class="form-label">Tipo</label>
-          <select id="tipo" name="tipo_id" class="form-select" required>
-            <option value="">Seleccione...</option>
-            {% for t in tipos %}
-              <option value="{{ t.tipo_id }}">{{ t.nombre|replace('_',' ')|capitalize }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <!-- Capacidad -->
-        <div class="col-md-6">
-          <label for="capacidad" class="form-label">Capacidad (kg)</label>
-          <input id="capacidad" name="capacidad" type="number" class="form-control"
-                 min="1" step="10" required>
-        </div>
-
-        <!-- Estado -->
-        <div class="col-md-6">
-          <label for="estado_id" class="form-label">Estado</label>
-          <select id="estado" name="estado_id" class="form-select" required>
-            <option value="">Seleccione...</option>
-            {% for e in estados %}
-              <option value="{{ e.estado_id }}">{{ e.nombre|replace('_',' ')|capitalize }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <!-- Kilometraje Actual -->
-        <div class="col-md-6">
-          <label for="km_actual" class="form-label">Kilometraje actual</label>
-          <input id="km_actual" name="km_actual" type="number" class="form-control"
-                 min="0" value="0">
-        </div>
-
-        <!-- Seguro Vigente -->
-        <div class="col-md-6">
-          <label for="seguro_vigente" class="form-label">¿Seguro vigente?</label>
-          <select id="seguro_vigente" name="seguro_vigente" class="form-select">
-            <option value="1">Sí</option>
-            <option value="0">No</option>
-          </select>
-        </div>
-
-        <!-- Aseguradora -->
-        <div class="col-md-6">
-          <label for="aseguradora" class="form-label">Aseguradora</label>
-          <input id="aseguradora" name="aseguradora" type="text" class="form-control">
-        </div>
-
-        <!-- Número de Póliza -->
-        <div class="col-md-6">
-          <label for="poliza_numero" class="form-label">Número de póliza</label>
-          <input id="poliza_numero" name="poliza_numero" type="text" class="form-control">
-        </div>
-
-        <!-- Fecha Vencimiento Seguro -->
-        <div class="col-md-6">
-          <label for="fecha_venc_seguro" class="form-label">Vencimiento del seguro</label>
-          <input id="fecha_venc_seguro" name="fecha_venc_seguro" type="date" class="form-control">
-        </div>
-
-        <!-- Observaciones -->
-        <div class="col-12">
-          <label for="observaciones" class="form-label">Observaciones</label>
-          <textarea id="observaciones" name="observaciones"
-                    class="form-control" rows="3"></textarea>
-        </div>
-
-      </div>
-
-      <div class="mt-4 d-flex justify-content-end gap-2">
-        <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
-        <button type="submit" class="btn btn-success">Guardar vehículo</button>
-      </div>
-
-    </form>
-  </div>
-
-=======
-  </div>
-
-  <div class="col-md-3">
-    <label for="f-tipo" class="form-label">Tipo</label>
-    <select id="f-tipo" name="tipo_id" class="form-select">
-      <option value="" {% if not tipo_sel %}selected{% endif %}>Todos</option>
-      {% for t in tipos %}
-        <option value="{{ t.tipo_id }}"
-                {% if tipo_sel == t.tipo_id %}selected{% endif %}>
-          {{ t.nombre|replace('_',' ')|capitalize }}
-        </option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="col-md-3">
-    <label for="f-estado" class="form-label">Estado</label>
-    <select id="f-estado" name="estado_id" class="form-select">
-      <option value="" {% if not estado_sel %}selected{% endif %}>Todos</option>
-      {% for e in estados %}
-        <option value="{{ e.estado_id }}"
-                {% if estado_sel == e.estado_id %}selected{% endif %}>
-          {{ e.nombre|replace('_',' ')|capitalize }}
-        </option>
-      {% endfor %}
-    </select>
-  </div>
-
-  <div class="col-md-2 d-flex align-items-end">
-    <button class="btn btn-outline-success w-100" type="submit">
-      <i class="bi bi-funnel"></i> Filtrar
-    </button>
-  </div>
-</form>
-
-
- <!-- Formulario de registro -->
-<div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
-  <h5 id="titulo-form" class="mb-3">Registrar nuevo vehículo</h5>
-
-  <form action="{{ url_for('main.vehiculos') }}" method="POST" novalidate>
-    <div class="row g-3">
-
-      <!-- Número Unidad -->
-      <div class="col-md-6">
-        <label for="unidad_numero" class="form-label">Número de unidad</label>
-        <input id="unidad_numero" name="unidad_numero" type="text" class="form-control" required>
-      </div>
-
-      <!-- Placa -->
-      <div class="col-md-6">
-        <label for="placa" class="form-label">Placa</label>
-        <input id="placa" name="placa" type="text" class="form-control"
-               pattern="^[A-Z]{1,2}-?\d{3,6}$" required>
-      </div>
-
-      <!-- VIN -->
-      <div class="col-md-6">
-        <label for="vin" class="form-label">VIN</label>
-        <input id="vin" name="vin" type="text" class="form-control" maxlength="17"
-               placeholder="17 caracteres">
-      </div>
-
-      <!-- Marca -->
-      <div class="col-md-6">
-        <label for="marca" class="form-label">Marca</label>
-        <input id="marca" name="marca" type="text" class="form-control" required>
-      </div>
-
-      <!-- Modelo -->
-      <div class="col-md-6">
-        <label for="modelo" class="form-label">Modelo</label>
-        <input id="modelo" name="modelo" type="text" class="form-control" required>
-      </div>
-
-      <!-- Año -->
-      <div class="col-md-6">
-        <label for="anio" class="form-label">Año</label>
-        <input id="anio" name="anio" type="number" class="form-control"
-               min="1980" max="2099" required>
-      </div>
-
-      <!-- Tipo -->
-      <div class="col-md-6">
-        <label for="tipo_id" class="form-label">Tipo</label>
-        <select id="tipo" name="tipo_id" class="form-select" required>
-          <option value="">Seleccione...</option>
-          {% for t in tipos %}
-            <option value="{{ t.tipo_id }}">{{ t.nombre|replace('_',' ')|capitalize }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Capacidad -->
-      <div class="col-md-6">
-        <label for="capacidad" class="form-label">Capacidad (kg)</label>
-        <input id="capacidad" name="capacidad" type="number" class="form-control"
-               min="1" step="10" required>
-      </div>
-
-      <!-- Estado -->
-      <div class="col-md-6">
-        <label for="estado_id" class="form-label">Estado</label>
-        <select id="estado" name="estado_id" class="form-select" required>
-          <option value="">Seleccione...</option>
-          {% for e in estados %}
-            <option value="{{ e.estado_id }}">{{ e.nombre|replace('_',' ')|capitalize }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Kilometraje Actual -->
-      <div class="col-md-6">
-        <label for="km_actual" class="form-label">Kilometraje actual</label>
-        <input id="km_actual" name="km_actual" type="number" class="form-control"
-               min="0" value="0">
-      </div>
-
-      <!-- Seguro Vigente -->
-      <div class="col-md-6">
-        <label for="seguro_vigente" class="form-label">¿Seguro vigente?</label>
-        <select id="seguro_vigente" name="seguro_vigente" class="form-select">
-          <option value="1">Sí</option>
-          <option value="0">No</option>
-        </select>
-      </div>
-
-      <!-- Aseguradora -->
-      <div class="col-md-6">
-        <label for="aseguradora" class="form-label">Aseguradora</label>
-        <input id="aseguradora" name="aseguradora" type="text" class="form-control">
-      </div>
-
-      <!-- Número de Póliza -->
-      <div class="col-md-6">
-        <label for="poliza_numero" class="form-label">Número de póliza</label>
-        <input id="poliza_numero" name="poliza_numero" type="text" class="form-control">
-      </div>
-
-      <!-- Fecha Vencimiento Seguro -->
-      <div class="col-md-6">
-        <label for="fecha_venc_seguro" class="form-label">Vencimiento del seguro</label>
-        <input id="fecha_venc_seguro" name="fecha_venc_seguro" type="date" class="form-control">
-      </div>
-
-      <!-- Observaciones -->
-      <div class="col-12">
-        <label for="observaciones" class="form-label">Observaciones</label>
-        <textarea id="observaciones" name="observaciones"
-                  class="form-control" rows="3"></textarea>
-      </div>
-
     </div>
 
-    <div class="mt-4 d-flex justify-content-end gap-2">
-      <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
-      <button type="submit" class="btn btn-success">Guardar vehículo</button>
-    </div>
+    <!-- MODAL REGISTRO -->
+    <div class="modal fade" id="modalRegistroConductor" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
 
-  </form>
-</div>
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Nuevo Conductor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
->>>>>>> Gestion_Vehiculos
+                <div class="modal-body">
+                    <form id="formConductor" method="POST" action="{{ url_for('main.conductores') }}" class="needs-validation" novalidate>
 
-  <!-- Listado de vehículos -->
-  <div class="card p-4 shadow-sm">
-    <h5 class="mb-3">Listado de vehículos</h5>
-    <div class="table-responsive">
-      <table class="table table-striped align-middle">
-        <thead class="table-success">
-          <tr>
-            <th scope="col">Placa</th>
-            <th scope="col">Marca</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Año</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Capacidad (kg)</th>
-            <th scope="col">Estado</th>
-            <th scope="col" class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if vehiculos %}
-            {% for v in vehiculos %}
-              <tr>
-                <td>{{ v.placa }}</td>
-                <td>{{ v.marca }}</td>
-                <td>{{ v.modelo }}</td>
-                <td>{{ v.anio }}</td>
-                <td>{{ v.tipo.nombre|replace('_',' ')|capitalize }}</td>
-                <td>{{ v.capacidad_kg }}</td>
-                <td>
-                  {% if v.estado.nombre in ['disponible', 'en_servicio'] %}
-                    <span class="badge bg-success">
-                      {{ v.estado.nombre.replace('_',' ') }}
-                    </span>
-                  {% elif v.estado.nombre == 'en_mantenimiento' %}
-                    <span class="badge bg-warning text-dark">
-                      En mantenimiento
-                    </span>
-                  {% else %}
-                    <span class="badge bg-secondary">
-                      {{ v.estado.nombre.replace('_',' ') }}
-                    </span>
-                  {% endif %}
-                </td>
-<<<<<<< HEAD
-                <td class="text-center">
-                  <!-- Botón Editar -->
-                  <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-                     class="btn btn-sm btn-warning me-1"
-                     aria-label="Editar {{ v.placa }}">
-                    <i class="bi bi-pencil"></i>
-                  </a>
+                        <div class="row g-3">
 
-                  <!-- Botón Eliminar -->
-                  <form action="{{ url_for('main.eliminar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-                        method="POST"
-                        class="d-inline"
-                        onsubmit="return confirm('¿Seguro que deseas eliminar el vehículo {{ v.placa }}?');">
-                    <button type="submit"
-                            class="btn btn-sm btn-danger"
-                            aria-label="Eliminar {{ v.placa }}">
-                      <i class="bi bi-trash"></i>
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" name="nombre_completo" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Documento</label>
+                                <input type="text" class="form-control" name="documento_identificacion" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Correo</label>
+                                <input type="email" class="form-control" name="correo">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Tipo de Licencia</label>
+                                <select class="form-select" name="tipo_licencia" required>
+                                    <option value="Liviana">Liviana</option>
+                                    <option value="Pesada">Pesada</option>
+                                    <option value="Pesada T">Pesada T</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Vencimiento Licencia</label>
+                                <input type="date" class="form-control" name="fecha_vencimiento_licencia" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Estado</label>
+                                <select class="form-select" name="estado">
+                                    <option value="Activo" selected>Activo</option>
+                                    <option value="De Vacaciones">De Vacaciones</option>
+                                    <option value="Suspendido">Suspendido</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Experiencia y Notas</label>
+                                <textarea class="form-control" name="experiencia_notas" rows="3"></textarea>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" form="formConductor">
+                        <i class="bi bi-save-fill me-2"></i> Guardar
                     </button>
-                  </form>
-                </td>
-=======
-               <td class="text-center">
-  <!-- Botón Editar: redirige a la vista de edición -->
-  <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-     class="btn btn-sm btn-warning me-1"
-     aria-label="Editar {{ v.placa }}">
-    <i class="bi bi-pencil"></i>
-  </a>
+                </div>
 
-  <!-- Botón Eliminar: formulario POST con confirmación -->
-  <form action="{{ url_for('main.eliminar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
-        method="POST"
-        class="d-inline"
-        onsubmit="return confirm('¿Seguro que deseas eliminar el vehículo {{ v.placa }}?');">
-    <button type="submit"
-            class="btn btn-sm btn-danger"
-            aria-label="Eliminar {{ v.placa }}">
-      <i class="bi bi-trash"></i>
-    </button>
-  </form>
-</td>
-
->>>>>>> Gestion_Vehiculos
-              </tr>
-            {% endfor %}
-          {% else %}
-            <tr>
-              <td colspan="8" class="text-center text-muted">
-                No hay vehículos registrados aún.
-              </td>
-            </tr>
-          {% endif %}
-        </tbody>
-      </table>
+            </div>
+        </div>
     </div>
-  </div>
+
 </div>
 
-<<<<<<< HEAD
-<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
-
 {% endblock %}
-=======
-<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script> 
 
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formConductor');
+    form.addEventListener('submit', (e) => {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
 {% endblock %}
->>>>>>> Gestion_Vehiculos

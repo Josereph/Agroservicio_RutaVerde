@@ -1,6 +1,5 @@
 from flask import Blueprint, current_app, render_template, request, redirect, url_for, flash
 from . import db
-<<<<<<< HEAD
 from .models import (
     Clientes, Evidencia, NivelFragilidad, SeguimientoControl, Servicios,
     TipoServicio, Vehiculos, CatTipoVehiculo, CatEstadoVehiculo,
@@ -9,35 +8,22 @@ from .models import (
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
-=======
-from .models import Clientes, Evidencia, NivelFragilidad, SeguimientoControl, Servicios, TipoServicio, Vehiculos, CatTipoVehiculo, CatEstadoVehiculo, Conductor, Departamento, Municipio, Direccion, Ubicaciones
-from datetime import datetime
-import os
-from werkzeug.utils import secure_filename
+from sqlalchemy import or_
 
-
-
->>>>>>> Gestion_Vehiculos
-
-
-# ESta mrd siempre jode, ya me tiene hasta los huevos, si, esa es la gran hijueputa soluciion
 bp = Blueprint('main', __name__)
 
 # ============================================================
 # RUTA PRINCIPAL
 # ============================================================
-<<<<<<< HEAD
-@bp.route('/recursos')
-def recursos():
-    return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
-
-
-=======
->>>>>>> Gestion_Vehiculos
 @bp.route('/')
 @bp.route('/index')
 def index():
     return render_template('layouts/index.html', title='Inicio')
+
+
+@bp.route('/recursos')
+def recursos():
+    return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
 
 
 @bp.route('/alertas')
@@ -49,25 +35,14 @@ def alertas():
 # GESTIÓN DE EVIDENCIA
 # ============================================================
 
-<<<<<<< HEAD
 def allowed_file(filename):
     allowed = {'png', 'jpg', 'jpeg', 'pdf'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed
-=======
-# ============================================================
-# GESTIÓN DE EVIDENCIA
-# ============================================================
->>>>>>> Gestion_Vehiculos
 
 
 @bp.route('/gestion_evidencia')
 def gestion_evidencia():
-<<<<<<< HEAD
 
-    # Servicios para select
-=======
-    # Servicios listados para los SELECT
->>>>>>> Gestion_Vehiculos
     servicios = (
         db.session.query(
             Servicios.Id_Servicio,
@@ -78,11 +53,6 @@ def gestion_evidencia():
         .all()
     )
 
-<<<<<<< HEAD
-    # Evidencias en historial
-=======
-    # Historial de evidencias
->>>>>>> Gestion_Vehiculos
     evidencias = (
         db.session.query(Evidencia, Servicios, Clientes)
         .join(Servicios, Evidencia.id_servicio == Servicios.Id_Servicio)
@@ -91,11 +61,6 @@ def gestion_evidencia():
         .all()
     )
 
-<<<<<<< HEAD
-    # Seguimientos
-=======
-    # Historial de seguimientos
->>>>>>> Gestion_Vehiculos
     seguimientos = (
         db.session.query(SeguimientoControl, Servicios, Clientes)
         .join(Servicios, SeguimientoControl.id_servicio == Servicios.Id_Servicio)
@@ -110,40 +75,8 @@ def gestion_evidencia():
         evidencias=evidencias,
         seguimientos=seguimientos
     )
-<<<<<<< HEAD
 
 
-=======
-
-    
-@bp.route('/seguimiento/registrar', methods=['POST'])
-def registrar_seguimiento():
-
-    id_servicio = request.form.get('id_servicio')
-    estado_actual = request.form.get('estado_actual')
-    control_calidad = request.form.get('control_calidad')
-    incidente = request.form.get('incidente')
-    nombre_receptor = request.form.get('nombre_receptor')
-    notificacion = True if request.form.get('notificacion_enviada') == "1" else False
-
-    nuevo = SeguimientoControl(
-        id_servicio=id_servicio,
-        estado_actual=estado_actual,
-        control_calidad=control_calidad,
-        incidente=incidente,
-        nombre_receptor=nombre_receptor,
-        notificacion_enviada=notificacion
-    )
-
-    db.session.add(nuevo)
-    db.session.commit()
-
-    flash("📊 Seguimiento registrado correctamente.", "success")
-    return redirect(url_for('main.gestion_evidencia'))
-
-
-
->>>>>>> Gestion_Vehiculos
 @bp.route('/evidencia/registrar', methods=['POST'])
 def registrar_evidencia():
 
@@ -154,10 +87,6 @@ def registrar_evidencia():
 
     archivo = request.files.get('archivo')
 
-<<<<<<< HEAD
-=======
-    # Validar archivo
->>>>>>> Gestion_Vehiculos
     if not archivo or archivo.filename == "":
         flash("Debe subir un archivo válido", "danger")
         return redirect(url_for('main.gestion_evidencia'))
@@ -166,18 +95,10 @@ def registrar_evidencia():
         flash("Formato no permitido. Use JPG, PNG o PDF.", "danger")
         return redirect(url_for('main.gestion_evidencia'))
 
-<<<<<<< HEAD
-=======
-    # Guardar archivo
->>>>>>> Gestion_Vehiculos
     filename = secure_filename(archivo.filename)
     ruta_guardado = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
     archivo.save(ruta_guardado)
 
-<<<<<<< HEAD
-=======
-    # Crear evidencia
->>>>>>> Gestion_Vehiculos
     nueva = Evidencia(
         id_servicio=id_servicio,
         tipo_evidencia=tipo_evidencia,
@@ -189,14 +110,10 @@ def registrar_evidencia():
     db.session.add(nueva)
     db.session.commit()
 
-<<<<<<< HEAD
-    flash("Evidencia registrada correctamente.", "success")
+    flash("📸 Evidencia registrada correctamente.", "success")
     return redirect(url_for('main.gestion_evidencia'))
 
 
-# ============================================================
-# SEGUIMIENTO CONTROL
-# ============================================================
 @bp.route('/seguimiento/registrar', methods=['POST'])
 def registrar_seguimiento():
 
@@ -208,42 +125,21 @@ def registrar_seguimiento():
         nombre_receptor=request.form.get('nombre_receptor'),
         notificacion_enviada=True if request.form.get('notificacion_enviada') == "1" else False
     )
+
     db.session.add(nuevo)
     db.session.commit()
 
-    flash("Seguimiento registrado correctamente.", "success")
+    flash("📊 Seguimiento registrado correctamente.", "success")
     return redirect(url_for('main.gestion_evidencia'))
 
 
-=======
-    flash("📸 Evidencia registrada correctamente.", "success")
-    return redirect(url_for('main.gestion_evidencia'))
-
-
-
-
-def allowed_file(filename):
-    allowed = {'png', 'jpg', 'jpeg', 'pdf'}
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed
-
-  
->>>>>>> Gestion_Vehiculos
 # ============================================================
 # UBICACIONES
 # ============================================================
+
 @bp.route('/ubicaciones')
 def ubicaciones():
 
-<<<<<<< HEAD
-    dep = Departamento.query.all()
-    muni = Municipio.query.all()
-
-    inventario = (
-        db.session.query(Ubicaciones, Departamento, Municipio, Direccion)
-        .join(Departamento)
-        .join(Municipio)
-        .join(Direccion)
-=======
     departamentos = Departamento.query.all()
     municipios = Municipio.query.all()
 
@@ -252,40 +148,24 @@ def ubicaciones():
         .join(Departamento, Ubicaciones.Id_Departamento == Departamento.Id_Departamento)
         .join(Municipio, Ubicaciones.Id_Municipio == Municipio.Id_Municipio)
         .join(Direccion, Ubicaciones.Id_Direccion == Direccion.Id_Direccion)
->>>>>>> Gestion_Vehiculos
         .all()
     )
 
     return render_template(
         "Modules/Gestion_Ubicaciones/Vista4.html",
-<<<<<<< HEAD
-        departamentos=dep,
-        municipios=muni,
-=======
         departamentos=departamentos,
         municipios=municipios,
->>>>>>> Gestion_Vehiculos
         inventario=inventario
     )
 
 
-<<<<<<< HEAD
 @bp.route("/registrar_ubicacion", methods=["POST"])
 def registrar_ubicacion():
 
-=======
-
-@bp.route("/registrar_ubicacion", methods=["POST"])
-def registrar_ubicacion():
->>>>>>> Gestion_Vehiculos
     dep = request.form["Id_Departamento"]
     muni = request.form["Id_Municipio"]
     direccion_texto = request.form.get("Direccion") or ""
 
-<<<<<<< HEAD
-=======
-    # 1) Crear dirección
->>>>>>> Gestion_Vehiculos
     nueva_dir = Direccion(
         Id_Municipio=muni,
         Detalle_Direccion=direccion_texto
@@ -293,15 +173,12 @@ def registrar_ubicacion():
     db.session.add(nueva_dir)
     db.session.commit()
 
-<<<<<<< HEAD
-=======
-    # 2) Crear ubicación
->>>>>>> Gestion_Vehiculos
     nueva = Ubicaciones(
         Id_Departamento=dep,
         Id_Municipio=muni,
         Id_Direccion=nueva_dir.Id_Direccion
     )
+
     db.session.add(nueva)
     db.session.commit()
 
@@ -313,20 +190,11 @@ def registrar_ubicacion():
 def detalles_ubicacion(id_ubicacion):
 
     u = Ubicaciones.query.get_or_404(id_ubicacion)
-<<<<<<< HEAD
-=======
-
->>>>>>> Gestion_Vehiculos
     d = Departamento.query.get(u.Id_Departamento)
     m = Municipio.query.get(u.Id_Municipio)
     dir = Direccion.query.get(u.Id_Direccion)
 
-<<<<<<< HEAD
-    sub = (
-=======
-    # Sububicaciones del MISMO departamento
     sub_ubicaciones = (
->>>>>>> Gestion_Vehiculos
         db.session.query(Ubicaciones, Municipio, Direccion)
         .join(Municipio)
         .join(Direccion)
@@ -335,88 +203,31 @@ def detalles_ubicacion(id_ubicacion):
         .all()
     )
 
-<<<<<<< HEAD
-    return render_template(
-        "Modules/Gestion_Ubicaciones/detalles.html",
-        u=u,
-        d=d,
-        m=m,
-        dir=dir,
-        sub_ubicaciones=sub,
-        departamentos=Departamento.query.all(),
-        municipios=Municipio.query.all()
-    )
-
-
-@bp.route("/ubicaciones/actualizar/<int:id_ubicacion>", methods=["POST"])
-def actualizar_ubicacion(id_ubicacion):
-
-    u = Ubicaciones.query.get_or_404(id_ubicacion)
-    id_direccion = request.form.get("Id_Direccion", type=int)
-    dir = Direccion.query.get(id_direccion)
-
-    if not dir:
-        flash("Error: Dirección no encontrada.", "danger")
-        return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
-
-    u.Id_Departamento = request.form["Id_Departamento"]
-    u.Id_Municipio = request.form["Id_Municipio"]
-    dir.Detalle_Direccion = request.form.get("Direccion", "").strip()
-
-    try:
-        db.session.commit()
-        flash("Ubicación actualizada.", "success")
-    except Exception as e:
-        db.session.rollback()
-        flash(f"Error al actualizar: {e}", "danger")
-
-    return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
-=======
     departamentos = Departamento.query.all()
     municipios = Municipio.query.all()
-    
+
     return render_template(
-    "Modules/Gestion_Ubicaciones/detalles.html",
-    u=u,
-    d=d,
-    m=m,
-    dir=dir,
-    sub_ubicaciones=sub_ubicaciones,
-    departamentos=departamentos,
-    municipios=municipios
+        "Modules/Gestion_Ubicaciones/detalles.html",
+        u=u, d=d, m=m, dir=dir,
+        sub_ubicaciones=sub_ubicaciones,
+        departamentos=departamentos,
+        municipios=municipios
     )
-
-
->>>>>>> Gestion_Vehiculos
 
 
 # ============================================================
 # SERVICIOS
 # ============================================================
-<<<<<<< HEAD
-=======
 
-@property
-def ultimo_estado(self):
-    return self.seguimientos.order_by(SeguimientoControl.id_seguimiento.desc()).first()
-
-
->>>>>>> Gestion_Vehiculos
 @bp.route('/servicios', methods=['GET', 'POST'])
 def servicios():
 
     clientes = Clientes.query.all()
     vehiculos = Vehiculos.query.all()
     conductores = Conductor.query.all()
-<<<<<<< HEAD
-    tipos = TipoServicio.query.all()
-    frag = NivelFragilidad.query.all()
-    ubic = Ubicaciones.query.all()
-=======
     tipos_servicio = TipoServicio.query.all()
     fragilidades = NivelFragilidad.query.all()
     ubicaciones = Ubicaciones.query.all()
->>>>>>> Gestion_Vehiculos
 
     if request.method == 'POST':
         nuevo = Servicios(
@@ -431,14 +242,6 @@ def servicios():
             Fecha_Entrega=request.form['Fecha_Entrega'],
             Precio_Total=request.form['Precio_Total']
         )
-<<<<<<< HEAD
-        db.session.add(nuevo)
-        db.session.commit()
-        flash("Servicio registrado.", "success")
-        return redirect(url_for('main.servicios'))
-
-    lista = Servicios.query.order_by(Servicios.Id_Servicio.desc()).all()
-=======
 
         db.session.add(nuevo)
         db.session.commit()
@@ -447,86 +250,22 @@ def servicios():
         return redirect(url_for('main.servicios'))
 
     lista_servicios = Servicios.query.order_by(Servicios.Id_Servicio.desc()).all()
->>>>>>> Gestion_Vehiculos
 
     return render_template(
         'Modules/Gestion_Servicio/Vista2.html',
         clientes=clientes,
         vehiculos=vehiculos,
         conductores=conductores,
-<<<<<<< HEAD
-        tipos_servicio=tipos,
-        fragilidades=frag,
-        ubicaciones=ubic,
-        servicios=lista
-    )
-
-
-@bp.route('/servicios/editar/<int:id_servicio>', methods=['GET', 'POST'])
-def editar_servicio(id_servicio):
-
-    serv = Servicios.query.get_or_404(id_servicio)
-    vehiculos = Vehiculos.query.all()
-    conductores = Conductor.query.all()
-
-    if request.method == 'POST':
-
-        serv.Id_Vehiculo = request.form['id_vehiculo']
-        serv.id_conductor = request.form['id_conductor']
-
-        seg = SeguimientoControl(
-            id_servicio=id_servicio,
-            estado_actual=request.form['estado_actual'],
-            incidente=request.form.get('comentario_estado')
-        )
-
-        db.session.add(seg)
-        db.session.commit()
-
-        flash("Servicio actualizado.", "success")
-        return redirect(url_for('main.servicios'))
-
-    return render_template(
-        'Modules/Gestion_Servicio/Editar_Servicio.html',
-        servicio=serv,
-        vehiculos=vehiculos,
-        conductores=conductores
-    )
-
-
-@bp.route('/servicios/eliminar/<int:id_servicio>', methods=['POST'])
-def eliminar_servicio(id_servicio):
-
-    serv = Servicios.query.get_or_404(id_servicio)
-
-    for s in serv.seguimientos:
-        db.session.delete(s)
-    for e in serv.evidencias:
-        db.session.delete(e)
-
-    db.session.delete(serv)
-    db.session.commit()
-
-    flash("Servicio eliminado.", "success")
-    return redirect(url_for('main.servicios'))
-
-
-# ============================================================
-# CONDUCTORES
-# ============================================================
-@bp.route('/conductores', methods=['GET', 'POST'])
-def conductores_view():
-
-    if request.method == 'POST':
-=======
         tipos_servicio=tipos_servicio,
         fragilidades=fragilidades,
         ubicaciones=ubicaciones,
         servicios=lista_servicios
     )
-    
+
+
 @bp.route('/servicios/editar/<int:id_servicio>', methods=['GET', 'POST'])
 def editar_servicio(id_servicio):
+
     servicio = Servicios.query.get_or_404(id_servicio)
 
     vehiculos = Vehiculos.query.all()
@@ -545,7 +284,6 @@ def editar_servicio(id_servicio):
             incidente=comentario
         )
         db.session.add(seg)
-
         db.session.commit()
 
         flash("Servicio actualizado correctamente.", "success")
@@ -557,12 +295,12 @@ def editar_servicio(id_servicio):
         vehiculos=vehiculos,
         conductores=conductores
     )
-    
+
+
 @bp.route('/servicios/eliminar/<int:id_servicio>', methods=['POST'])
 def eliminar_servicio(id_servicio):
     servicio = Servicios.query.get_or_404(id_servicio)
 
-    # Eliminar seguimientos y evidencias
     for s in servicio.seguimientos:
         db.session.delete(s)
     for e in servicio.evidencias:
@@ -575,17 +313,15 @@ def eliminar_servicio(id_servicio):
     return redirect(url_for('main.servicios'))
 
 
-
-
-
 # ============================================================
 # CONDUCTORES
 # ============================================================
+
 @bp.route('/conductores', methods=['GET', 'POST'])
-@bp.route('/conductores')
 def conductores():
-    # ---------- POST → Registrar nuevo conductor ----------
+
     if request.method == 'POST':
+
         nombre = request.form.get('nombre_completo')
         documento = request.form.get('documento_identificacion')
         tipo_licencia = request.form.get('tipo_licencia')
@@ -595,16 +331,14 @@ def conductores():
         estado = request.form.get('estado') or 'Activo'
         experiencia = request.form.get('experiencia_notas') or None
 
-        # Validar obligatorios reales de la BD
         if not all([nombre, documento, tipo_licencia, fecha_venc_str]):
-            flash("Completa nombre, documento, tipo de licencia y fecha de vencimiento.", "danger")
+            flash("Completa los campos obligatorios.", "danger")
             return redirect(url_for('main.conductores'))
 
-        # Convertir fecha
         try:
             fecha_venc = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
         except ValueError:
-            flash("Fecha de vencimiento inválida.", "danger")
+            flash("Fecha inválida.", "danger")
             return redirect(url_for('main.conductores'))
 
         nuevo = Conductor(
@@ -624,11 +358,10 @@ def conductores():
             flash("Conductor registrado correctamente.", "success")
         except Exception as e:
             db.session.rollback()
-            flash(f"Error al guardar el conductor: {e}", "danger")
+            flash(f"Error al guardar: {e}", "danger")
 
         return redirect(url_for('main.conductores'))
 
-    # ---------- GET → Mostrar lista de conductores ----------
     lista_conductores = Conductor.query.order_by(Conductor.nombre_completo).all()
 
     return render_template(
@@ -639,23 +372,13 @@ def conductores():
 
 
 # ============================================================
-# MINI MENÚ DE RECURSOS OPERATIVOS
+# VEHÍCULOS — GET + POST + FILTRO
 # ============================================================
-@bp.route('/recursos')
-def recursos():
-    return render_template('layouts/MiniMenuRecursos.html', title='Recursos Operativos')
 
-
-# ============================================================
-# GESTIÓN DE VEHÍCULOS (GET + POST)
-# ============================================================
 @bp.route('/vehiculos', methods=['GET', 'POST'])
 def vehiculos():
 
-    # ---------- POST → Registrar nuevo vehículo ----------
     if request.method == 'POST':
-        print("⚠️ LLEGÓ POST /vehiculos")
-        print("FORM DATA:", request.form)
 
         unidad_numero = request.form.get('unidad_numero')
         placa = request.form.get('placa')
@@ -663,8 +386,6 @@ def vehiculos():
         modelo = request.form.get('modelo')
         anio = request.form.get('anio', type=int)
         capacidad = request.form.get('capacidad', type=float)
-
-        # Estos NOMBRES deben coincidir con name="..." del HTML
         tipo_id = request.form.get('tipo_id', type=int)
         estado_id = request.form.get('estado_id', type=int)
 
@@ -676,17 +397,14 @@ def vehiculos():
         fecha_seguro = request.form.get('fecha_venc_seguro') or None
         obs = request.form.get('observaciones') or None
 
-        # Normalizar km y seguro_vigente
         if km is None:
             km = 0
         seguro_vigente = True if seguro_raw == "1" else False
 
-        # Validación mínima (solo campos obligatorios de verdad)
         if not all([unidad_numero, placa, tipo_id, capacidad, estado_id]):
-            flash("Debes completar los campos obligatorios: unidad, placa, tipo, capacidad y estado.", "danger")
+            flash("Debes completar los campos obligatorios.", "danger")
             return redirect(url_for('main.vehiculos'))
 
-        # Crear objeto vehículo con TODOS los campos que quieres guardar
         nuevo = Vehiculos(
             unidad_numero=unidad_numero,
             placa=placa,
@@ -708,43 +426,32 @@ def vehiculos():
         try:
             db.session.add(nuevo)
             db.session.commit()
-            print("✅ Vehículo insertado con ID:", nuevo.id_vehiculo)
             flash("Vehículo registrado correctamente.", "success")
         except Exception as e:
             db.session.rollback()
-            print("❌ ERROR al guardar vehículo:", e)
             flash(f"Error al guardar el vehículo: {e}", "danger")
 
         return redirect(url_for('main.vehiculos'))
 
-    # ---------- GET → Mostrar formulario y tabla ----------
-       # ---------- GET → Mostrar formulario y tabla con filtros ----------
-    from sqlalchemy import or_
-
-    # Leer parámetros de búsqueda desde la URL (GET)
     q = request.args.get('q', '', type=str).strip()
     tipo_filtro = request.args.get('tipo_id', type=int)
     estado_filtro = request.args.get('estado_id', type=int)
 
-    # Consulta base
     consulta = Vehiculos.query
 
-    # Filtro de texto: placa, marca o modelo
     if q:
         patron = f"%{q}%"
         consulta = consulta.filter(
             or_(
                 Vehiculos.placa.ilike(patron),
                 Vehiculos.marca.ilike(patron),
-                Vehiculos.modelo.ilike(patron),
+                Vehiculos.modelo.ilike(patron)
             )
         )
 
-    # Filtro por tipo de vehículo
     if tipo_filtro:
         consulta = consulta.filter(Vehiculos.tipo_id == tipo_filtro)
 
-    # Filtro por estado
     if estado_filtro:
         consulta = consulta.filter(Vehiculos.estado_id == estado_filtro)
 
@@ -761,61 +468,36 @@ def vehiculos():
         estados=estados,
         q=q,
         tipo_sel=tipo_filtro,
-        estado_sel=estado_filtro,
+        estado_sel=estado_filtro
     )
 
-    
-    # ============================================================
+
+# ============================================================
 # EDITAR VEHÍCULO
 # ============================================================
+
 @bp.route('/vehiculos/editar/<int:id_vehiculo>', methods=['GET', 'POST'])
 def editar_vehiculo(id_vehiculo):
+
     vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
 
     if request.method == 'POST':
-        # Mismos campos que en crear
-        unidad_numero = request.form.get('unidad_numero')
-        placa = request.form.get('placa')
-        marca = request.form.get('marca')
-        modelo = request.form.get('modelo')
-        anio = request.form.get('anio', type=int)
-        capacidad = request.form.get('capacidad', type=float)
 
-        tipo_id = request.form.get('tipo_id', type=int)
-        estado_id = request.form.get('estado_id', type=int)
-
-        vin = request.form.get('vin') or None
-        km = request.form.get('km_actual', type=int)
-        seguro_raw = request.form.get('seguro_vigente')
-        aseguradora = request.form.get('aseguradora') or None
-        poliza = request.form.get('poliza_numero') or None
-        fecha_seguro = request.form.get('fecha_venc_seguro') or None
-        obs = request.form.get('observaciones') or None
-
-        if km is None:
-            km = 0
-        seguro_vigente = True if seguro_raw == "1" else False
-
-        if not all([unidad_numero, placa, tipo_id, capacidad, estado_id]):
-            flash("Debes completar los campos obligatorios: unidad, placa, tipo, capacidad y estado.", "danger")
-            return redirect(url_for('main.editar_vehiculo', id_vehiculo=id_vehiculo))
-
-        # Asignar cambios al objeto existente
-        vehiculo.unidad_numero = unidad_numero
-        vehiculo.placa = placa
-        vehiculo.marca = marca
-        vehiculo.modelo = modelo
-        vehiculo.anio = anio
-        vehiculo.capacidad_kg = capacidad
-        vehiculo.tipo_id = tipo_id
-        vehiculo.estado_id = estado_id
-        vehiculo.vin = vin
-        vehiculo.km_actual = km
-        vehiculo.seguro_vigente = seguro_vigente
-        vehiculo.aseguradora = aseguradora
-        vehiculo.poliza_numero = poliza
-        vehiculo.fecha_venc_seguro = fecha_seguro
-        vehiculo.observaciones = obs
+        vehiculo.unidad_numero = request.form.get('unidad_numero')
+        vehiculo.placa = request.form.get('placa')
+        vehiculo.marca = request.form.get('marca')
+        vehiculo.modelo = request.form.get('modelo')
+        vehiculo.anio = request.form.get('anio', type=int)
+        vehiculo.capacidad_kg = request.form.get('capacidad', type=float)
+        vehiculo.tipo_id = request.form.get('tipo_id', type=int)
+        vehiculo.estado_id = request.form.get('estado_id', type=int)
+        vehiculo.vin = request.form.get('vin') or None
+        vehiculo.km_actual = request.form.get('km_actual', type=int) or 0
+        vehiculo.seguro_vigente = True if request.form.get('seguro_vigente') == "1" else False
+        vehiculo.aseguradora = request.form.get('aseguradora') or None
+        vehiculo.poliza_numero = request.form.get('poliza_numero') or None
+        vehiculo.fecha_venc_seguro = request.form.get('fecha_venc_seguro') or None
+        vehiculo.observaciones = request.form.get('observaciones') or None
 
         try:
             db.session.commit()
@@ -826,7 +508,6 @@ def editar_vehiculo(id_vehiculo):
 
         return redirect(url_for('main.vehiculos'))
 
-    # GET → mostrar formulario de edición
     tipos = CatTipoVehiculo.query.order_by(CatTipoVehiculo.nombre).all()
     estados = CatEstadoVehiculo.query.order_by(CatEstadoVehiculo.nombre).all()
 
@@ -842,8 +523,10 @@ def editar_vehiculo(id_vehiculo):
 # ============================================================
 # ELIMINAR VEHÍCULO
 # ============================================================
+
 @bp.route('/vehiculos/eliminar/<int:id_vehiculo>', methods=['POST'])
 def eliminar_vehiculo(id_vehiculo):
+
     vehiculo = Vehiculos.query.get_or_404(id_vehiculo)
 
     try:
@@ -857,228 +540,15 @@ def eliminar_vehiculo(id_vehiculo):
     return redirect(url_for('main.vehiculos'))
 
 
-    """Vista del módulo de gestión de vehículos"""
-    return render_template('Modules/Gestion_Vehiculos/VistaGestionVehiculos.html', title='Gestión de Vehículos')
->>>>>>> Gestion_Vehiculos
-
-        nombre = request.form.get('nombre_completo')
-        documento = request.form.get('documento_identificacion')
-        tipo_lic = request.form.get('tipo_licencia')
-        fecha_venc = request.form.get('fecha_vencimiento_licencia')
-
-        if not all([nombre, documento, tipo_lic, fecha_venc]):
-            flash("Completa todos los campos obligatorios.", "danger")
-            return redirect(url_for('main.conductores_view'))
-
-        nuevo = Conductor(
-            nombre_completo=nombre,
-            documento_identificacion=documento,
-            tipo_licencia=tipo_lic,
-            fecha_vencimiento_licencia=datetime.strptime(fecha_venc, "%Y-%m-%d"),
-            telefono=request.form.get('telefono') or None,
-            correo=request.form.get('correo') or None,
-            estado=request.form.get('estado') or "Activo",
-            experiencia_notas=request.form.get('experiencia_notas') or None
-        )
-
-        db.session.add(nuevo)
-        db.session.commit()
-        flash("Conductor registrado.", "success")
-        return redirect(url_for('main.conductores_view'))
-
-    lista = Conductor.query.order_by(Conductor.nombre_completo).all()
-
-    return render_template(
-        "Modules/Gestion_Conductores/VistaGestionConductores.html",
-        conductores=lista
-    )
-
-
 # ============================================================
-# VEHÍCULOS
+# BÚSQUEDA Y REPORTES
 # ============================================================
-from sqlalchemy import or_
 
-@bp.route('/vehiculos', methods=['GET', 'POST'])
-def vehiculos_view():
-
-    if request.method == 'POST':
-
-        nuevo = Vehiculos(
-            unidad_numero=request.form.get('unidad_numero'),
-            placa=request.form.get('placa'),
-            marca=request.form.get('marca'),
-            modelo=request.form.get('modelo'),
-            anio=request.form.get('anio', type=int),
-            capacidad_kg=request.form.get('capacidad', type=float),
-            tipo_id=request.form.get('tipo_id', type=int),
-            estado_id=request.form.get('estado_id', type=int),
-            vin=request.form.get('vin') or None,
-            km_actual=request.form.get('km_actual', type=int) or 0,
-            seguro_vigente=True if request.form.get('seguro_vigente') == "1" else False,
-            aseguradora=request.form.get('aseguradora') or None,
-            poliza_numero=request.form.get('poliza_numero') or None,
-            fecha_venc_seguro=request.form.get('fecha_venc_seguro') or None,
-            observaciones=request.form.get('observaciones') or None
-        )
-
-        db.session.add(nuevo)
-        db.session.commit()
-
-        flash("Vehículo registrado.", "success")
-        return redirect(url_for('main.vehiculos_view'))
-
-    q = request.args.get('q', '', type=str).strip()
-    tipo = request.args.get('tipo_id', type=int)
-    estado = request.args.get('estado_id', type=int)
-
-    consulta = Vehiculos.query
-
-    if q:
-        patron = f"%{q}%"
-        consulta = consulta.filter(
-            or_(
-                Vehiculos.placa.ilike(patron),
-                Vehiculos.marca.ilike(patron),
-                Vehiculos.modelo.ilike(patron)
-            )
-        )
-
-    if tipo:
-        consulta = consulta.filter(Vehiculos.tipo_id == tipo)
-
-    if estado:
-        consulta = consulta.filter(Vehiculos.estado_id == estado)
-
-    vehiculos_lista = consulta.all()
-
-    return render_template(
-        "Modules/Gestion_Vehiculos/VistaGestionVehiculos.html",
-        vehiculos=vehiculos_lista,
-        tipos=CatTipoVehiculo.query.all(),
-        estados=CatEstadoVehiculo.query.all(),
-        q=q,
-        tipo_sel=tipo,
-        estado_sel=estado
-    )
-
-
-@bp.route('/vehiculos/editar/<int:id_vehiculo>', methods=['GET', 'POST'])
-def editar_vehiculo(id_vehiculo):
-
-    v = Vehiculos.query.get_or_404(id_vehiculo)
-
-    if request.method == 'POST':
-
-        v.unidad_numero = request.form.get('unidad_numero')
-        v.placa = request.form.get('placa')
-        v.marca = request.form.get('marca')
-        v.modelo = request.form.get('modelo')
-        v.anio = request.form.get('anio', type=int)
-        v.capacidad_kg = request.form.get('capacidad', type=float)
-        v.tipo_id = request.form.get('tipo_id', type=int)
-        v.estado_id = request.form.get('estado_id', type=int)
-        v.vin = request.form.get('vin') or None
-        v.km_actual = request.form.get('km_actual', type=int) or 0
-        v.seguro_vigente = True if request.form.get('seguro_vigente') == "1" else False
-        v.aseguradora = request.form.get('aseguradora') or None
-        v.poliza_numero = request.form.get('poliza_numero') or None
-        v.fecha_venc_seguro = request.form.get('fecha_venc_seguro') or None
-        v.observaciones = request.form.get('observaciones') or None
-
-        db.session.commit()
-        flash("Vehículo actualizado.", "success")
-        return redirect(url_for('main.vehiculos_view'))
-
-    return render_template(
-        "Modules/Gestion_Vehiculos/EditarVehiculo.html",
-        vehiculo=v,
-        tipos=CatTipoVehiculo.query.all(),
-        estados=CatEstadoVehiculo.query.all()
-    )
-
-
-@bp.route('/vehiculos/eliminar/<int:id_vehiculo>', methods=['POST'])
-def eliminar_vehiculo(id_vehiculo):
-
-    v = Vehiculos.query.get_or_404(id_vehiculo)
-    db.session.delete(v)
-    db.session.commit()
-
-    flash("Vehículo eliminado.", "success")
-    return redirect(url_for('main.vehiculos_view'))
-
-
-# ============================================================
-# REPORTE Y BÚSQUEDA
-# ============================================================
 @bp.route('/busqueda')
 def busqueda():
-<<<<<<< HEAD
-    return render_template('layouts/busqueda.html')
+    return render_template('layouts/busqueda.html', title='Búsqueda')
 
-
-@bp.route('/reportes')
-def reportes():
-    return render_template('layouts/Reportes.html')
-=======
-    """Vista busqueda"""
-    return render_template('layouts/busqueda.html', title='Busqueda')
-
-
-# ============================================================
-# Clientes
-# ============================================================
-@bp.route('/clientes', methods=['GET', 'POST'])
-def clientes():
-    # ---------- POST → Registrar nuevo cliente ----------
-    if request.method == 'POST':
-        nombre = request.form.get('nombre_cliente')
-        dui = request.form.get('dui_cliente')
-        correo = request.form.get('correo_electronico')
-
-        # Validación mínima
-        if not nombre or not dui or not correo:
-            flash("Todos los campos son obligatorios.", "danger")
-            return redirect(url_for('main.clientes'))
-
-        nuevo_cliente = Clientes(
-            Nombre_Cliente=nombre,
-            Dui=dui,
-            CorreoElectronico=correo
-        )
-
-        try:
-            db.session.add(nuevo_cliente)
-            db.session.commit()
-            flash("Cliente registrado correctamente.", "success")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error al guardar el cliente: {e}", "danger")
-
-        return redirect(url_for('main.clientes'))
-
-    # ---------- GET → Mostrar clientes existentes ----------
-    lista_clientes = Clientes.query.order_by(Clientes.Nombre_Cliente).all()
-
-    return render_template(
-        "layouts/Clientes.html",
-        title="Gestión de Clientes",
-        clientes=lista_clientes
-    )
-
-
-@bp.route('/editarservicio')
-def editarservicio():
-    """
-    Editar los servicios
-    """
-    return render_template('Modules/Gestion_Servicio/Editar_Servicio.html', title='Editar ServisioS')
 
 @bp.route('/Reportes')
 def reportes():
-    """Vista del módulo de reportes"""
     return render_template('layouts/Reportes.html', title='Reportes')
-
-
->>>>>>> Gestion_Vehiculos

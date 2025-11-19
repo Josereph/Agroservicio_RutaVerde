@@ -5,129 +5,6 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/vista2.css') }}">
 
-<<<<<<< HEAD
-        <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="false">
-                    Registrar Nuevo Servicio
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link tab-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta" type="button" role="tab" aria-controls="consulta" aria-selected="false">
-                    Servicios Existentes
-                </button>
-            </li>
-        </ul>
-
-        <div class="tab-content tab-content-card" id="serviciosTabContent">
-            <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
-                <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
-                
-                <form action="{{ url_for('main.servicios') }}" method="POST">
-    <div class="row g-4">
-
-        <!-- CLIENTE -->
-        <div class="col-md-6">
-            <label class="form-label">Cliente</label>
-            <select class="form-select" name="Id_Cliente" required>
-                <option value="">Seleccione...</option>
-                {% for c in clientes %}
-                    <option value="{{ c.Id_Cliente }}">{{ c.Nombre_Cliente }} ({{ c.Dui }})</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- VEHÍCULO -->
-        <div class="col-md-6">
-            <label class="form-label">Vehículo Asignado</label>
-            <select class="form-select" name="Id_Vehiculo" required>
-                <option value="">Seleccione...</option>
-                {% for v in vehiculos %}
-                    <option value="{{ v.id_vehiculo }}">{{ v.unidad_numero }} - {{ v.placa }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- CONDUCTOR -->
-        <div class="col-md-6">
-            <label class="form-label">Conductor</label>
-            <select class="form-select" name="id_conductor" required>
-                <option value="">Seleccione...</option>
-                {% for con in conductores %}
-                    <option value="{{ con.id_conductor }}">{{ con.nombre_completo }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- TIPO SERVICIO -->
-        <div class="col-md-6">
-            <label class="form-label">Tipo de Servicio</label>
-            <select class="form-select" name="Id_Tipo_Servicio" required>
-                <option value="">Seleccione...</option>
-                {% for ts in tipos_servicio %}
-                    <option value="{{ ts.Id_Tipo_Servicio }}">{{ ts.Nombre_Servicio }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- FRAGILIDAD -->
-        <div class="col-md-6">
-            <label class="form-label">Nivel de Fragilidad</label>
-            <select class="form-select" name="Id_Fragilidad" required>
-                <option value="">Seleccione...</option>
-                {% for f in fragilidades %}
-                    <option value="{{ f.Id_Fragilidad }}">{{ f.Nivel }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- UBICACION -->
-        <div class="col-md-6">
-            <label class="form-label">Ubicación Logística</label>
-            <select class="form-select" name="Id_Ubicacion" required>
-                <option value="">Seleccione...</option>
-                {% for u in ubicaciones %}
-                    <option value="{{ u.Id_Ubicacion }}">
-                        UB-{{ u.Id_Ubicacion }} | {{ u.municipio.Nombre_Municipio }} ({{ u.departamento.Nombre_Departamento }})
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- PESO -->
-        <div class="col-md-6">
-            <label class="form-label">Peso de la Carga (kg)</label>
-            <input type="number" step="0.01" name="Peso_Carga" class="form-control" required>
-        </div>
-
-        <!-- PRECIO -->
-        <div class="col-md-6">
-            <label class="form-label">Precio Total ($)</label>
-            <input type="number" step="0.01" name="Precio_Total" class="form-control" required>
-        </div>
-
-        <!-- FECHAS -->
-        <div class="col-md-6">
-            <label class="form-label">Fecha de Pedido</label>
-            <input type="date" name="Fecha_Pedido" class="form-control" required>
-        </div>
-
-        <div class="col-md-6">
-            <label class="form-label">Fecha de Entrega</label>
-            <input type="date" name="Fecha_Entrega" class="form-control" required>
-        </div>
-
-        <!-- BOTÓN -->
-        <div class="col-12 mt-4 text-end">
-            <button type="submit" class="btn btn-lg btn-primary">
-                Registrar Servicio
-            </button>
-        </div>
-
-    </div>
-</form>
-
-=======
 <div class="container mt-5">
     <h1 class="mb-4 display-4 text-primary-green">Gestión de Servicios</h1>
 
@@ -273,7 +150,6 @@
                     <button class="btn btn-outline-secondary me-2 btn-secondary-action">Filtrar por Estado</button>
                     <button class="btn btn-outline-secondary btn-secondary-action">Exportar Reporte</button>
                 </div>
->>>>>>> Gestion_Vehiculos
             </div>
 
             <div class="table-responsive">
@@ -290,70 +166,6 @@
                         </tr>
                     </thead>
 
-<<<<<<< HEAD
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle custom-table">
-                        <thead class="thead-custom">
-                            <tr>
-                                <th>ID Servicio</th>
-                                <th>Cliente (DUI)</th>
-                                <th>Producto/Carga</th>
-                                <th>Origen/Destino</th>
-                                <th>Precio Total</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>SRV-001</td>
-                                <td>José Diego C. (0123...)</td>
-                                <td>Semilla Maíz (50.5kg)</td>
-                                <td>Sonsonate / Ahuachapán</td>
-                                <td>$45.00</td>
-                                <td><span class="badge bg-warning text-dark">En Camión</span></td>
-                                <!-- CORRECCIÓN: Usar d-flex y gap-1 para asegurar la alineación horizontal -->
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <a href="/editarservicio" class="btn btn-sm btn-success"><i class="">Editar</i></a>
-                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>SRV-002</td>
-                                <td>René A. H. (9876...)</td>
-                                <td>Abono Orgánico (100kg)</td>
-                                <td>La Paz / San Vicente</td>
-                                <td>$75.50</td>
-                                <td><span class="badge bg-primary">En Ruta</span></td>
-                                <!-- CORRECCIÓN: Usar d-flex y gap-1 -->
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <a href="/editarservicio" class="btn btn-sm btn-success">Editar</a>
-                                        <button class="btn btn-sm btn-danger"><i>Eliminar</i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>SRV-003</td>
-                                <td>Joseph O. (5432...)</td>
-                                <td>Fertilizante Líquido (Frágil)</td>
-                                <td>San Salvador / La Libertad</td>
-                                <td>$120.00</td>
-                                <td><span class="badge bg-success">Entregado</span></td>
-                                <!-- CORRECCIÓN: Usar d-flex y gap-1 (botones deshabilitados) -->
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <button class="btn btn-sm btn-success" disabled><i class="">Editar</i></button>
-                                        <button class="btn btn-sm btn-danger" disabled><i>Eliminar</i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-=======
                     <tbody>
                     {% for s in servicios %}
 
@@ -394,17 +206,11 @@
                     </tbody>
 
                 </table>
->>>>>>> Gestion_Vehiculos
             </div>
         </div>
 
     </div>
-<<<<<<< HEAD
-    <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
-{% endblock %}
-=======
 </div>
 
 <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}
->>>>>>> Gestion_Vehiculos
