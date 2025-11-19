@@ -337,6 +337,65 @@ def eliminar_servicio(id_servicio):
     flash("Servicio eliminado correctamente.", "success")
     return redirect(url_for('main.servicios'))
 
+@bp.route('/buscar_servicios', methods=['GET'])
+def buscar_servicios():
+    from sqlalchemy import and_, or_
+
+    # --- Leer filtros de la URL ---
+    tipo_servicio = request.args.get('tipo_servicio', '').strip()
+    peso_min = request.args.get('peso_min', type=float)
+    fragilidad = request.args.get('fragilidad', '').strip()
+    fecha_limite = request.args.get('fecha_limite')
+    marca = request.args.get('marca_vehiculo', '').strip()
+    estado = request.args.get('estado', '').strip()
+    municipio = request.args.get('municipio', '').strip()
+
+    # Consulta base
+    consulta = (
+        db.session.query(Servicios, Clientes, Vehiculos, SeguimientoControl)
+        .join(Clientes, Servicios.Id_Cliente == Clientes.Id_Cliente)
+        .outerjoin(Vehiculos, Servicios.Id_Vehiculo == Vehiculos.id_vehiculo)
+        .outerjoin(SeguimientoControl, SeguimientoControl.id_servicio == Servicios.Id_Servicio)
+    )
+
+    # --- Filtros dinámicos ---
+    if tipo_servicio:
+        consulta = consulta.filter(Servicios.Id_Tipo_Servicio == tipo_servicio)
+
+    if peso_min:
+        consulta = consulta.filter(Servicios.Peso_Carga >= peso_min)
+
+    if fragilidad:
+        consulta = consulta.join(NivelFragilidad).filter(
+            NivelFragilidad.nivel.ilike(f"%{fragilidad}%")
+        )
+
+    if fecha_limite:
+        consulta = consulta.filter(Servicios.Fecha_Entrega <= fecha_limite)
+
+    if marca:
+        consulta = consulta.filter(Vehiculos.marca.ilike(f"%{marca}%"))
+
+    if estado:
+        consulta = consulta.filter(SeguimientoControl.estado_actual.ilike(f"%{estado}%"))
+
+    if municipio:
+        consulta = consulta.join(Ubicaciones).join(Municipio).filter(
+            Municipio.Nombre_Municipio.ilike(f"%{municipio}%")
+        )
+
+    # Evitar duplicados tomando solo el último seguimiento
+    consulta = consulta.order_by(Servicios.Id_Servicio.desc())
+
+    resultados = consulta.all()
+
+    return render_template(
+        "layouts/busqueda.html",
+        resultados=resultados,
+        total=len(resultados)
+    )
+
+
 
 
 
