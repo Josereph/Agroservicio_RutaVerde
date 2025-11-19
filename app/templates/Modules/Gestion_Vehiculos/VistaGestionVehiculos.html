@@ -20,6 +20,7 @@
            placeholder="Placa, marca o modelo"
            inputmode="search"
            value="{{ q or '' }}" />
+<<<<<<< HEAD
   </div>
 
   <div class="col-md-3">
@@ -182,6 +183,170 @@
     </form>
   </div>
 
+=======
+  </div>
+
+  <div class="col-md-3">
+    <label for="f-tipo" class="form-label">Tipo</label>
+    <select id="f-tipo" name="tipo_id" class="form-select">
+      <option value="" {% if not tipo_sel %}selected{% endif %}>Todos</option>
+      {% for t in tipos %}
+        <option value="{{ t.tipo_id }}"
+                {% if tipo_sel == t.tipo_id %}selected{% endif %}>
+          {{ t.nombre|replace('_',' ')|capitalize }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label for="f-estado" class="form-label">Estado</label>
+    <select id="f-estado" name="estado_id" class="form-select">
+      <option value="" {% if not estado_sel %}selected{% endif %}>Todos</option>
+      {% for e in estados %}
+        <option value="{{ e.estado_id }}"
+                {% if estado_sel == e.estado_id %}selected{% endif %}>
+          {{ e.nombre|replace('_',' ')|capitalize }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end">
+    <button class="btn btn-outline-success w-100" type="submit">
+      <i class="bi bi-funnel"></i> Filtrar
+    </button>
+  </div>
+</form>
+
+
+ <!-- Formulario de registro -->
+<div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
+  <h5 id="titulo-form" class="mb-3">Registrar nuevo vehículo</h5>
+
+  <form action="{{ url_for('main.vehiculos') }}" method="POST" novalidate>
+    <div class="row g-3">
+
+      <!-- Número Unidad -->
+      <div class="col-md-6">
+        <label for="unidad_numero" class="form-label">Número de unidad</label>
+        <input id="unidad_numero" name="unidad_numero" type="text" class="form-control" required>
+      </div>
+
+      <!-- Placa -->
+      <div class="col-md-6">
+        <label for="placa" class="form-label">Placa</label>
+        <input id="placa" name="placa" type="text" class="form-control"
+               pattern="^[A-Z]{1,2}-?\d{3,6}$" required>
+      </div>
+
+      <!-- VIN -->
+      <div class="col-md-6">
+        <label for="vin" class="form-label">VIN</label>
+        <input id="vin" name="vin" type="text" class="form-control" maxlength="17"
+               placeholder="17 caracteres">
+      </div>
+
+      <!-- Marca -->
+      <div class="col-md-6">
+        <label for="marca" class="form-label">Marca</label>
+        <input id="marca" name="marca" type="text" class="form-control" required>
+      </div>
+
+      <!-- Modelo -->
+      <div class="col-md-6">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input id="modelo" name="modelo" type="text" class="form-control" required>
+      </div>
+
+      <!-- Año -->
+      <div class="col-md-6">
+        <label for="anio" class="form-label">Año</label>
+        <input id="anio" name="anio" type="number" class="form-control"
+               min="1980" max="2099" required>
+      </div>
+
+      <!-- Tipo -->
+      <div class="col-md-6">
+        <label for="tipo_id" class="form-label">Tipo</label>
+        <select id="tipo" name="tipo_id" class="form-select" required>
+          <option value="">Seleccione...</option>
+          {% for t in tipos %}
+            <option value="{{ t.tipo_id }}">{{ t.nombre|replace('_',' ')|capitalize }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Capacidad -->
+      <div class="col-md-6">
+        <label for="capacidad" class="form-label">Capacidad (kg)</label>
+        <input id="capacidad" name="capacidad" type="number" class="form-control"
+               min="1" step="10" required>
+      </div>
+
+      <!-- Estado -->
+      <div class="col-md-6">
+        <label for="estado_id" class="form-label">Estado</label>
+        <select id="estado" name="estado_id" class="form-select" required>
+          <option value="">Seleccione...</option>
+          {% for e in estados %}
+            <option value="{{ e.estado_id }}">{{ e.nombre|replace('_',' ')|capitalize }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Kilometraje Actual -->
+      <div class="col-md-6">
+        <label for="km_actual" class="form-label">Kilometraje actual</label>
+        <input id="km_actual" name="km_actual" type="number" class="form-control"
+               min="0" value="0">
+      </div>
+
+      <!-- Seguro Vigente -->
+      <div class="col-md-6">
+        <label for="seguro_vigente" class="form-label">¿Seguro vigente?</label>
+        <select id="seguro_vigente" name="seguro_vigente" class="form-select">
+          <option value="1">Sí</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+
+      <!-- Aseguradora -->
+      <div class="col-md-6">
+        <label for="aseguradora" class="form-label">Aseguradora</label>
+        <input id="aseguradora" name="aseguradora" type="text" class="form-control">
+      </div>
+
+      <!-- Número de Póliza -->
+      <div class="col-md-6">
+        <label for="poliza_numero" class="form-label">Número de póliza</label>
+        <input id="poliza_numero" name="poliza_numero" type="text" class="form-control">
+      </div>
+
+      <!-- Fecha Vencimiento Seguro -->
+      <div class="col-md-6">
+        <label for="fecha_venc_seguro" class="form-label">Vencimiento del seguro</label>
+        <input id="fecha_venc_seguro" name="fecha_venc_seguro" type="date" class="form-control">
+      </div>
+
+      <!-- Observaciones -->
+      <div class="col-12">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea id="observaciones" name="observaciones"
+                  class="form-control" rows="3"></textarea>
+      </div>
+
+    </div>
+
+    <div class="mt-4 d-flex justify-content-end gap-2">
+      <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+      <button type="submit" class="btn btn-success">Guardar vehículo</button>
+    </div>
+
+  </form>
+</div>
+
+>>>>>>> Gestion_Vehiculos
 
   <!-- Listado de vehículos -->
   <div class="card p-4 shadow-sm">
@@ -225,6 +390,7 @@
                     </span>
                   {% endif %}
                 </td>
+<<<<<<< HEAD
                 <td class="text-center">
                   <!-- Botón Editar -->
                   <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
@@ -245,6 +411,29 @@
                     </button>
                   </form>
                 </td>
+=======
+               <td class="text-center">
+  <!-- Botón Editar: redirige a la vista de edición -->
+  <a href="{{ url_for('main.editar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
+     class="btn btn-sm btn-warning me-1"
+     aria-label="Editar {{ v.placa }}">
+    <i class="bi bi-pencil"></i>
+  </a>
+
+  <!-- Botón Eliminar: formulario POST con confirmación -->
+  <form action="{{ url_for('main.eliminar_vehiculo', id_vehiculo=v.id_vehiculo) }}"
+        method="POST"
+        class="d-inline"
+        onsubmit="return confirm('¿Seguro que deseas eliminar el vehículo {{ v.placa }}?');">
+    <button type="submit"
+            class="btn btn-sm btn-danger"
+            aria-label="Eliminar {{ v.placa }}">
+      <i class="bi bi-trash"></i>
+    </button>
+  </form>
+</td>
+
+>>>>>>> Gestion_Vehiculos
               </tr>
             {% endfor %}
           {% else %}
@@ -260,6 +449,12 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 
 {% endblock %}
+=======
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script> 
+
+{% endblock %}
+>>>>>>> Gestion_Vehiculos

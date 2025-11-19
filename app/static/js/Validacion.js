@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isNaN(anio) || anio < 1980 || anio > yearActual + 1) {
             marcarInvalido(
                 form.anio,
-                `El año debe estar entre 1980 y ${yearActual + 1}.`
+                El año debe estar entre 1980 y ${yearActual + 1}.
             );
             valido = false;
         }
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!valido) {
             e.preventDefault();
             mostrarAlerta(
-                "Por favor, corrija los campos marcados en rojo ⚠️",
+                "Por favor, corrija los campos marcados en rojo ⚠",
                 "danger"
             );
         }
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function mostrarAlerta(mensaje, tipo = "success") {
         const alert = document.createElement("div");
-        alert.className = `alert alert-${tipo} mt-3`;
+        alert.className = alert alert-${tipo} mt-3;
         alert.textContent = mensaje;
 
         const container = form.closest(".card") || document.body;
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (valido) {
                 formUbicacion.submit();
             } else {
-                mostrarAlerta("⚠️ Corrige los campos marcados antes de continuar", "danger", formUbicacion);
+                mostrarAlerta("⚠ Corrige los campos marcados antes de continuar", "danger", formUbicacion);
             }
         });
     }
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function mostrarAlerta(mensaje, tipo, form) {
         const alerta = document.createElement("div");
-        alerta.className = `alert alert-${tipo} mt-3`;
+        alerta.className = alert alert-${tipo} mt-3;
 
         const container = form.closest(".card") || form; 
         

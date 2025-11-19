@@ -70,12 +70,18 @@
 
 
 
+<<<<<<< HEAD
                         <button type="submit" class="btn-cta w-100">Guardar Punto Logístico</button>
 
                         <button type="submit" class="btn btn-primary w-100">Guardar Punto Logístico</button>
 
 
                         <button type="submit" class="btn-cta w-100">Guardar Punto Logístico</button>
+=======
+                        <button type="submit" class="btn btn-primary w-100">Guardar Punto Logístico</button>
+
+
+>>>>>>> Gestion_Vehiculos
 
                     </form>
                 </div>
@@ -100,6 +106,7 @@
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
+<<<<<<< HEAD
                             <tbody id="inventario-tbody">
                                 <tr class="ubicacion-nivel-1">
                                     <td><span class="hierarchy-level nivel-1"></span>San Salvador</td>
@@ -202,6 +209,27 @@
                                     </td>
                                 </tr>
                                 </tbody>
+=======
+                          <tbody id="inventario-tbody">
+    {% for u, d, m, dir in inventario %}
+    <tr class="ubicacion-nivel-1">
+        <td><span class="hierarchy-level nivel-1"></span>{{ m.Nombre_Municipio }}</td>
+        <td>UB-{{ u.Id_Ubicacion }}</td>
+        <td>{{ d.Nombre_Departamento }}</td>
+        <td>{{ m.Nombre_Municipio }}</td>
+        <td><span class="badge bg-success">Activo</span></td>
+        <td>
+            <a href="{{ url_for('main.detalles_ubicacion', id_ubicacion=u.Id_Ubicacion) }}"
+               class="btn btn-sm btn-outline-success">
+                Ver Detalles
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+
+>>>>>>> Gestion_Vehiculos
                         </table>
                     </div>
                     <div class="card-footer text-muted small">

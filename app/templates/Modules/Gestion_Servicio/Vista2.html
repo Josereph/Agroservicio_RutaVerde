@@ -3,11 +3,9 @@
 {% block title %}Agroservicio Ruta Verde - Gestión de Servicios{% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/vista2.css') }}">
-        
-    <div class="container mt-5">
-        <h1 class="mb-4 display-4 text-primary-green">Gestión de Servicios</h1>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vista2.css') }}">
 
+<<<<<<< HEAD
         <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro" type="button" role="tab" aria-controls="registro" aria-selected="false">
@@ -129,21 +127,170 @@
     </div>
 </form>
 
-            </div>
+=======
+<div class="container mt-5">
+    <h1 class="mb-4 display-4 text-primary-green">Gestión de Servicios</h1>
 
-            <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
-                <h2 class="h5 mb-4 text-secondary-title">Listado de Envíos y su Estado:</h2>
-                
-                <div class="row mb-3 align-items-center">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control custom-input" placeholder="Buscar por ID, Cliente o Estado...">
+    <ul class="nav nav-tabs" id="serviciosTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link tab-link" id="registro-tab" data-bs-toggle="tab" data-bs-target="#registro"
+                    type="button" role="tab" aria-controls="registro" aria-selected="false">
+                Registrar Nuevo Servicio
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link tab-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"
+                    type="button" role="tab" aria-controls="consulta" aria-selected="false">
+                Servicios Existentes
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content tab-content-card" id="serviciosTabContent">
+
+        <!-- ==========================
+             REGISTRAR SERVICIO
+        =========================== -->
+        <div class="tab-pane fade" id="registro" role="tabpanel" aria-labelledby="registro-tab">
+            <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo envío:</h2>
+
+            <form action="{{ url_for('main.servicios') }}" method="POST">
+                <div class="row g-4">
+
+                    <!-- CLIENTE -->
+                    <div class="col-md-6">
+                        <label class="form-label">Cliente</label>
+                        <select class="form-select" name="Id_Cliente" required>
+                            <option value="">Seleccione...</option>
+                            {% for c in clientes %}
+                                <option value="{{ c.Id_Cliente }}">{{ c.Nombre_Cliente }} ({{ c.Dui }})</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    <div class="col-md-8 text-end">
-                        <button class="btn btn-outline-secondary me-2 btn-secondary-action">Filtrar por Estado</button>
-                        <button class="btn btn-outline-secondary btn-secondary-action">Exportar Reporte</button>
+
+                    <!-- VEHÍCULO -->
+                    <div class="col-md-6">
+                        <label class="form-label">Vehículo Asignado</label>
+                        <select class="form-select" name="Id_Vehiculo" required>
+                            <option value="">Seleccione...</option>
+                            {% for v in vehiculos %}
+                                <option value="{{ v.id_vehiculo }}">{{ v.unidad_numero }} - {{ v.placa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- CONDUCTOR -->
+                    <div class="col-md-6">
+                        <label class="form-label">Conductor</label>
+                        <select class="form-select" name="id_conductor" required>
+                            <option value="">Seleccione...</option>
+                            {% for con in conductores %}
+                                <option value="{{ con.id_conductor }}">{{ con.nombre_completo }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- TIPO SERVICIO -->
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo de Servicio</label>
+                        <select class="form-select" name="Id_Tipo_Servicio" required>
+                            <option value="">Seleccione...</option>
+                            {% for ts in tipos_servicio %}
+                                <option value="{{ ts.Id_Tipo_Servicio }}">{{ ts.Nombre_Servicio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- FRAGILIDAD -->
+                    <div class="col-md-6">
+                        <label class="form-label">Nivel de Fragilidad</label>
+                        <select class="form-select" name="Id_Fragilidad" required>
+                            <option value="">Seleccione...</option>
+                            {% for f in fragilidades %}
+                                <option value="{{ f.Id_Fragilidad }}">{{ f.Nivel }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- UBICACION -->
+                    <div class="col-md-6">
+                        <label class="form-label">Ubicación Logística</label>
+                        <select class="form-select" name="Id_Ubicacion" required>
+                            <option value="">Seleccione...</option>
+                            {% for u in ubicaciones %}
+                                <option value="{{ u.Id_Ubicacion }}">
+                                    UB-{{ u.Id_Ubicacion }} | {{ u.municipio.Nombre_Municipio }} ({{ u.departamento.Nombre_Departamento }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- PESO -->
+                    <div class="col-md-6">
+                        <label class="form-label">Peso de la Carga (kg)</label>
+                        <input type="number" step="0.01" name="Peso_Carga" class="form-control" required>
+                    </div>
+
+                    <!-- PRECIO -->
+                    <div class="col-md-6">
+                        <label class="form-label">Precio Total ($)</label>
+                        <input type="number" step="0.01" name="Precio_Total" class="form-control" required>
+                    </div>
+
+                    <!-- FECHAS -->
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de Pedido</label>
+                        <input type="date" name="Fecha_Pedido" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de Entrega</label>
+                        <input type="date" name="Fecha_Entrega" class="form-control" required>
+                    </div>
+
+                    <!-- BOTÓN -->
+                    <div class="col-12 mt-4 text-end">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Registrar Servicio
+                        </button>
                     </div>
                 </div>
+            </form>
+        </div>
 
+
+        <!-- ==========================
+             SERVICIOS EXISTENTES
+        =========================== -->
+        <div class="tab-pane fade" id="consulta" role="tabpanel" aria-labelledby="consulta-tab">
+            <h2 class="h5 mb-4 text-secondary-title">Listado de Envíos y su Estado:</h2>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4">
+                    <input type="text" class="form-control custom-input" placeholder="Buscar por ID, Cliente o Estado...">
+                </div>
+                <div class="col-md-8 text-end">
+                    <button class="btn btn-outline-secondary me-2 btn-secondary-action">Filtrar por Estado</button>
+                    <button class="btn btn-outline-secondary btn-secondary-action">Exportar Reporte</button>
+                </div>
+>>>>>>> Gestion_Vehiculos
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle custom-table">
+                    <thead class="thead-custom">
+                        <tr>
+                            <th>ID Servicio</th>
+                            <th>Cliente (DUI)</th>
+                            <th>Carga</th>
+                            <th>Vehículo</th>
+                            <th>Precio Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+<<<<<<< HEAD
                 <div class="table-responsive">
                     <table class="table table-hover align-middle custom-table">
                         <thead class="thead-custom">
@@ -206,8 +353,58 @@
                         </tbody>
                     </table>
                 </div>
+=======
+                    <tbody>
+                    {% for s in servicios %}
+
+                        {% set estado = s.ultimo_estado %}
+
+                        <tr>
+                            <td>{{ s.Id_Servicio }}</td>
+                            <td>{{ s.cliente.Nombre_Cliente }} ({{ s.cliente.Dui }})</td>
+                            <td>{{ s.Peso_Carga }} kg</td>
+                            <td>{{ s.vehiculo.marca }} / {{ s.vehiculo.modelo }}</td>
+                            <td>${{ s.Precio_Total }}</td>
+
+                            <td>
+                                {% if estado %}
+                                    <span class="badge bg-primary">
+                                        {{ estado.estado_actual }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Sin seguimiento</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url_for('main.editar_servicio', id_servicio=s.Id_Servicio) }}"
+                                       class="btn btn-sm btn-success">Editar</a>
+
+                                    <form action="{{ url_for('main.eliminar_servicio', id_servicio=s.Id_Servicio) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('¿Seguro que deseas eliminar este servicio?');">
+                                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+>>>>>>> Gestion_Vehiculos
             </div>
         </div>
+
     </div>
+<<<<<<< HEAD
     <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}
+=======
+</div>
+
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+{% endblock %}
+>>>>>>> Gestion_Vehiculos

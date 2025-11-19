@@ -147,6 +147,11 @@
 
     border: 1px solid rgba(31,138,62,0.12);
 
+    border: 1px solid #38761d;
+    border: 1px solid rgba(31,138,62,0.12);
+
+    border: 1px solid rgba(31,138,62,0.12);
+
     box-shadow: none;
 }
 .status{
