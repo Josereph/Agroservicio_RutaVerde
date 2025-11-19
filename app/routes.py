@@ -672,8 +672,11 @@ def buscar_servicios():
 
 
 
+# ============================================================
+# GESTIÓN DE CONDUCTORES
+# ============================================================
 
-@bp.route('/conductores')
+@bp.route('/conductores', methods=['GET', 'POST'])
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
     if request.method == 'POST':
@@ -686,12 +689,10 @@ def conductores():
         estado = request.form.get('estado') or 'Activo'
         experiencia = request.form.get('experiencia_notas') or None
 
-        # Validar obligatorios reales de la BD
-        if not all([nombre, documento, tipo_licencia, fecha_venc_str]):
+        if not nombre or not documento or not tipo_licencia or not fecha_venc_str:
             flash("Completa nombre, documento, tipo de licencia y fecha de vencimiento.", "danger")
             return redirect(url_for('main.conductores'))
 
-        # Convertir fecha
         try:
             fecha_venc = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
         except ValueError:
@@ -727,6 +728,65 @@ def conductores():
         title="Gestión de Conductores",
         conductores=lista_conductores
     )
+
+
+# ============================================================
+# EDITAR CONDUCTOR
+# ============================================================
+
+@bp.route('/conductores/editar/<int:id_conductor>', methods=['GET', 'POST'])
+def editar_conductor(id_conductor):
+    conductor = Conductor.query.get_or_404(id_conductor)
+
+    if request.method == 'POST':
+        conductor.nombre_completo = request.form.get('nombre_completo')
+        conductor.documento_identificacion = request.form.get('documento_identificacion')
+        conductor.tipo_licencia = request.form.get('tipo_licencia')
+        conductor.telefono = request.form.get('telefono') or None
+        conductor.correo = request.form.get('correo') or None
+        conductor.estado = request.form.get('estado')
+        conductor.experiencia_notas = request.form.get('experiencia_notas') or None
+
+        fecha_venc_str = request.form.get('fecha_vencimiento_licencia')
+        try:
+            conductor.fecha_vencimiento_licencia = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
+        except:
+            flash("Fecha inválida.", "danger")
+            return redirect(url_for('main.editar_conductor', id_conductor=id_conductor))
+
+        try:
+            db.session.commit()
+            flash("Conductor actualizado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al actualizar: {e}", "danger")
+
+        return redirect(url_for('main.conductores'))
+
+    return render_template(
+        "Modules/Gestion_Conductores/EditarConductor.html",
+        conductor=conductor
+    )
+
+
+# ============================================================
+# ELIMINAR CONDUCTOR
+# ============================================================
+
+@bp.route('/conductores/eliminar/<int:id_conductor>', methods=['POST'])
+def eliminar_conductor(id_conductor):
+    conductor = Conductor.query.get_or_404(id_conductor)
+
+    try:
+        db.session.delete(conductor)
+        db.session.commit()
+        flash("Conductor eliminado correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error al eliminar: {e}", "danger")
+
+    return redirect(url_for('main.conductores'))
+
 
 
 # ============================================================

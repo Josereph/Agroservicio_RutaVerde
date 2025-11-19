@@ -1,252 +1,140 @@
 {% extends "layouts/base.html" %}
-
 {% block title %}Gestión de Conductores{% endblock %}
-
 {% block content %}
 
-<!-- 
-  CONTENIDO PRINCIPAL: Gestión de Conductores 
-  Envuelto en un ID para aislar los estilos CSS.
--->
-<div id="modulo-conductores">
+<div class="container-xl mt-4 p-4">
 
-    <!-- 
-      NOTA: Asumo que tu 'base.html' ya carga Bootstrap 5 CSS y JS.
-    -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <h1 class="h2 mb-0">Gestión de Conductores</h1>
 
-    <div class="container-xl mt-4 p-4">
-        
-        <!-- Cabecera y Botón de Acción -->
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-            <h1 class="h2 mb-0">Gestión de Conductores</h1>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistroConductor">
-                <i class="bi bi-person-plus-fill me-2"></i>
-                Registrar Nuevo Conductor
-            </button>
-        </div>
-
-        <!-- 
-          TABLA DE CONDUCTORES: 
-          Envuelto en 'card-table-wrapper' para estilo coherente 
-          y 'table-responsive' para móviles.
-        -->
-        <div class="card-table-wrapper">
-            <h5 class="mb-3">Conductores Registrados</h5>
-            
-            <!-- Filtros y búsqueda (opcional, como placeholder) -->
-            <div class="row g-2 mb-3">
-                <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Buscar por nombre o documento...">
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select">
-                        <option value="">Filtrar por estado...</option>
-                        <option value="Activo">Activo</option>
-                        <option value="De Vacaciones">De Vacaciones</option>
-                        <option value="Suspendido">Suspendido</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Nombre Completo</th>
-                            <th scope="col">Documento</th>
-                            <th scope="col">Tipo Licencia</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col">Correo</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col" class="text-end">Acciones</th>
-                        </tr>
-                    </thead>
-                   <tbody id="tablaConductoresBody">
-    {% if conductores %}
-        {% for c in conductores %}
-        <tr>
-            <td>{{ c.nombre_completo }}</td>
-            <td>{{ c.documento_identificacion }}</td>
-            <td>{{ c.tipo_licencia }}</td>
-            <td>{{ c.telefono or '—' }}</td>
-            <td>{{ c.correo or '—' }}</td>
-            <td>
-                {% if c.estado == 'Activo' %}
-                    <span class="badge bg-success-subtle text-success-emphasis rounded-pill">Activo</span>
-                {% elif c.estado == 'De Vacaciones' %}
-                    <span class="badge bg-info-subtle text-info-emphasis rounded-pill">De Vacaciones</span>
-                {% elif c.estado == 'Suspendido' %}
-                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">Suspendido</span>
-                {% else %}
-                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">{{ c.estado }}</span>
-                {% endif %}
-            </td>
-            <td class="text-end">
-                <!-- Aquí luego puedes conectar botones de Editar / Eliminar -->
-                <button class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                    <i class="bi bi-pencil-fill"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                    <i class="bi bi-trash-fill"></i>
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    {% else %}
-        <tr>
-            <td colspan="7" class="text-center text-muted">
-                No hay conductores registrados.
-            </td>
-        </tr>
-    {% endif %}
-</tbody>
-
-                </table>
-            </div>
-            
-            <!-- Paginación (opcional, como placeholder) -->
-          
-        </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistroConductor">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            Registrar Nuevo Conductor
+        </button>
     </div>
 
-    <!-- 
-      MODAL: Formulario de Registro de Conductor 
-    -->
-    <div class="modal fade" id="modalRegistroConductor" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Registrar Nuevo Conductor</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+    <div class="card-table-wrapper">
+        <h5 class="mb-3">Conductores Registrados</h5>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Documento</th>
+                        <th>Tipo Licencia</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in conductores %}
+                    <tr>
+                        <td>{{ c.nombre_completo }}</td>
+                        <td>{{ c.documento_identificacion }}</td>
+                        <td>{{ c.tipo_licencia }}</td>
+                        <td>{{ c.telefono or '—' }}</td>
+                        <td>{{ c.correo or '—' }}</td>
+                        <td>
+                            {% if c.estado == 'Activo' %}
+                            <span class="badge bg-success-subtle text-success-emphasis">Activo</span>
+                            {% elif c.estado == 'De Vacaciones' %}
+                            <span class="badge bg-info-subtle text-info-emphasis">De Vacaciones</span>
+                            {% else %}
+                            <span class="badge bg-warning-subtle text-warning-emphasis">Suspendido</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            <a href="{{ url_for('main.editar_conductor', id_conductor=c.id_conductor) }}"
+                                class="btn btn-sm btn-outline-primary me-1">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+
+                            <form action="{{ url_for('main.eliminar_conductor', id_conductor=c.id_conductor) }}"
+                                  method="POST" style="display:inline-block"
+                                  onsubmit="return confirm('¿Eliminar conductor?')">
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL REGISTRO -->
+<div class="modal fade" id="modalRegistroConductor">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar Conductor</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form method="POST" action="{{ url_for('main.conductores') }}" class="needs-validation" novalidate>
+
                 <div class="modal-body">
-                    <!-- 
-                      Formulario dinámico con validación de Bootstrap.
-                      'needs-validation' y 'novalidate' activan la validación JS.
-                    -->
-                    <form id="formConductor"
-      class="needs-validation"
-      novalidate
-      method="POST"
-      action="{{ url_for('main.conductores') }}">
-    <div class="row g-3">
-        <!-- Nombre Completo -->
-        <div class="col-md-6">
-            <label for="nombre" class="form-label">Nombre Completo</label>
-            <input type="text" class="form-control" id="nombre"
-                   name="nombre_completo" required>
-            <div class="invalid-feedback">
-                Por favor ingrese el nombre completo.
-            </div>
-        </div>
-        
-        <!-- Documento de Identificación -->
-        <div class="col-md-6">
-            <label for="dui" class="form-label">Documento (DUI o NIT)</label>
-            <input type="text" class="form-control" id="dui"
-                   name="documento_identificacion"
-                   placeholder="00000000-0" required>
-            <div class="invalid-feedback">
-                Por favor ingrese un documento de identificación.
-            </div>
-        </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label>Nombre Completo</label>
+                            <input type="text" name="nombre_completo" class="form-control" required>
+                        </div>
 
-        <!-- Teléfono -->
-        <div class="col-md-6">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono"
-                   name="telefono"
-                   placeholder="0000-0000">
-        </div>
+                        <div class="col-md-6">
+                            <label>Documento</label>
+                            <input type="text" name="documento_identificacion" class="form-control" required>
+                        </div>
 
-        <!-- Correo Electrónico -->
-        <div class="col-md-6">
-            <label for="correo" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="correo"
-                   name="correo"
-                   placeholder="ejemplo@email.com">
-        </div>
+                        <div class="col-md-4">
+                            <label>Tipo Licencia</label>
+                            <select name="tipo_licencia" class="form-select">
+                                <option value="Liviana">Liviana</option>
+                                <option value="Pesada">Pesada</option>
+                                <option value="Pesada T">Pesada T</option>
+                            </select>
+                        </div>
 
-        <!-- Tipo de Licencia -->
-        <div class="col-md-4">
-            <label for="tipoLicencia" class="form-label">Tipo de Licencia</label>
-            <select class="form-select" id="tipoLicencia"
-                    name="tipo_licencia" required>
-                <option value="" disabled selected>Seleccionar...</option>
-                <option value="Liviana">Liviana</option>
-                <option value="Pesada">Pesada</option>
-                <option value="Pesada T">Pesada T</option>
-            </select>
-            <div class="invalid-feedback">
-                Seleccione un tipo de licencia.
-            </div>
-        </div>
+                        <div class="col-md-4">
+                            <label>Fecha Vencimiento</label>
+                            <input type="date" name="fecha_vencimiento_licencia" class="form-control" required>
+                        </div>
 
-        <!-- Fecha de Vencimiento -->
-        <div class="col-md-4">
-            <label for="fechaVencimiento" class="form-label">Vencimiento Licencia</label>
-            <input type="date" class="form-control" id="fechaVencimiento"
-                   name="fecha_vencimiento_licencia" required>
-            <div class="invalid-feedback">
-                Ingrese la fecha de vencimiento.
-            </div>
-        </div>
-        
-        <!-- Estado -->
-        <div class="col-md-4">
-            <label for="estado" class="form-label">Estado</label>
-            <select class="form-select" id="estado" name="estado" required>
-                <option value="Activo" selected>Activo</option>
-                <option value="De Vacaciones">Fuera de Servicio</option>
-                <option value="Suspendido">Suspendido</option>
-            </select>
-        </div>
+                        <div class="col-md-4">
+                            <label>Estado</label>
+                            <select name="estado" class="form-select">
+                                <option value="Activo">Activo</option>
+                                <option value="De Vacaciones">De Vacaciones</option>
+                                <option value="Suspendido">Suspendido</option>
+                            </select>
+                        </div>
 
-        <!-- Experiencia y Notas -->
-        <div class="col-12">
-            <label for="experiencia_notas" class="form-label">Experiencia y Notas</label>
-            <textarea class="form-control" id="experiencia_notas"
-                      name="experiencia_notas"
-                      rows="3"
-                      placeholder="Años de experiencia, rutas conocidas..."></textarea>
-        </div>
-    </div>
-</form>
+                        <div class="col-12">
+                            <label>Experiencia / Notas</label>
+                            <textarea name="experiencia_notas" class="form-control" rows="3"></textarea>
+                        </div>
 
+                    </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" form="formConductor">
-                        <i class="bi bi-save-fill me-2"></i>
-                        Guardar Conductor
-                    </button>
-                    <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary">Guardar</button>
                 </div>
-            </div>
+
+            </form>
+
         </div>
     </div>
+</div>
 
-</div> <!-- Fin de #modulo-conductores -->
-
-{% endblock %}
-
-
-{% block scripts %}
-<!-- 
-  Scripts específicos para esta página.
--->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('formConductor');
-
-        form.addEventListener('submit', (event) => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-    });
-</script>
-<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}
