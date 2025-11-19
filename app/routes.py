@@ -18,13 +18,180 @@ bp = Blueprint('main', __name__)
 def index():
     return render_template('layouts/index.html', title='Inicio')
 
+# ============================================================
+# Alertas
+# ============================================================
+
 @bp.route('/alertas')
 def alertas():
     """
-    Sistema de Alertas
-    Muestra el dashboard de alertas sin registros activos
+    Sistema de Alertas integrado con Evidencias y Seguimiento
     """
-    return render_template('layouts/Alertas.html', title='Sistema de Alertas')
+    try:
+        # ========================================
+        # ALERTAS CRÍTICAS
+        # ========================================
+        alertas_list = []
+        
+        # 1. Documentos ilegibles
+        docs_ilegibles = Evidencia.query.filter_by(es_legible=False).all()
+        for doc in docs_ilegibles:
+            servicio = Servicios.query.get(doc.id_servicio)
+            cliente = Clientes.query.get(servicio.Id_Cliente) if servicio else None
+            alertas_list.append({
+                'tipo': 'documento_ilegible',
+                'prioridad': 'critica',
+                'titulo': f'Documento ilegible en Servicio #{doc.id_servicio}',
+                'descripcion': f'Archivo: {doc.nombre_archivo} no es legible. Cliente: {cliente.Nombre_Cliente if cliente else "N/A"}',
+                'fecha': doc.fecha_captura,
+                'id_servicio': doc.id_servicio,
+                'categoria': 'documentacion'
+            })
+        
+        # 2. Control de calidad rechazado
+        rechazados = SeguimientoControl.query.filter_by(control_calidad='rechazado').all()
+        for rec in rechazados:
+            servicio = Servicios.query.get(rec.id_servicio)
+            alertas_list.append({
+                'tipo': 'calidad_rechazada',
+                'prioridad': 'critica',
+                'titulo': f'Control de calidad rechazado - Servicio #{rec.id_servicio}',
+                'descripcion': f'Motivo: {rec.incidente or "No especificado"}',
+                'fecha': rec.fecha_hora,
+                'id_servicio': rec.id_servicio,
+                'categoria': 'servicios'
+            })
+        
+        # ========================================
+        # ALERTAS DE ALTA PRIORIDAD
+        # ========================================
+        
+        # 3. Servicios en espera por más de 2 horas
+        from datetime import datetime, timedelta
+        dos_horas_atras = datetime.now() - timedelta(hours=2)
+        
+        en_espera = SeguimientoControl.query.filter(
+            SeguimientoControl.estado_actual == 'en_espera',
+            SeguimientoControl.fecha_hora < dos_horas_atras
+        ).all()
+        
+        for esp in en_espera:
+            alertas_list.append({
+                'tipo': 'espera_prolongada',
+                'prioridad': 'alta',
+                'titulo': f'Servicio #{esp.id_servicio} en espera por más de 2 horas',
+                'descripcion': f'Estado desde: {esp.fecha_hora.strftime("%d/%m/%Y %H:%M")}',
+                'fecha': esp.fecha_hora,
+                'id_servicio': esp.id_servicio,
+                'categoria': 'servicios'
+            })
+        
+        # 4. Servicios sin foto de salida (últimos 7 días)
+        siete_dias_atras = datetime.now() - timedelta(days=7)
+        servicios_recientes = Servicios.query.filter(Servicios.Fecha_Pedido >= siete_dias_atras).all()
+        
+        for serv in servicios_recientes:
+            tiene_foto_salida = Evidencia.query.filter_by(
+                id_servicio=serv.Id_Servicio,
+                tipo_evidencia='foto_salida'
+            ).first()
+            
+            if not tiene_foto_salida:
+                alertas_list.append({
+                    'tipo': 'sin_foto_salida',
+                    'prioridad': 'alta',
+                    'titulo': f'Falta foto de salida - Servicio #{serv.Id_Servicio}',
+                    'descripcion': 'No se ha registrado fotografía de salida',
+                    'fecha': datetime.now(),
+                    'id_servicio': serv.Id_Servicio,
+                    'categoria': 'documentacion'
+                })
+        
+        # 5. Notificaciones no enviadas
+        sin_notificar = SeguimientoControl.query.filter(
+            SeguimientoControl.notificacion_enviada == False,
+            SeguimientoControl.estado_actual.in_(['en_ruta', 'en_espera', 'entregado'])
+        ).all()
+        
+        for sn in sin_notificar:
+            alertas_list.append({
+                'tipo': 'sin_notificacion',
+                'prioridad': 'alta',
+                'titulo': f'Cliente no notificado - Servicio #{sn.id_servicio}',
+                'descripcion': f'Estado: {sn.estado_actual}. Cliente debe ser informado',
+                'fecha': sn.fecha_hora,
+                'id_servicio': sn.id_servicio,
+                'categoria': 'servicios'
+            })
+        
+        # ========================================
+        # ALERTAS DE MEDIA PRIORIDAD
+        # ========================================
+        
+        # 6. Incidentes reportados
+        con_incidentes = SeguimientoControl.query.filter(
+            SeguimientoControl.incidente.isnot(None),
+            SeguimientoControl.incidente != ''
+        ).all()
+        
+        for inc in con_incidentes:
+            alertas_list.append({
+                'tipo': 'incidente_reportado',
+                'prioridad': 'media',
+                'titulo': f'Incidente en Servicio #{inc.id_servicio}',
+                'descripcion': inc.incidente,
+                'fecha': inc.fecha_hora,
+                'id_servicio': inc.id_servicio,
+                'categoria': 'sistema'
+            })
+        
+        # ========================================
+        # CONTAR ESTADÍSTICAS
+        # ========================================
+        stats = {
+            'criticas': sum(1 for a in alertas_list if a['prioridad'] == 'critica'),
+            'altas': sum(1 for a in alertas_list if a['prioridad'] == 'alta'),
+            'medias': sum(1 for a in alertas_list if a['prioridad'] == 'media'),
+            'bajas': sum(1 for a in alertas_list if a['prioridad'] == 'baja'),
+            'total': len(alertas_list)
+        }
+        
+        # Contar por categoría
+        por_categoria = {
+            'vehiculos': sum(1 for a in alertas_list if a['categoria'] == 'vehiculos'),
+            'conductores': sum(1 for a in alertas_list if a['categoria'] == 'conductores'),
+            'servicios': sum(1 for a in alertas_list if a['categoria'] == 'servicios'),
+            'documentacion': sum(1 for a in alertas_list if a['categoria'] == 'documentacion'),
+            'inventario': sum(1 for a in alertas_list if a['categoria'] == 'inventario'),
+            'sistema': sum(1 for a in alertas_list if a['categoria'] == 'sistema')
+        }
+        
+        # Ordenar alertas por prioridad y fecha
+        orden_prioridad = {'critica': 0, 'alta': 1, 'media': 2, 'baja': 3}
+        alertas_list.sort(key=lambda x: (orden_prioridad[x['prioridad']], x['fecha']), reverse=True)
+        
+        return render_template(
+            'layouts/Alertas.html',
+            title='Sistema de Alertas',
+            alertas=alertas_list,
+            stats=stats,
+            por_categoria=por_categoria
+        )
+        
+    except Exception as e:
+        print(f"Error en alertas: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        # Si hay error, mostrar sin datos
+        return render_template(
+            'layouts/Alertas.html',
+            title='Sistema de Alertas',
+            alertas=[],
+            stats={'criticas': 0, 'altas': 0, 'medias': 0, 'bajas': 0, 'total': 0},
+            por_categoria={'vehiculos': 0, 'conductores': 0, 'servicios': 0, 
+                          'documentacion': 0, 'inventario': 0, 'sistema': 0}
+        )
 
 
 
