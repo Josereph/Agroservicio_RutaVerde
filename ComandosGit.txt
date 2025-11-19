@@ -1,5 +1,0 @@
-//git status 
-Cambios hechos en una rama 
-
-//git checkout -b 
-rama en donde se encuantra en ese momentos 
