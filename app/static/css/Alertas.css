@@ -111,10 +111,89 @@
     font-size: 0.95rem;
 }
 
+/* ========================================== */
+/* TABLA DE ALERTAS ACTIVAS */
+/* ========================================== */
+.alertas-activas-section {
+    padding: 60px 20px;
+    background-color: white;
+}
+
+.alertas-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.alertas-table thead {
+    background-color: #2d5016;
+    color: white;
+}
+
+.alertas-table thead th {
+    border: none;
+    font-weight: 600;
+    padding: 15px 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.alertas-table tbody td {
+    padding: 12px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.alertas-table tbody td.text-start {
+    text-align: left !important;
+}
+
+.alertas-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.alertas-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.alertas-table .btn-outline-primary {
+    color: #a4c639;
+    border-color: #a4c639;
+    font-size: 0.85rem;
+    padding: 5px 12px;
+}
+
+.alertas-table .btn-outline-primary:hover {
+    background-color: #a4c639;
+    color: white;
+    border-color: #a4c639;
+}
+
+.alertas-table .btn-success {
+    background-color: #28a745;
+    border: none;
+    font-size: 0.85rem;
+    padding: 5px 12px;
+}
+
+.alertas-table .btn-success:hover {
+    background-color: #218838;
+}
+
+.alertas-table .badge {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
 /* Categorías de Alertas */
 .alertas-categorias-section {
     padding: 80px 20px;
-    background-color: white;
+    background-color: #f8f9fa;
+}
+
+.section-header {
+    margin-bottom: 20px;
 }
 
 .section-label {
@@ -123,6 +202,8 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
 }
 
 .section-title {
@@ -130,6 +211,7 @@
     font-weight: bold;
     color: #2d5016;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .categoria-card {
@@ -221,11 +303,11 @@
 /* Estado Actual */
 .alertas-estado-section {
     padding: 80px 20px;
-    background-color: #f8f9fa;
+    background-color: white;
 }
 
 .estado-content {
-    padding: 40px;
+    padding: 40px 20px;
 }
 
 .section-description {
@@ -243,18 +325,24 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 12px 0;
-    font-size: 1.05rem;
-    color: #333;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 .detalle-item i {
     font-size: 1.5rem;
 }
 
+.detalle-item span {
+    font-size: 1.05rem;
+    color: #333;
+}
+
 .estado-visual {
     text-align: center;
-    padding: 60px;
+    padding: 60px 40px;
     background: white;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -291,10 +379,43 @@
     font-size: 1.1rem;
 }
 
+/* Estado con alertas */
+.sistema-alerta-icon {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    color: white;
+    animation: shake 3s infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.sistema-alerta-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #dc3545;
+    margin-bottom: 10px;
+}
+
+.sistema-alerta-descripcion {
+    color: #666;
+    font-size: 1.1rem;
+}
+
 /* Prioridades */
 .prioridades-section {
     padding: 80px 20px;
-    background-color: white;
+    background-color: #f8f9fa;
 }
 
 .prioridad-card {
@@ -380,7 +501,7 @@
 /* Notificaciones */
 .notificaciones-section {
     padding: 80px 20px;
-    background-color: #f8f9fa;
+    background-color: white;
 }
 
 .notif-visual {
@@ -402,7 +523,7 @@
 }
 
 .notif-content {
-    padding: 40px;
+    padding: 40px 20px;
 }
 
 .notif-canales-titulo {
@@ -416,10 +537,17 @@
     align-items: center;
     gap: 15px;
     padding: 15px;
-    background: white;
+    background: #f8f9fa;
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.canal-item:hover {
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateX(5px);
 }
 
 .canal-item i {
@@ -427,8 +555,54 @@
     color: #a4c639;
 }
 
-/* Responsive */
+.canal-item span {
+    color: #333;
+    font-weight: 500;
+}
+
+/* ========================================== */
+/* UTILIDADES */
+/* ========================================== */
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* ========================================== */
+/* RESPONSIVE */
+/* ========================================== */
+@media (max-width: 992px) {
+    .alertas-hero-section .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .alertas-table thead th,
+    .alertas-table tbody td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .alertas-hero-section {
+        padding: 60px 20px;
+    }
+    
     .alertas-hero-section .hero-title {
         font-size: 2rem;
     }
@@ -437,9 +611,66 @@
         font-size: 1.8rem;
     }
     
-    .sistema-ok-icon {
+    .sistema-ok-icon,
+    .sistema-alerta-icon {
         width: 120px;
         height: 120px;
         font-size: 4rem;
+    }
+    
+    .notif-icon-grande {
+        width: 150px;
+        height: 150px;
+        font-size: 4.5rem;
+    }
+    
+    .alerta-stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .alerta-stat-card .stat-icon-wrapper {
+        margin: 0 auto 15px;
+    }
+    
+    /* Hacer tabla responsive */
+    .alertas-table {
+        font-size: 0.8rem;
+    }
+    
+    .alertas-table thead th,
+    .alertas-table tbody td {
+        padding: 8px 5px;
+    }
+    
+    .alertas-table .btn-sm {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    
+    /* Ocultar columnas menos importantes en móvil */
+    .alertas-table th:nth-child(2),
+    .alertas-table td:nth-child(2),
+    .alertas-table th:nth-child(6),
+    .alertas-table td:nth-child(6) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .alertas-stats-section,
+    .alertas-categorias-section,
+    .prioridades-section {
+        padding: 40px 15px;
+    }
+    
+    .estado-content,
+    .notif-content {
+        padding: 20px 10px;
+    }
+    
+    .categoria-card,
+    .prioridad-card {
+        padding: 20px;
     }
 }

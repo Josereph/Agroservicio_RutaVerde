@@ -28,7 +28,7 @@
                     <i class="bi bi-exclamation-triangle-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 class="stat-value">0</h3>
+                    <h3 class="stat-value">{{ stats.criticas }}</h3>
                     <p class="stat-description">Alertas Críticas</p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <i class="bi bi-exclamation-circle-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 class="stat-value">0</h3>
+                    <h3 class="stat-value">{{ stats.altas }}</h3>
                     <p class="stat-description">Prioridad Alta</p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <i class="bi bi-info-circle-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 class="stat-value">0</h3>
+                    <h3 class="stat-value">{{ stats.medias }}</h3>
                     <p class="stat-description">Prioridad Media</p>
                 </div>
             </div>
@@ -64,13 +64,81 @@
                     <i class="bi bi-bell-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 class="stat-value">0</h3>
+                    <h3 class="stat-value">{{ stats.bajas }}</h3>
                     <p class="stat-description">Prioridad Baja</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Tabla de Alertas Activas -->
+{% if alertas and alertas|length > 0 %}
+<div class="container-fluid alertas-activas-section">
+    <div class="section-header text-center">
+        <span class="section-label">Alertas Activas</span>
+        <h2 class="section-title">Requieren Atención Inmediata</h2>
+        <p class="text-muted">Total de alertas: {{ stats.total }}</p>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle alertas-table">
+                    <thead>
+                        <tr>
+                            <th>Prioridad</th>
+                            <th>Categoría</th>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Servicio</th>
+                            <th>Fecha</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alerta in alertas %}
+                        <tr>
+                            <td>
+                                {% if alerta.prioridad == 'critica' %}
+                                    <span class="badge bg-danger px-3 py-2">🔴 Crítica</span>
+                                {% elif alerta.prioridad == 'alta' %}
+                                    <span class="badge bg-warning text-dark px-3 py-2">🟠 Alta</span>
+                                {% elif alerta.prioridad == 'media' %}
+                                    <span class="badge px-3 py-2" style="background-color: #ffc107; color: #000;">🟡 Media</span>
+                                {% else %}
+                                    <span class="badge bg-info px-3 py-2">🔵 Baja</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">{{ alerta.categoria|title }}</span>
+                            </td>
+                            <td class="text-start">
+                                <strong>{{ alerta.titulo }}</strong>
+                            </td>
+                            <td class="text-start">{{ alerta.descripcion }}</td>
+                            <td>
+                                <a href="{{ url_for('main.gestion_evidencia') }}?servicio={{ alerta.id_servicio }}" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-box-seam"></i> #{{ alerta.id_servicio }}
+                                </a>
+                            </td>
+                            <td><small>{{ alerta.fecha.strftime('%d/%m/%Y %H:%M') }}</small></td>
+                            <td>
+                                <a href="{{ url_for('main.gestion_evidencia') }}" 
+                                   class="btn btn-sm btn-success">
+                                    <i class="bi bi-eye"></i> Ver
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <!-- Sección: Categorías de Alertas -->
 <div class="container-fluid alertas-categorias-section">
@@ -94,7 +162,9 @@
                     <li><i class="bi bi-check2"></i> Estado operativo</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.vehiculos > 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.vehiculos }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -113,7 +183,9 @@
                     <li><i class="bi bi-check2"></i> Capacitaciones pendientes</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.conductores > 0 %}bg-warning{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.conductores }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -132,7 +204,9 @@
                     <li><i class="bi bi-check2"></i> Evidencias faltantes</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.servicios > 0 %}bg-info{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.servicios }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -151,7 +225,9 @@
                     <li><i class="bi bi-check2"></i> Fotografías faltantes</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.documentacion > 0 %}bg-danger{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.documentacion }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -170,7 +246,9 @@
                     <li><i class="bi bi-check2"></i> Disponibilidad</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.inventario > 0 %}bg-warning{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.inventario }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -189,7 +267,9 @@
                     <li><i class="bi bi-check2"></i> Rutas bloqueadas</li>
                 </ul>
                 <div class="categoria-badge">
-                    <span class="badge bg-secondary">0 activas</span>
+                    <span class="badge {% if por_categoria.sistema > 0 %}bg-dark{% else %}bg-secondary{% endif %}">
+                        {{ por_categoria.sistema }} activas
+                    </span>
                 </div>
             </div>
         </div>
@@ -197,6 +277,7 @@
 </div>
 
 <!-- Sección: Estado Actual -->
+{% if not alertas or alertas|length == 0 %}
 <div class="container-fluid alertas-estado-section">
     <div class="row align-items-center">
         <div class="col-lg-6 mb-4">
@@ -238,6 +319,52 @@
         </div>
     </div>
 </div>
+{% else %}
+<!-- Si hay alertas, mostrar resumen -->
+<div class="container-fluid alertas-estado-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+            <div class="estado-content">
+                <span class="section-label">Estado Operativo</span>
+                <h2 class="section-title">Sistema con Alertas Activas</h2>
+                <p class="section-description">
+                    Se han detectado {{ stats.total }} alerta(s) que requieren atención. 
+                    Revisa la tabla superior para ver los detalles y tomar las acciones necesarias.
+                </p>
+                <div class="estado-detalles">
+                    {% if stats.criticas > 0 %}
+                    <div class="detalle-item">
+                        <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                        <span>{{ stats.criticas }} alerta(s) crítica(s) - Acción inmediata</span>
+                    </div>
+                    {% endif %}
+                    {% if stats.altas > 0 %}
+                    <div class="detalle-item">
+                        <i class="bi bi-exclamation-circle-fill text-warning"></i>
+                        <span>{{ stats.altas }} alerta(s) de alta prioridad - Atender en 24h</span>
+                    </div>
+                    {% endif %}
+                    {% if stats.medias > 0 %}
+                    <div class="detalle-item">
+                        <i class="bi bi-info-circle-fill" style="color: #ffc107;"></i>
+                        <span>{{ stats.medias }} alerta(s) de media prioridad</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="estado-visual">
+                <div class="sistema-alerta-icon">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <h3 class="sistema-alerta-text">Alertas Detectadas</h3>
+                <p class="sistema-alerta-descripcion">Revisar y resolver</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <!-- Sección: Niveles de Prioridad -->
 <div class="container-fluid prioridades-section">
