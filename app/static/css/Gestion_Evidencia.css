@@ -1,0 +1,286 @@
+/* ========================================== */
+/* ESTILOS MÓDULO DE EVIDENCIAS - MINIMALISTA */
+/* ========================================== */
+
+/* Contenedor principal */
+.evidencia-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* ========================================== */
+/* TÍTULOS */
+/* ========================================== */
+.evidencia-titulo {
+    color: #2d5016;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.evidencia-subtitulo {
+    color: #2d5016;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.evidencia-seccion-titulo {
+    color: #2d5016;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+/* ========================================== */
+/* LABELS */
+/* ========================================== */
+.evidencia-label {
+    color: #2d5016;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* ========================================== */
+/* PESTAÑAS (TABS) */
+/* ========================================== */
+.evidencia-tabs {
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: none !important;
+}
+
+.evidencia-tabs .nav-link {
+    color: #2d5016;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    margin: 0 4px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.evidencia-tabs .nav-link:hover {
+    background-color: #e8f5e9;
+    color: #2d5016;
+}
+
+.evidencia-tabs .nav-link.active {
+    background-color: #a4c639 !important;
+    color: #2d5016 !important;
+    box-shadow: 0 2px 8px rgba(164, 198, 57, 0.3);
+}
+
+/* ========================================== */
+/* TARJETAS */
+/* ========================================== */
+.evidencia-card {
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+}
+
+.evidencia-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================== */
+/* FORMULARIOS */
+/* ========================================== */
+.evidencia-card .form-control,
+.evidencia-card .form-select {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px 14px;
+    transition: border-color 0.2s ease;
+}
+
+.evidencia-card .form-control:focus,
+.evidencia-card .form-select:focus {
+    border-color: #a4c639;
+    box-shadow: 0 0 0 3px rgba(164, 198, 57, 0.1);
+    outline: none;
+}
+
+.evidencia-card .form-check-input:checked {
+    background-color: #a4c639;
+    border-color: #a4c639;
+}
+
+/* ========================================== */
+/* BOTONES - ESTILO MINIMALISTA */
+/* ========================================== */
+.evidencia-btn-primary {
+    background-color: #a4c639;
+    color: #2d5016;
+    border: 2px solid #2d5016;
+    padding: 14px 40px;
+    font-size: 1.05rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
+}
+
+.evidencia-btn-primary:hover {
+    background-color: #8fb030;
+    color: #1f3810;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.25);
+}
+
+.evidencia-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
+}
+
+.evidencia-btn-secondary {
+    background-color: #2d5016;
+    color: white;
+    border: 2px solid #2d5016;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
+}
+
+.evidencia-btn-secondary:hover {
+    background-color: #1f3810;
+    border-color: #1f3810;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.25);
+}
+
+.evidencia-btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(45, 80, 22, 0.15);
+}
+
+/* ========================================== */
+/* TABLAS */
+/* ========================================== */
+.evidencia-table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.evidencia-table-header {
+    background-color: #2d5016;
+    color: white;
+}
+
+.evidencia-table thead th {
+    border: none;
+    font-weight: 600;
+    padding: 16px 12px;
+    font-size: 0.9rem;
+}
+
+.evidencia-table tbody tr {
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #e8f5e9;
+}
+
+.evidencia-table tbody tr:hover {
+    background-color: #f0f9f0;
+}
+
+.evidencia-table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+}
+
+/* ========================================== */
+/* BADGES */
+/* ========================================== */
+.evidencia-badge-cargando {
+    background-color: #ffc107;
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.evidencia-badge-ruta {
+    background-color: #17a2b8;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.evidencia-badge-espera {
+    background-color: #fd7e14;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ========================================== */
+/* ALERTAS */
+/* ========================================== */
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #a4c639;
+    border-radius: 8px;
+    color: #2d5016;
+    font-weight: 600;
+}
+
+/* ========================================== */
+/* RESPONSIVE */
+/* ========================================== */
+@media (max-width: 768px) {
+    .evidencia-container {
+        padding: 1rem;
+    }
+    
+    .evidencia-titulo {
+        font-size: 1.5rem;
+    }
+    
+    .evidencia-subtitulo {
+        font-size: 1.1rem;
+    }
+    
+    .evidencia-tabs .nav-link {
+        padding: 10px 16px;
+        margin: 4px 0;
+        font-size: 0.9rem;
+    }
+    
+    .evidencia-btn-primary,
+    .evidencia-btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* ========================================== */
+/* ANIMACIÓN SUAVE DE ENTRADA */
+/* ========================================== */
+.tab-pane {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,71 @@
+.bg-agro {
+    background-color: #38761D !important;
+    color: white !important;
+}
+
+.bg-tierra {
+    background-color: #8B653F !important;
+    color: white !important;
+}
+
+.btn-agro {
+    background-color: #6AA84F;
+    border-color: #6AA84F;
+    color: white;
+}
+
+.btn-agro:hover {
+    background-color: #38761D;
+    border-color: #38761D;
+    color: white;
+}
+
+.badge.bg-success {
+    background-color: #6AA84F !important;
+}
+
+.badge.bg-warning {
+    background-color: #E79B37 !important;
+}
+
+.btn-success {
+    background-color: #38761D !important;
+    border-color: #38761D !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background-color: #6AA84F !important;
+    border-color: #6AA84F !important;
+    color: white !important;
+}
+
+.btn-outline-success {
+    background-color: #38761D !important; 
+    border-color: #38761D !important;
+    color: white !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #6AA84F !important;
+    border-color: #6AA84F !important;
+    color: white !important;
+}
+.table-bordered th, 
+.table-bordered td {
+    border-color: #38761D !important;
+}
+
+.table th,
+.table td {
+    border-color: #38761D !important;
+}
+
+
+.card-header {
+    font-weight: 600;
+}
+
+.card-body.p-0 {
+    overflow-x: auto;
+}

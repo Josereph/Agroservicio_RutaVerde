@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Agroservicio Ruta Verde - Búsqueda de Servicios de Transporte{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/busqueda.css') }}">
+
+<div class="search-container">
+    <h1><i class="fas fa-truck-loading"></i> Buscar Servicios de Transporte</h1>
+    
+    <form action="/buscar_servicios" method="GET" class="search-form-grid">
+        
+        <div class="form-group">
+            <label for="tipo_servicio"><i class="fas fa-box"></i> Tipo de Servicio</label>
+            <select name="tipo_servicio" id="tipo_servicio">
+                <option value="">Cualquier Tipo</option>
+                <option value="flete_pesado">Flete Pesado</option>
+                <option value="paqueteria_agil">Paquetería Ágil</option>
+                <option value="granel">Carga a Granel</option>
+                <option value="refrigerado">Refrigerado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="peso_min"><i class="fas fa-weight-hanging"></i> Peso Mínimo (kg)</label>
+            <input 
+                type="number" 
+                name="peso_min" 
+                id="peso_min" 
+                placeholder="Ej: 500" 
+                min="0"
+            >
+        </div>
+        
+        <div class="form-group">
+            <label for="fragilidad"><i class="fas fa-hand-holding"></i> Fragilidad</label>
+            <select name="fragilidad" id="fragilidad">
+                <option value="">Cualquier Nivel</option>
+                <option value="baja">Baja</option>
+                <option value="media">Media</option>
+                <option value="alta">Alta</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fecha_limite"><i class="fas fa-calendar-alt"></i> Fecha Límite</label>
+            <input 
+                type="date" 
+                name="fecha_limite" 
+                id="fecha_limite"
+            >
+        </div>
+        
+        <div class="form-group">
+            <label for="marca_vehiculo"><i class="fas fa-truck"></i> Marca de Vehículo</label>
+            <select name="marca_vehiculo" id="marca_vehiculo">
+                <option value="">Cualquier Marca</option>
+                <option value="foton">Foton</option>
+                <option value="hino">Hino</option>
+                <option value="kenworth">Kenworth</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="estado"><i class="fas fa-map-marker-alt"></i> Estado del Cargamento</label>
+            <select name="estado" id="estado">
+                <option value="">Cualquier Estado</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="en_transito">En Tránsito</option>
+                <option value="entregado">Entregado</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="departamento"><i class="fas fa-globe-americas"></i> Departamento</label>
+            <select name="departamento" id="departamento">
+                <option value="">Todo El Salvador</option>
+                <option value="san_salvador">San Salvador</option>
+                <option value="la_libertad">La Libertad</option>
+                <option value="santa_ana">Santa Ana</option>
+                </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="municipio">Municipio</label>
+            <input 
+                type="text" 
+                name="municipio" 
+                id="municipio" 
+                placeholder="Ej: Apopa"
+            >
+        </div>
+
+        <button type="submit" class="search-button-full" aria-label="Buscar Servicios">
+            <i class="fas fa-search"></i> Buscar Servicios
+        </button>
+    </form>
+
+   <div class="search-results">
+    <h2>Resultados encontrados ({{ total }})</h2>
+
+    {% if total == 0 %}
+    <p class="no-results">
+        No se encontraron servicios que coincidan con los filtros seleccionados.
+    </p>
+    {% endif %}
+
+    <div class="results-list">
+        {% for s, c, v, seg in resultados %}
+        <article class="result-item">
+            <a href="/servicios/editar/{{ s.Id_Servicio }}" class="result-link">
+
+                <div class="result-icon-box">
+                    <i class="fas fa-truck fa-3x"></i>
+                </div>
+
+                <div class="result-details">
+                    <h3>Servicio #{{ s.Id_Servicio }} - {{ c.Nombre_Cliente }}</h3>
+                    <p class="description">
+                        Peso: {{ s.Peso_Carga }} kg |
+                        Vehículo: {{ v.marca if v else "N/A" }}
+                    </p>
+
+                    <p class="category">
+                        Estado: 
+                        <span class="badge">
+                            {{ seg.estado_actual if seg else "Sin registro" }}
+                        </span>
+                    </p>
+                </div>
+
+            </a>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+
+</div>
+{% endblock %}

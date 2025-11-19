@@ -1,0 +1,161 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Editar Vehículo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/Vehiculos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Editar Vehículo</h2>
+  <p class="text-center text-muted">Modifica la información del vehículo seleccionado.</p>
+
+  <div class="card p-4 shadow-sm mb-5" aria-labelledby="titulo-form">
+    <h5 id="titulo-form" class="mb-3">Datos del vehículo</h5>
+
+    <form action="{{ url_for('main.editar_vehiculo', id_vehiculo=vehiculo.id_vehiculo) }}"
+          method="POST" novalidate>
+      <div class="row g-3">
+
+        <!-- Número Unidad -->
+        <div class="col-md-6">
+          <label for="unidad_numero" class="form-label">Número de unidad</label>
+          <input id="unidad_numero" name="unidad_numero" type="text" class="form-control"
+                 value="{{ vehiculo.unidad_numero }}" required>
+        </div>
+
+        <!-- Placa -->
+        <div class="col-md-6">
+          <label for="placa" class="form-label">Placa</label>
+          <input id="placa" name="placa" type="text" class="form-control"
+                 pattern="^[A-Z]{1,2}-?\d{3,6}$"
+                 value="{{ vehiculo.placa }}" required>
+        </div>
+
+        <!-- VIN -->
+        <div class="col-md-6">
+          <label for="vin" class="form-label">VIN</label>
+          <input id="vin" name="vin" type="text" class="form-control" maxlength="17"
+                 value="{{ vehiculo.vin or '' }}">
+        </div>
+
+        <!-- Marca -->
+        <div class="col-md-6">
+          <label for="marca" class="form-label">Marca</label>
+          <input id="marca" name="marca" type="text" class="form-control"
+                 value="{{ vehiculo.marca or '' }}" required>
+        </div>
+
+        <!-- Modelo -->
+        <div class="col-md-6">
+          <label for="modelo" class="form-label">Modelo</label>
+          <input id="modelo" name="modelo" type="text" class="form-control"
+                 value="{{ vehiculo.modelo or '' }}" required>
+        </div>
+
+        <!-- Año -->
+        <div class="col-md-6">
+          <label for="anio" class="form-label">Año</label>
+          <input id="anio" name="anio" type="number" class="form-control"
+                 min="1980" max="2099"
+                 value="{{ vehiculo.anio or '' }}" required>
+        </div>
+
+        <!-- Tipo -->
+        <div class="col-md-6">
+          <label for="tipo_id" class="form-label">Tipo</label>
+          <select id="tipo" name="tipo_id" class="form-select" required>
+            <option value="">Seleccione...</option>
+            {% for t in tipos %}
+              <option value="{{ t.tipo_id }}"
+                      {% if t.tipo_id == vehiculo.tipo_id %}selected{% endif %}>
+                {{ t.nombre|replace('_',' ')|capitalize }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Capacidad -->
+        <div class="col-md-6">
+          <label for="capacidad" class="form-label">Capacidad (kg)</label>
+          <input id="capacidad" name="capacidad" type="number" class="form-control"
+                 min="1" step="10"
+                 value="{{ vehiculo.capacidad_kg }}">
+        </div>
+
+        <!-- Estado -->
+        <div class="col-md-6">
+          <label for="estado_id" class="form-label">Estado</label>
+          <select id="estado" name="estado_id" class="form-select" required>
+            <option value="">Seleccione...</option>
+            {% for e in estados %}
+              <option value="{{ e.estado_id }}"
+                      {% if e.estado_id == vehiculo.estado_id %}selected{% endif %}>
+                {{ e.nombre|replace('_',' ')|capitalize }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Kilometraje Actual -->
+        <div class="col-md-6">
+          <label for="km_actual" class="form-label">Kilometraje actual</label>
+          <input id="km_actual" name="km_actual" type="number" class="form-control"
+                 min="0"
+                 value="{{ vehiculo.km_actual or 0 }}">
+        </div>
+
+        <!-- Seguro Vigente -->
+        <div class="col-md-6">
+          <label for="seguro_vigente" class="form-label">¿Seguro vigente?</label>
+          <select id="seguro_vigente" name="seguro_vigente" class="form-select">
+            <option value="1" {% if vehiculo.seguro_vigente %}selected{% endif %}>Sí</option>
+            <option value="0" {% if not vehiculo.seguro_vigente %}selected{% endif %}>No</option>
+          </select>
+        </div>
+
+        <!-- Aseguradora -->
+        <div class="col-md-6">
+          <label for="aseguradora" class="form-label">Aseguradora</label>
+          <input id="aseguradora" name="aseguradora" type="text" class="form-control"
+                 value="{{ vehiculo.aseguradora or '' }}">
+        </div>
+
+        <!-- Número de Póliza -->
+        <div class="col-md-6">
+          <label for="poliza_numero" class="form-label">Número de póliza</label>
+          <input id="poliza_numero" name="poliza_numero" type="text" class="form-control"
+                 value="{{ vehiculo.poliza_numero or '' }}">
+        </div>
+
+        <!-- Fecha Vencimiento Seguro -->
+        <div class="col-md-6">
+          <label for="fecha_venc_seguro" class="form-label">Vencimiento del seguro</label>
+          <input id="fecha_venc_seguro" name="fecha_venc_seguro" type="date"
+                 class="form-control"
+                 value="{{ vehiculo.fecha_venc_seguro|default('', true) }}">
+        </div>
+
+        <!-- Observaciones -->
+        <div class="col-12">
+          <label for="observaciones" class="form-label">Observaciones</label>
+          <textarea id="observaciones" name="observaciones"
+                    class="form-control" rows="3">{{ vehiculo.observaciones or '' }}</textarea>
+        </div>
+
+      </div>
+
+      <div class="mt-4 d-flex justify-content-between gap-2">
+        <a href="{{ url_for('main.vehiculos') }}" class="btn btn-outline-secondary">
+          Volver
+        </a>
+        <button type="submit" class="btn btn-success">
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+{% endblock %}

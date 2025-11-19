@@ -1,0 +1,527 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Sistema de Reportes - Agroservicio Ruta Verde{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/Reportes.css">
+
+<div class="reportes-hero-section">
+    <div class="container-fluid">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="bi bi-bar-chart-line-fill"></i>
+                <span>Business Intelligence</span>
+            </div>
+            <h1 class="hero-title">Centro de Reportes</h1>
+            <p class="hero-subtitle">Análisis y Visualización de Datos Operativos</p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid reportes-stats-section">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card evidencias">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-file-earmark-image"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">{{ total_evidencias }}</h3>
+                    <p class="stat-description">Evidencias Capturadas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card servicios">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">{{ servicios_completados }}</h3>
+                    <p class="stat-description">Servicios Completados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card incidentes">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">{{ incidentes_reportados }}</h3>
+                    <p class="stat-description">Incidentes Reportados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="reporte-stat-card entregas">
+                <div class="stat-icon-wrapper">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-value">{{ "%.1f" | format(porcentaje_a_tiempo) }}%</h3>
+                    <p class="stat-description">Entregas a Tiempo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid reportes-tipos-section">
+    <div class="section-header text-center">
+        <span class="section-label">Categorías de Reportes</span>
+        <h2 class="section-title">Informes Disponibles</h2>
+    </div>
+
+    <div class="row mt-5">
+        {% set evidencia_badge_class = 'bg-success' if total_evidencias > 0 else 'bg-secondary' %}
+        {% set evidencia_badge_text = 'Datos Activos' if total_evidencias > 0 else 'Sin datos' %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon evidencias-icon">
+                    <i class="bi bi-camera-fill"></i>
+                </div>
+                <h4 class="tipo-titulo">Evidencias y Documentación</h4>
+                <p class="tipo-descripcion">
+                    Análisis completo de fotografías, documentos firmados y control de legibilidad.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Evidencias por tipo</li>
+                    <li><i class="bi bi-check2"></i> Documentos legibles vs ilegibles</li>
+                    <li><i class="bi bi-check2"></i> Cobertura de documentación</li>
+                    <li><i class="bi bi-check2"></i> Historial de capturas</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge {{ evidencia_badge_class }}">{{ evidencia_badge_text }}</span>
+                </div>
+            </div>
+        </div>
+        
+        {% set seguimiento_data_count = servicios_completados + incidentes_reportados %}
+        {% set seguimiento_badge_class = 'bg-success' if seguimiento_data_count > 0 else 'bg-secondary' %}
+        {% set seguimiento_badge_text = 'Datos Activos' if seguimiento_data_count > 0 else 'Sin datos' %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon seguimiento-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <h4 class="tipo-titulo">Seguimiento de Entregas</h4>
+                <p class="tipo-descripcion">
+                    Monitoreo de estados, tiempos de entrega y notificaciones enviadas.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Estados por servicio</li>
+                    <li><i class="bi bi-check2"></i> Tiempo promedio de entrega</li>
+                    <li><i class="bi bi-check2"></i> Notificaciones enviadas</li>
+                    <li><i class="bi bi-check2"></i> Receptores registrados</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge {{ seguimiento_badge_class }}">{{ seguimiento_badge_text }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon calidad-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h4 class="tipo-titulo">Control de Calidad</h4>
+                <p class="tipo-descripcion">
+                    Inspecciones realizadas, productos aprobados y rechazos registrados.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Inspecciones aprobadas</li>
+                    <li><i class="bi bi-check2"></i> Productos rechazados</li>
+                    <li><i class="bi bi-check2"></i> Observaciones frecuentes</li>
+                    <li><i class="bi bi-check2"></i> Tendencias de calidad</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        {% set incidentes_badge_class = 'bg-warning text-dark' if incidentes_reportados > 0 else 'bg-secondary' %}
+        {% set incidentes_badge_text = 'Datos Activos' if incidentes_reportados > 0 else 'Sin datos' %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon incidentes-icon">
+                    <i class="bi bi-exclamation-octagon"></i>
+                </div>
+                <h4 class="tipo-titulo">Incidentes y Eventos</h4>
+                <p class="tipo-descripcion">
+                    Registro de problemas durante entregas: clima, mecánicos, cambios de ruta.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Incidentes por tipo</li>
+                    <li><i class="bi bi-check2"></i> Frecuencia de eventos</li>
+                    <li><i class="bi bi-check2"></i> Impacto en entregas</li>
+                    <li><i class="bi bi-check2"></i> Resoluciones aplicadas</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge {{ incidentes_badge_class }}">{{ incidentes_badge_text }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon vehiculos-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <h4 class="tipo-titulo">Vehículos y Flota</h4>
+                <p class="tipo-descripcion">
+                    Análisis de uso de vehículos, mantenimientos y estado operativo.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Vehículos más utilizados</li>
+                    <li><i class="bi bi-check2"></i> Kilometraje acumulado</li>
+                    <li><i class="bi bi-check2"></i> Mantenimientos realizados</li>
+                    <li><i class="bi bi-check2"></i> Estado de la flota</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="tipo-reporte-card">
+                <div class="tipo-icon conductores-icon">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <h4 class="tipo-titulo">Conductores</h4>
+                <p class="tipo-descripcion">
+                    Desempeño de conductores, entregas realizadas y disponibilidad.
+                </p>
+                <ul class="tipo-lista">
+                    <li><i class="bi bi-check2"></i> Entregas por conductor</li>
+                    <li><i class="bi bi-check2"></i> Tiempo promedio de viaje</li>
+                    <li><i class="bi bi-check2"></i> Licencias y documentación</li>
+                    <li><i class="bi bi-check2"></i> Disponibilidad del personal</li>
+                </ul>
+                <div class="tipo-badge">
+                    <span class="badge bg-secondary">Sin datos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid filtros-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+            <div class="filtros-content">
+                <span class="section-label">Herramientas de Análisis</span>
+                <h2 class="section-title">Filtros y Exportación</h2>
+                <p class="section-description">
+                    El sistema permite filtrar reportes por múltiples criterios y exportar 
+                    los datos en diferentes formatos para análisis externo.
+                </p>
+                <div class="filtros-disponibles">
+                    <h5 class="filtros-titulo">Filtros Disponibles:</h5>
+                    <div class="filtro-item">
+                        <i class="bi bi-calendar-range"></i>
+                        <span>Por rango de fechas (día, semana, mes, año)</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Por cliente o empresa</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-truck"></i>
+                        <span>Por vehículo o conductor</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-box-seam"></i>
+                        <span>Por tipo de producto</span>
+                    </div>
+                    <div class="filtro-item">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>Por ruta o ubicación</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="exportacion-visual">
+                <div class="export-icon-grande">
+                    <i class="bi bi-file-earmark-arrow-down"></i>
+                </div>
+                <h4 class="export-titulo">Formatos de Exportación</h4>
+                <div class="export-formatos">
+                    <div class="formato-btn">
+                        <i class="bi bi-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+
+                    <a href="{{ url_for('main.exportar_excel') }}" class="formato-btn" title="Exportar datos a Excel">
+                        <i class="bi bi-file-earmark-excel"></i>
+                        <span>Excel</span>
+                    </a>
+                    <div class="formato-btn">
+                        <i class="bi bi-printer"></i>
+                        <span>Imprimir</span>
+                    </div>
+                    <div class="formato-btn">
+                        <i class="bi bi-envelope"></i>
+                        <span>Enviar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid graficos-section">
+    <div class="section-header text-center">
+        <span class="section-label">Visualización de Datos</span>
+        <h2 class="section-title">Dashboard de Análisis</h2>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-bar-chart"></i> Evidencias por Tipo
+                    </h5>
+                </div>
+                <div class="grafico-body">
+                    <canvas id="evidenciasChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-pie-chart"></i> Estados de Envíos
+                    </h5>
+                </div>
+                <div class="grafico-body">
+                    <canvas id="estadosChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-calendar3"></i> Entregas por Mes
+                    </h5>
+                </div>
+                <div class="grafico-body">
+                    <canvas id="mensualChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="grafico-card">
+                <div class="grafico-header">
+                    <h5 class="grafico-titulo">
+                        <i class="bi bi-exclamation-triangle"></i> Incidentes Frecuentes
+                    </h5>
+                </div>
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid reportes-estado-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 order-lg-2">
+            <div class="estado-visual">
+                {% if sistema_activo %}
+                    <div class="sistema-activo-icon">
+                        <i class="bi bi-database-check"></i>
+                    </div>
+                    <h3 class="sistema-text text-success">Sistema de Reportes Activo</h3>
+                    <p class="sistema-descripcion">Datos disponibles y actualizados</p>
+                {% else %}
+                    <div class="sistema-sin-datos-icon">
+                        <i class="bi bi-database-slash"></i>
+                    </div>
+                    <h3 class="sistema-text">Sin Datos Registrados</h3>
+                    <p class="sistema-descripcion">Sistema listo para generar reportes</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4 order-lg-1">
+            <div class="estado-content">
+                <span class="section-label">Estado del Sistema</span>
+                <h2 class="section-title">Reportes {{ 'Activos' if sistema_activo else 'en Espera' }}</h2>
+                <p class="section-description">
+                    El sistema de reportes está configurado y listo para generar análisis 
+                    automáticamente. Una vez que se registren servicios, evidencias y 
+                    seguimientos, los reportes se generarán automáticamente.
+                </p>
+                <div class="estado-detalles">
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Sistema de reportes configurado</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Plantillas de reportes listas</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="bi bi-check-circle text-success"></i>
+                        <span>Filtros y exportación habilitados</span>
+                    </div>
+                    <div class="detalle-item">
+                        {% if sistema_activo %}
+                            <i class="bi bi-check-circle text-success"></i>
+                            <span>Datos procesados para reportes</span>
+                        {% else %}
+                            <i class="bi bi-clock text-warning"></i>
+                            <span>Esperando datos para generar reportes</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<div id="json-data-container" style="display: none;">
+    <script type="application/json">
+        {
+            "evidencias": {{ data_evidencias | tojson | safe }},
+            "estados": {{ data_estados | tojson | safe }},
+            "mensual": {{ data_mensual | tojson | safe }}
+        }
+    </script>
+</div>
+
+<script>
+    // 2. Extracción de datos y análisis JSON
+    // Buscamos la etiqueta <script> dentro del contenedor oculto.
+    const rawJson = document.querySelector('#json-data-container script').textContent;
+    const allData = JSON.parse(rawJson);
+
+    const dataEvidencias = allData.evidencias;
+    const dataEstados = allData.estados;
+    const dataMensual = allData.mensual;
+
+    // Colores base (puedes personalizarlos)
+    const chartColors = {
+        primary: 'rgba(54, 162, 235, 0.7)',  // Azul
+        secondary: 'rgba(255, 99, 132, 0.7)', // Rojo
+        success: 'rgba(75, 192, 192, 0.7)',  // Verde
+        warning: 'rgba(255, 205, 86, 0.7)',  // Amarillo
+        info: 'rgba(153, 102, 255, 0.7)',    // Púrpura
+        dark: 'rgba(100, 100, 100, 0.7)'
+    };
+
+    // Función auxiliar para dibujar un gráfico de barras/pastel
+    function drawChart(elementId, type, data, label, backgroundColors) {
+        if (!data || Object.keys(data).length === 0) {
+            // Si no hay datos, muestra el placeholder
+            const container = document.getElementById(elementId).closest('.grafico-card').querySelector('.grafico-body');
+            container.innerHTML = `
+                <div class="grafico-placeholder">
+                    <div class="placeholder-icon"><i class="bi bi-graph-up"></i></div>
+                    <p class="placeholder-text">Sin datos para mostrar</p>
+                    <small class="placeholder-subtext">Los gráficos se generarán automáticamente cuando haya registros</small>
+                </div>
+            `;
+            return;
+        }
+
+        const ctx = document.getElementById(elementId).getContext('2d');
+        const datasets = [{
+            label: label,
+            data: Object.values(data),
+            backgroundColor: backgroundColors.slice(0, Object.keys(data).length),
+            borderColor: backgroundColors.slice(0, Object.keys(data).length).map(c => c.replace('0.7', '1')), 
+            borderWidth: type === 'bar' ? 1 : 0,
+        }];
+
+        new Chart(ctx, {
+            type: type,
+            data: {
+                labels: Object.keys(data),
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                scales: type === 'bar' ? {
+                    y: {
+                        beginAtZero: true
+                    }
+                } : {}
+            }
+        });
+    }
+
+    // --- 1. Gráfico de Evidencias por Tipo (Barra) ---
+    drawChart(
+        'evidenciasChart', 
+        'bar', 
+        dataEvidencias, 
+        'Evidencias Capturadas', 
+        [chartColors.success, chartColors.primary, chartColors.warning, chartColors.secondary]
+    );
+
+    // --- 2. Gráfico de Estados de Envíos (Doughnut) ---
+    drawChart(
+        'estadosChart', 
+        'doughnut', 
+        dataEstados, 
+        'Servicios por Estado', 
+        [chartColors.primary, chartColors.success, chartColors.secondary, chartColors.warning, chartColors.info]
+    );
+
+    // --- 3. Gráfico de Entregas por Mes (Línea) ---
+    if (Object.keys(dataMensual).length > 0) {
+        const ctxMensual = document.getElementById('mensualChart').getContext('2d');
+        new Chart(ctxMensual, {
+            type: 'line',
+            data: {
+                labels: Object.keys(dataMensual),
+                datasets: [{
+                    label: 'Entregas',
+                    data: Object.values(dataMensual),
+                    borderColor: chartColors.primary.replace('0.7', '1'),
+                    backgroundColor: chartColors.primary.replace('0.7', '0.2'),
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}
