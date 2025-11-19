@@ -3,118 +3,139 @@
 {% block title %}Agroservicio Ruta Verde - Gestión de Clientes{% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/clientes.css') }}">
-        
-    <div class="container mt-5">
-        <h1 class="mb-4 display-4 text-primary-green">Gestión de Clientes</h1>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clientes.css') }}">
 
-        <ul class="nav nav-tabs" id="clientesTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                {# CAMBIO 1: CLASE 'active' ELIMINADA del botón #}
-                <button class="nav-link tab-link" id="registro-cliente-tab" data-bs-toggle="tab" data-bs-target="#registro-cliente" type="button" role="tab" aria-controls="registro-cliente" aria-selected="false">
-                    Registrar Nuevo Cliente
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link tab-link" id="consulta-clientes-tab" data-bs-toggle="tab" data-bs-target="#consulta-clientes" type="button" role="tab" aria-controls="consulta-clientes" aria-selected="false">
-                    Clientes Existentes
-                </button>
-            </li>
-        </ul>
+<div class="container mt-5">
+    <h1 class="mb-4 display-4 text-primary-green">Gestión de Clientes</h1>
 
-        <div class="tab-content tab-content-card" id="clientesTabContent">
-            
-            {# Pestaña: Registrar Nuevo Cliente #}
-            {# CAMBIO 2: CLASES 'show active' ELIMINADAS del panel de contenido #}
-            <div class="tab-pane fade" id="registro-cliente" role="tabpanel" aria-labelledby="registro-cliente-tab"> 
-                <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo cliente:</h2>
-                
-                <form action="" method="POST">
-                    <div class="row g-4">
-                        
-                        {# Nombre del Cliente #}
-                        <div class="col-md-6">
-                            <label for="nombre_cliente" class="form-label text-inter-regular">Nombre del Cliente</label>
-                            <input type="text" class="form-control custom-input" id="nombre_cliente" name="nombre_cliente" placeholder="Nombre completo del cliente o empresa" maxlength="100" required>
-                        </div>
-                        
-                        {# DUI/NIT #}
-                        <div class="col-md-6">
-                            <label for="dui_cliente" class="form-label text-inter-regular">DUI o Documento Único</label>
-                            <input type="text" class="form-control custom-input" id="dui_cliente" name="dui_cliente" placeholder="Documento de Identidad (Único)" maxlength="20" required>
-                            <small class="text-muted small-text">*Campo con restricción UNIQUE en la base de datos.</small>
-                        </div>
+    <ul class="nav nav-tabs" id="clientesTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link tab-link" id="registro-cliente-tab" data-bs-toggle="tab"
+                data-bs-target="#registro-cliente" type="button" role="tab" aria-controls="registro-cliente"
+                aria-selected="false">
+                Registrar Nuevo Cliente
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link tab-link" id="consulta-clientes-tab" data-bs-toggle="tab"
+                data-bs-target="#consulta-clientes" type="button" role="tab" aria-controls="consulta-clientes"
+                aria-selected="false">
+                Clientes Existentes
+            </button>
+        </li>
+    </ul>
 
-                        {# Correo Electrónico #}
-                        <div class="col-12">
-                            <label for="correo_electronico" class="form-label text-inter-regular">Correo Electrónico</label>
-                            <input type="email" class="form-control custom-input" id="correo_electronico" name="correo_electronico" placeholder="Correo para notificaciones y facturación" maxlength="200" required>
-                        </div>
+    <div class="tab-content tab-content-card" id="clientesTabContent">
 
-                        {# Botón de Registro #}
-                        <div class="col-12 mt-4">
-                            <div class="d-flex justify-content-end"> 
-                                <button type="submit" class="btn btn-lg primary-submit-btn w-60 w-md-50">
-                                    <i class="bi bi-person-plus-fill me-2"></i> Registrar Cliente
-                                </button>
-                            </div>
-                        </div>
-                        
+        <!-- ============================
+             REGISTRO DE CLIENTE
+        ============================= -->
+        <div class="tab-pane fade" id="registro-cliente" role="tabpanel"
+            aria-labelledby="registro-cliente-tab">
+
+            <h2 class="h5 mb-4 text-secondary-title">Completa los datos para registrar un nuevo cliente:</h2>
+
+            <form action="{{ url_for('main.clientes') }}" method="POST">
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+                        <label for="nombre_cliente" class="form-label text-inter-regular">Nombre del Cliente</label>
+                        <input type="text" class="form-control custom-input" id="nombre_cliente"
+                            name="nombre_cliente" maxlength="100" required>
                     </div>
-                </form>
-            </div>
 
-            {# Pestaña: Clientes Existentes (Tabla) #}
-            <div class="tab-pane fade" id="consulta-clientes" role="tabpanel" aria-labelledby="consulta-clientes-tab">
-                <h2 class="h5 mb-4 text-secondary-title">Listado y gestión de clientes registrados:</h2>
-                
-                <div class="row mb-3 align-items-center">
-                    <div class="col-md-5">
-                        <input type="text" class="form-control custom-input" placeholder="Buscar por Nombre, ID o DUI...">
+                    <div class="col-md-6">
+                        <label for="dui_cliente" class="form-label text-inter-regular">DUI o Documento Único</label>
+                        <input type="text" class="form-control custom-input" id="dui_cliente"
+                            name="dui_cliente" maxlength="20" required>
+                        <small class="text-muted small-text">*Campo con restricción UNIQUE.</small>
                     </div>
-                    <div class="col-md-7 text-end">
-                        <button class="btn btn-outline-secondary btn-secondary-action">
-                            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar Reporte
+
+                    <div class="col-12">
+                        <label for="correo_electronico" class="form-label text-inter-regular">Correo Electrónico</label>
+                        <input type="email" class="form-control custom-input" id="correo_electronico"
+                            name="correo_electronico" maxlength="200" required>
+                    </div>
+
+                    <div class="col-12 mt-4 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-lg primary-submit-btn w-60 w-md-50">
+                            <i class="bi bi-person-plus-fill me-2"></i>
+                            Registrar Cliente
                         </button>
                     </div>
+
                 </div>
+            </form>
+        </div>
 
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle custom-table">
-                        <thead class="thead-custom">
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre del Cliente</th>
-                                <th>DUI/Documento</th>
-                                <th>Correo Electrónico</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                       <tbody>
-    {% for cliente in clientes %}
-    <tr>
-        <td>{{ cliente.Id_Cliente }}</td>
-        <td>{{ cliente.Nombre_Cliente }}</td>
-        <td>{{ cliente.Dui }}</td>
-        <td>{{ cliente.CorreoElectronico }}</td>
-        <td>
-            <button class="btn btn-sm btn-success me-1">
-                <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-danger">
-                <i class="bi bi-trash"></i>
-            </button>
-        </td>
-    </tr>
-    {% endfor %}
-</tbody>
 
-                    </table>
+        <!-- ============================
+             TABLA DE CLIENTES
+        ============================= -->
+        <div class="tab-pane fade" id="consulta-clientes" role="tabpanel"
+            aria-labelledby="consulta-clientes-tab">
+
+            <h2 class="h5 mb-4 text-secondary-title">Listado y gestión de clientes registrados:</h2>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-5">
+                    <input type="text" class="form-control custom-input" placeholder="Buscar por Nombre, ID o DUI...">
+                </div>
+                <div class="col-md-7 text-end">
+                    <button class="btn btn-outline-secondary btn-secondary-action">
+                        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar Reporte
+                    </button>
                 </div>
             </div>
-            
-        </div>
-    </div>
 
-    <script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle custom-table">
+                    <thead class="thead-custom">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>DUI</th>
+                            <th>Correo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for cliente in clientes %}
+                        <tr>
+                            <td>{{ cliente.Id_Cliente }}</td>
+                            <td>{{ cliente.Nombre_Cliente }}</td>
+                            <td>{{ cliente.Dui }}</td>
+                            <td>{{ cliente.CorreoElectronico }}</td>
+                            <td class="text-end">
+
+                                <!-- BOTÓN EDITAR -->
+                                <a href="{{ url_for('main.editar_cliente', id_cliente=cliente.Id_Cliente) }}"
+                                    class="btn btn-sm btn-success me-1" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <!-- BOTÓN ELIMINAR -->
+                                <form action="{{ url_for('main.eliminar_cliente', id_cliente=cliente.Id_Cliente) }}"
+                                    method="POST" style="display:inline-block;"
+                                    onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
+
+                                    <button class="btn btn-sm btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
 {% endblock %}

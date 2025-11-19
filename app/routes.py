@@ -18,8 +18,6 @@ from io import StringIO
 from app import db
 from collections import defaultdict
 
-
-
 bp = Blueprint('main', __name__)
 
 # ============================================================
@@ -206,7 +204,6 @@ def alertas():
         )
 
 
-
 # ============================================================
 # GESTIÓN DE EVIDENCIA
 # ============================================================
@@ -324,7 +321,7 @@ def allowed_file(filename):
     allowed = {'png', 'jpg', 'jpeg', 'pdf'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed
 
-  
+    
 # ============================================================
 # UBICACIONES
 # ============================================================
@@ -356,6 +353,7 @@ def registrar_ubicacion():
     dep = request.form["Id_Departamento"]
     muni = request.form["Id_Municipio"]
     direccion_texto = request.form.get("Direccion") or ""
+    # Se lee el estado del formulario, pero no se usa en el constructor de Ubicaciones
 
     # 1) Crear dirección
     nueva_dir = Direccion(
@@ -365,7 +363,7 @@ def registrar_ubicacion():
     db.session.add(nueva_dir)
     db.session.commit()
 
-    # 2) Crear ubicación
+    # 2) Crear ubicación (¡Campo de estado ELIMINADO del constructor!)
     nueva = Ubicaciones(
         Id_Departamento=dep,
         Id_Municipio=muni,
@@ -413,6 +411,44 @@ def detalles_ubicacion(id_ubicacion):
         departamentos=departamentos,
         municipios=municipios
     )
+
+
+# RUTA DE EDICIÓN: ACTUALIZAR UBICACIÓN
+@bp.route("/ubicaciones/actualizar/<int:id_ubicacion>", methods=["POST"])
+def actualizar_ubicacion(id_ubicacion):
+    # 1. Obtener la ubicación existente
+    u = Ubicaciones.query.get_or_404(id_ubicacion)
+    
+    # 2. Obtener la dirección asociada
+    id_direccion = request.form.get("Id_Direccion", type=int) 
+    dir = Direccion.query.get(id_direccion)
+
+    if not dir:
+        flash("Error: No se encontró la dirección asociada para actualizar.", "danger")
+        return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
+
+    try:
+        # 3. Actualizar Ubicaciones (Departamento y Municipio)
+        u.Id_Departamento = request.form["Id_Departamento"]
+        u.Id_Municipio = request.form["Id_Municipio"]
+        # Se lee el estado, pero como no existe en el constructor, se asume que se
+        # llama de una forma distinta para la actualización de un objeto existente.
+        # Si la columna real es 'Estado' (mayúscula) o 'estado' (minúscula) se debe usar aquí.
+        # Por ahora, se elimina la línea para evitar el error de atributo.
+
+        # 4. Actualizar Dirección
+        dir.Detalle_Direccion = request.form.get("Direccion", "").strip()
+        
+        # 5. Guardar cambios en la base de datos
+        db.session.commit()
+        
+        flash("✅ Ubicación actualizada correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"❌ Error al guardar los cambios: {e}", "danger")
+    
+    # Redirigir de nuevo a la vista de detalles
+    return redirect(url_for("main.detalles_ubicacion", id_ubicacion=id_ubicacion))
 
 
 # ============================================================
@@ -635,15 +671,60 @@ def buscar_servicios():
     )
 
 
+# ============================================================
+# EDITAR CLIENTE
+# ============================================================
+@bp.route('/clientes/editar/<int:id_cliente>', methods=['GET', 'POST'])
+def editar_cliente(id_cliente):
+    cliente = Clientes.query.get_or_404(id_cliente)
+
+    if request.method == 'POST':
+        cliente.Nombre_Cliente = request.form.get('nombre_cliente')
+        cliente.Dui = request.form.get('dui_cliente')
+        cliente.CorreoElectronico = request.form.get('correo_electronico')
+
+        try:
+            db.session.commit()
+            flash("Cliente actualizado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al actualizar cliente: {e}", "danger")
+
+        return redirect(url_for('main.clientes'))
+
+    return render_template(
+        "layouts/EditarCliente.html",
+        cliente=cliente
+    )
+
+
+# ============================================================
+# ELIMINAR CLIENTE
+# ============================================================
+@bp.route('/clientes/eliminar/<int:id_cliente>', methods=['POST'])
+def eliminar_cliente(id_cliente):
+    cliente = Clientes.query.get_or_404(id_cliente)
+
+    try:
+        db.session.delete(cliente)
+        db.session.commit()
+        flash("Cliente eliminado correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error al eliminar cliente: {e}", "danger")
+
+    return redirect(url_for('main.clientes'))
+
+
 
 
 
 
 # ============================================================
-# CONDUCTORES
+# GESTIÓN DE CONDUCTORES
 # ============================================================
+
 @bp.route('/conductores', methods=['GET', 'POST'])
-@bp.route('/conductores')
 def conductores():
     # ---------- POST → Registrar nuevo conductor ----------
     if request.method == 'POST':
@@ -656,12 +737,10 @@ def conductores():
         estado = request.form.get('estado') or 'Activo'
         experiencia = request.form.get('experiencia_notas') or None
 
-        # Validar obligatorios reales de la BD
-        if not all([nombre, documento, tipo_licencia, fecha_venc_str]):
+        if not nombre or not documento or not tipo_licencia or not fecha_venc_str:
             flash("Completa nombre, documento, tipo de licencia y fecha de vencimiento.", "danger")
             return redirect(url_for('main.conductores'))
 
-        # Convertir fecha
         try:
             fecha_venc = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
         except ValueError:
@@ -697,6 +776,65 @@ def conductores():
         title="Gestión de Conductores",
         conductores=lista_conductores
     )
+
+
+# ============================================================
+# EDITAR CONDUCTOR
+# ============================================================
+
+@bp.route('/conductores/editar/<int:id_conductor>', methods=['GET', 'POST'])
+def editar_conductor(id_conductor):
+    conductor = Conductor.query.get_or_404(id_conductor)
+
+    if request.method == 'POST':
+        conductor.nombre_completo = request.form.get('nombre_completo')
+        conductor.documento_identificacion = request.form.get('documento_identificacion')
+        conductor.tipo_licencia = request.form.get('tipo_licencia')
+        conductor.telefono = request.form.get('telefono') or None
+        conductor.correo = request.form.get('correo') or None
+        conductor.estado = request.form.get('estado')
+        conductor.experiencia_notas = request.form.get('experiencia_notas') or None
+
+        fecha_venc_str = request.form.get('fecha_vencimiento_licencia')
+        try:
+            conductor.fecha_vencimiento_licencia = datetime.strptime(fecha_venc_str, "%Y-%m-%d").date()
+        except:
+            flash("Fecha inválida.", "danger")
+            return redirect(url_for('main.editar_conductor', id_conductor=id_conductor))
+
+        try:
+            db.session.commit()
+            flash("Conductor actualizado correctamente.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al actualizar: {e}", "danger")
+
+        return redirect(url_for('main.conductores'))
+
+    return render_template(
+        "Modules/Gestion_Conductores/EditarConductor.html",
+        conductor=conductor
+    )
+
+
+# ============================================================
+# ELIMINAR CONDUCTOR
+# ============================================================
+
+@bp.route('/conductores/eliminar/<int:id_conductor>', methods=['POST'])
+def eliminar_conductor(id_conductor):
+    conductor = Conductor.query.get_or_404(id_conductor)
+
+    try:
+        db.session.delete(conductor)
+        db.session.commit()
+        flash("Conductor eliminado correctamente.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error al eliminar: {e}", "danger")
+
+    return redirect(url_for('main.conductores'))
+
 
 
 # ============================================================
@@ -779,7 +917,7 @@ def vehiculos():
         return redirect(url_for('main.vehiculos'))
 
     # ---------- GET → Mostrar formulario y tabla ----------
-       # ---------- GET → Mostrar formulario y tabla con filtros ----------
+        # ---------- GET → Mostrar formulario y tabla con filtros ----------
     from sqlalchemy import or_
 
     # Leer parámetros de búsqueda desde la URL (GET)

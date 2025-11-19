@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+{% block title %}Editar Cliente{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <a href="{{ url_for('main.clientes') }}" class="btn btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+
+    <div class="card p-4 shadow-sm">
+        <h3 class="mb-3">Editar Cliente</h3>
+
+        <form method="POST">
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label>Nombre del Cliente</label>
+                    <input type="text" class="form-control" name="nombre_cliente"
+                           value="{{ cliente.Nombre_Cliente }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label>DUI / Documento</label>
+                    <input type="text" class="form-control" name="dui_cliente"
+                           value="{{ cliente.Dui }}" required>
+                </div>
+
+                <div class="col-md-12">
+                    <label>Correo Electrónico</label>
+                    <input type="email" class="form-control" name="correo_electronico"
+                           value="{{ cliente.CorreoElectronico }}" required>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary mt-3">
+                <i class="bi bi-save"></i> Guardar Cambios
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

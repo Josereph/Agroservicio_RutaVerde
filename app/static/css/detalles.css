@@ -1,41 +1,36 @@
-input[readonly].form-control,
-input[readonly].form-control:focus {
-    background-color: #E9ECEF;
-    opacity: 0.9;
-    cursor: not-allowed;
-    border-color: #CED4DA;
-    box-shadow: none;
+/* detalles.css */
+
+/* --- Colores Temáticos Agroservicio (Repetidos para seguridad, aunque ya deben estar en ubicaciones.css) --- */
+
+.bg-agro {
+    background-color: #38761D !important;
+    color: white !important;
 }
 
-.header-tierra .btn-light {
-    font-weight: 600;
-    color: #346a39;
-    background-color: #f1f8f1;
-    border-color: #C3E6CB;
-    transition: all 0.2s ease;
+.btn-agro {
+    background-color: #38761D;
+    border-color: #38761D;
+    color: white;
 }
 
-.header-tierra .btn-light:hover {
-    background-color: #ffffff;
-    border-color: #346a39;
-    color: #346a39;
+.btn-agro:hover {
+    background-color: #6AA84F;
+    border-color: #6AA84F;
+    color: white;
 }
 
-.btn-cta.w-75 {
-    width: 73% !important;
+/* Color del título principal */
+.text-agro-strong {
+    color: #38761D !important;
 }
 
-.btn-danger.w-20 {
-    width: 25% !important;
-    font-weight: 600;
+/* Estilo para campos no editables (Código, Nombre de Ubicación) */
+.form-control[readonly] {
+    background-color: #f8f9fa; /* Gris claro */
+    border-color: #e9ecef;
 }
 
-.detalle-header-titulo {
-    border-bottom: 2px solid #3E7D44;
-    padding-bottom: 0.75rem;
-}
-
-#no-hijos-row td {
-    background-color: #F8F9FA;
-    font-style: italic;
+/* Resaltar la tarjeta de edición */
+.card-shadow {
+    border-left: 5px solid #38761D;
 }
