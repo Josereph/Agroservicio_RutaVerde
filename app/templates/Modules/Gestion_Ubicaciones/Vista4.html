@@ -1,0 +1,130 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Agroservicio Ruta Verde - Gestión de Ubicaciones{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ubicaciones.css') }}">
+
+</div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header text-white">
+                    <link rel="stylesheet" href="cards.css">
+                    <link rel="stylesheet" href="ubicaciones.css">
+                    <h5 class="mb-0">Registrar Ubicación o Ruta 🚜</h5>
+                </div>
+                <div class="card-body">
+                    <form id="form-ubicacion" method="POST" action="{{ url_for('main.registrar_ubicacion') }}">
+
+
+                      
+
+                        <div class="mb-3">
+   <div class="mb-3">
+    <label for="ubicacion-departamento" class="form-label">Departamento</label>
+    <select class="form-select" id="ubicacion-departamento" name="Id_Departamento" required>
+        <option value="">Seleccione un Departamento</option>
+        {% for d in departamentos %}
+            <option value="{{ d.Id_Departamento }}">{{ d.Nombre_Departamento }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="ubicacion-municipio" class="form-label">Municipio</label>
+    <select class="form-select" id="ubicacion-municipio" name="Id_Municipio" required disabled>
+        <option value="">Seleccione primero un Departamento</option>
+
+        {% for dep in departamentos %}
+            <optgroup label="{{ dep.Nombre_Departamento }}" data-parent="{{ dep.Id_Departamento }}">
+                {% for muni in municipios if muni.Id_Departamento == dep.Id_Departamento %}
+                    <option value="{{ muni.Id_Municipio }}">
+                        {{ muni.Nombre_Municipio }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+</div>
+
+</div>
+
+
+                        <div class="mb-3">
+                            <label for="ubicacion-direccion" class="form-label">Dirección Exacta (Punto Logístico/Cultivo)</label>
+                            <textarea class="form-control" id="ubicacion-direccion" rows="2" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ubicacion-estado" class="form-label">Estado</label>
+                            <select class="form-select" id="ubicacion-estado" required>
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-primary w-100">Guardar Punto Logístico</button>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header text-white header-tierra">
+                    <h5 class="mb-0">Inventario de Zonas de Trabajo y Distribución</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Jerarquía</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Municipio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                          <tbody id="inventario-tbody">
+    {% for u, d, m, dir in inventario %}
+    <tr class="ubicacion-nivel-1">
+        <td><span class="hierarchy-level nivel-1"></span>{{ m.Nombre_Municipio }}</td>
+        <td>UB-{{ u.Id_Ubicacion }}</td>
+        <td>{{ d.Nombre_Departamento }}</td>
+        <td>{{ m.Nombre_Municipio }}</td>
+        <td><span class="badge bg-success">Activo</span></td>
+        <td>
+            <a href="{{ url_for('main.detalles_ubicacion', id_ubicacion=u.Id_Ubicacion) }}"
+               class="btn btn-sm btn-outline-success">
+                Ver Detalles
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+
+                        </table>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        Mostrando puntos logísticos activos e inactivos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/Validacion.js') }}" defer></script>
+{% endblock %}

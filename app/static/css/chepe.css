@@ -1,0 +1,82 @@
+/* Estilos específicos para el módulo de conductores, aislados para evitar conflictos */
+
+/* Tipografía coherente */
+#modulo-conductores h1, 
+#modulo-conductores h2, 
+#modulo-conductores h3, 
+#modulo-conductores h4, 
+#modulo-conductores h5, 
+#modulo-conductores h6 {
+    font-weight: 600;
+}
+
+/* Estilo de botones coherente */
+#modulo-conductores .btn {
+    border-radius: 0.5rem; /* Botones redondeados */
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+}
+
+#modulo-conductores .btn-primary {
+    /* Define el color primario del sistema */
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Estilo coherente para contenedores (tablas, formularios) */
+#modulo-conductores .card-table-wrapper {
+    background-color: #ffffff;
+    border-radius: 0.75rem; /* Bordes más redondeados */
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    padding: 2rem;
+    overflow: hidden;
+}
+
+/* Estilo para la tabla */
+#modulo-conductores .table {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+
+#modulo-conductores .table thead th {
+    border-bottom-width: 2px;
+    color: #6c757d; /* Texto de cabecera más sutil */
+    font-weight: 500;
+}
+
+#modulo-conductores .table tbody tr {
+    vertical-align: middle;
+}
+        
+#modulo-conductores .table tbody tr:hover {
+    background-color: #f1f3f5; /* Hover sutil */
+}
+
+#modulo-conductores .table-responsive {
+    border-radius: 0.75rem;
+}
+
+/* Badges de estado */
+#modulo-conductores .badge {
+    font-size: 0.8rem;
+    padding: 0.5em 0.75em;
+}
+
+/* Modal */
+/* NOTA: El modal se adjunta al 'body', por lo que no podemos usar el prefijo ID.
+   Estos estilos de Bootstrap son generalmente seguros y no deberían causar conflicto. */
+.modal-content {
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+}
+        
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+}

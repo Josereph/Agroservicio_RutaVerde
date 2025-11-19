@@ -1,0 +1,191 @@
+/* --- Contenedor Principal (sin cambios significativos) --- */
+.search-container {
+    max-width: 1000px; /* Aumentamos un poco el ancho */
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-container h1 {
+    text-align: center;
+    color: #008000;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+}
+
+/* --- Formulario de Filtros (Grid) --- */
+.search-form-grid {
+    display: grid;
+    /* 4 columnas en desktop */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px;
+    padding: 20px;
+    margin-bottom: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box; /* Importante para el padding */
+}
+
+.search-button-full {
+    grid-column: 4 / -1;
+    background-color: #008000;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.1em;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.search-button-full:hover {
+    background-color: #006400;
+}
+
+
+/* --- Resultados (Modificación para Servicios) --- */
+
+.result-link {
+    /* Mantenemos el flexbox para la distribución horizontal */
+    display: flex; 
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 15px;
+}
+
+.result-icon-box {
+    /* Reemplaza el result-image-box */
+    width: 80px; 
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Icono circular */
+    background-color: #e6ffe6; /* Fondo suave para el icono */
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.result-icon-box i {
+    color: #008000;
+}
+
+.result-details {
+    flex-grow: 1;
+}
+
+.result-details h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.3em;
+}
+
+.result-details .location {
+    color: #555;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+}
+
+.type-heavy {
+    background-color: #b30000; /* Rojo oscuro para pesado */
+}
+
+.type-agile {
+    background-color: #1a73e8; /* Azul para ágil */
+}
+
+.result-price {
+    align-self: center;
+    padding-left: 20px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.status-in-transit {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: orange; /* Naranja para En Tránsito */
+    border: 1px solid orange;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status-pending {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #008000; /* Verde para Pendiente */
+    border: 1px solid #008000;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.small-detail {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+}
+
+
+/* --- Responsive (Ajustes para pantallas medianas y pequeñas) --- */
+
+@media (max-width: 900px) {
+    .search-form-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+    }
+}
+
+@media (max-width: 500px) {
+    .search-form-grid {
+        grid-template-columns: 1fr; /* 1 columna en móviles */
+    }
+    
+    .result-link {
+        flex-direction: column; /* Apila el resultado en móvil */
+        align-items: flex-start;
+    }
+    
+    .result-icon-box {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    
+    .result-price {
+        align-self: flex-start;
+        padding-left: 0;
+        margin-top: 10px;
+    }
+}

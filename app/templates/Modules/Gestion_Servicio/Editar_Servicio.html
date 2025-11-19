@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Agroservicio Ruta Verde - Editar Servicio{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Editar_Servicio.css') }}">
+        
+    <div class="container mt-5 mb-5">
+        <!-- Título para mostrar qué servicio se está editando -->
+        <h1 class="mb-4 display-4 text-primary-green">Edición de Servicio #{{ servicio.Id_Servicio }}</h1>
+        <p class="lead text-secondary-title">Modifica los campos necesarios para actualizar el estado o la información logística de este envío.</p>
+
+        <div class="tab-content-card p-4">
+            <!-- 1. Acción del Formulario Corregida -->
+            <form action="{{ url_for('main.editar_servicio_post', id_servicio=servicio.Id_Servicio) }}" method="POST">
+                <!-- 2. ID de Servicio Oculto (Corregido) -->
+                <input type="hidden" name="servicio_id" value="{{ servicio.Id_Servicio }}">
+
+                <div class="row g-4 mb-4 pt-3 pb-3 bg-light-green rounded-3 shadow-sm">
+                    <div class="col-12"><h3 class="h5 text-section-header">Estado y Progreso del Envío (Prioritario)</h3></div>
+                    <div class="col-md-6">
+                        <label for="estado_actual" class="form-label text-inter-regular fw-bold">Estado Actual del Servicio</label>
+                        <!-- 3. Select de Estado (Dinámico) -->
+                        <select class="form-select custom-input border-2 border-primary" id="estado_actual" name="estado_actual" required>
+                            <!-- Los valores coinciden con el ENUM de SeguimientoControl: cargando, en_ruta, en_espera, entregado -->
+                            <option value="cargando" {% if estado_actual == 'cargando' %}selected{% endif %}>En Camión (Cargado)</option>
+                            <option value="en_ruta" {% if estado_actual == 'en_ruta' %}selected{% endif %}>En Ruta (Viajando)</option>
+                            <option value="en_espera" {% if estado_actual == 'en_espera' %}selected{% endif %}>En Espera (Pendiente)</option>
+                            <option value="entregado" {% if estado_actual == 'entregado' %}selected{% endif %}>Entregado al Cliente</option>
+                            <!-- La opción "Cancelado" no está en tu ENUM, se maneja como comentario o se puede mapear a un estado si es necesario -->
+                        </select>
+                        <small class="text-danger small-text">*Cambiar este estado actualiza la trazabilidad del cliente.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="comentario_estado" class="form-label text-inter-regular">Comentario de Actualización (Opcional)</label>
+                        <!-- 4. Input de Comentario (Precargado) -->
+                        <input type="text" class="form-control custom-input" id="comentario_estado" name="comentario_estado" 
+                               value="{{ comentario_estado or '' }}" placeholder="Ej: Vehículo salió a las 8:30 AM" maxlength="150">
+                    </div>
+                </div>
+
+                <div class="row g-4">                     
+                    <div class="col-12"><h3 class="h6 text-section-header mt-3">Asignación</h3></div>
+
+                    <div class="col-md-6">
+                        <label for="id_vehiculo" class="form-label text-inter-regular">Vehículo Asignado (ID_Vehiculo)</label>
+                        <!-- 5. Input de Vehículo (Precargado) -->
+                        <input type="number" class="form-control custom-input" id="id_vehiculo" name="id_vehiculo" 
+                               value="{{ servicio.Id_Vehiculo }}" placeholder="Ej: 1 (Camión pequeño)" required>
+                        <small class="text-muted small-text">*ID del vehículo para el cargamento.</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="id_conductor" class="form-label text-inter-regular">Conductor Asignado (id_conductor)</label>
+                        <!-- 6. Input de Conductor (Precargado) -->
+                        <input type="number" class="form-control custom-input" id="id_conductor" name="id_conductor" 
+                               value="{{ servicio.id_conductor }}" placeholder="Ej: 5 (Nombre del Chofer)" required>
+                        <small class="text-muted small-text">*ID del conductor responsable.</small>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <div class="d-flex justify-content-between"> 
+                            <button type="button" class="btn btn-secondary-outline-btn w-30 w-md-25" onclick="window.history.back();">
+                                <i class="fas fa-arrow-left me-2"></i> Regresar a Servicios
+                            </button>
+                            <button type="submit" class="btn btn-lg primary-submit-btn w-60 w-md-50">
+                                <i class="fas fa-sync-alt me-2"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
